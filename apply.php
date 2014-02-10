@@ -150,10 +150,10 @@
             Which of these options best describes your experience and support level for this service?
         </p>
         <select name="support_level" title="Which of these options best describes your experience and support level for this service?">
-            <option value="novice_no_support">I am a novice user with no local support</option>
-            <option value="novice_with_support">I am a novice user with local support</option>
-            <option value="experienced_not_hpc">I am experienced with UNIX/Linux but not HPC</option>
-            <option value="experienced_and_hpc">I am experience with UNIX/Linux and HPC</option>
+            <option value="Novice with No Local Support">I am a novice user with no local support</option>
+            <option value="Novice with Local Support">I am a novice user with local support</option>
+            <option value="Linux experience but no HPC">I am experienced with UNIX/Linux but not HPC</option>
+            <option value="Linux and HPC experience">I am experience with UNIX/Linux and HPC</option>
         </select>
     </div>
     
