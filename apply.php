@@ -13,6 +13,7 @@
         <h4 class="sectionTitle">
             User Information
         </h4>
+        <input type="text" value="Apply" name="submit_type" style="display:none" readonly/>
         <table> <!-- Shouldn't really use tables for layout, but I'm just copy/pasting at the moment. -->
             <tr>
                 <td> UCL userid: </td>
