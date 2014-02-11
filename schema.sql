@@ -63,7 +63,7 @@ CREATE TABLE User_Experience_Levels
 CREATE TABLE Account_Request
 (
   id INTEGER AUTO_INCREMENT,
-  user_id VARCHAR(7),
+  username VARCHAR(7),
   user_upi VARCHAR(15),
   supervisor_upi VARCHAR(15),
   user_type INTEGER,
@@ -83,11 +83,11 @@ CREATE TABLE Account_Request
 CREATE TABLE Project
 (
   id INTEGER AUTO_INCREMENT,
-  user_id VARCHAR(7),
+  username VARCHAR(7),
   request_id INTEGER,
   grant_code VARCHAR(7),
   is_funded BOOLEAN,
-  pi_user_id VARCHAR(7),
+  pi_username VARCHAR(7),
   consortium_id INTEGER,
   wants_cfi_because TEXT,
   cfi_impact TEXT,
@@ -122,4 +122,22 @@ CREATE TABLE Service_Requests
   PRIMARY KEY (id),
   FOREIGN KEY (project_id) REFERENCES Projects(id),
   FOREIGN KEY (service_id) REFERENCES Services(id)
+);
+
+CREATE TABLE Publications
+(
+  id INTEGER AUTO_INCREMENT,
+  username VARCHAR(7),
+  doi VARCHAR(255),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE Publication_Services
+(
+  id INTEGER AUTO_INCREMENT,
+  publication_id INTEGER,
+  service_used INTEGER,
+  PRIMARY KEY (id),
+  FOREIGN KEY (publication_id) REFERENCES Publications(id),
+  FOREIGN KEY (service_used) REFERENCES Services(id)
 );
