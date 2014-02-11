@@ -23,6 +23,7 @@
                         title="Your existing UCL userid." 
                         readonly 
                         value="<?php echo "$username_from_ldap" ?>"
+                        pattern="[A-Za-z0-9]{7}"
                     />
                 </td>
                 <td>
@@ -33,7 +34,7 @@
                         type="text"
                         name="upi"
                         title="Your UCL UPI. (It's on your swipecard.)"
-                        default="UPI"
+                        placeholder="UPI"
                     />
                 </td>
             </tr>
@@ -58,7 +59,7 @@
                         type="text"
                         name="surname"
                         title="Your surname (or family name)."
-                        default="Surname"
+                        placeholder="Surname"
                     />
                 </td>
             </tr>
@@ -71,7 +72,7 @@
                         type="text"
                         name="forenames"
                         title="Your forenames (or given names)."
-                        default="Forenames"
+                        placeholder="Forenames"
                     />
                 </td> 
                 <td>
@@ -82,7 +83,7 @@
                         type="text"
                         name="name_preferred"
                         title="Your preferred name."
-                        default="Preferred name"
+                        placeholder="Preferred name"
                     />
                 </td>
             </tr>
@@ -96,7 +97,8 @@
                         type="email"
                         name="email"
                         title="Your UCL e-mail address. You are unable to use non-UCL e-mail address for Legion accounts."
-                        default="person@ucl.ac.uk"
+                        placeholder="person@ucl.ac.uk"
+                        pattern="[-0-9a-zA-Z.+_]+@[a-z0-9.-]+ucl\.ac\.uk"
                     />
                 </td>
                 <td>
@@ -107,7 +109,7 @@
                         type="tel"
                         name="phone"
                         title="A telephone number (or UCL internal extension) we can contact you at."
-                        default="00000"
+                        placeholder="00000"
                     />
                 </td>
             </tr>
@@ -120,7 +122,7 @@
                         type="text"
                         name="dept"
                         title="The department to which you belong."
-                        default="Dept"
+                        placeholder="Dept"
                     />
                 </td>
             </tr>
@@ -224,7 +226,8 @@
                                 type="text"
                                 name="project[{$index}]['pi_userid']"
                                 placeholder="e.g. ccaaxxx"
-                                title="The PI of this project."
+                                title="The username of the PI of this project."
+                                pattern="[A-Za-z0-9]{7}"
         	                />
                         </td>
                     </tr>
