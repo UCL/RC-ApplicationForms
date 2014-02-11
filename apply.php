@@ -5,7 +5,7 @@
 <!-- Begin form -->
 <?php
     include "includes_nodb.php";
-    $username_from_ldap = $_SERVER['PHP_AUTH_USER'];
+    $current_user = $_SERVER['PHP_AUTH_USER'];
 ?>
 
 <form action="submit.php" method="post" enctype="multipart/form-data" id="application_form">
@@ -23,7 +23,7 @@
                         name="userid" 
                         title="Your existing UCL userid." 
                         readonly 
-                        value="<?php echo "$username_from_ldap" ?>"
+                        value="<?php echo "$current_user" ?>"
                         pattern="[A-Za-z0-9]{7}"
                     />
                 </td>
