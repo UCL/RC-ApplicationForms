@@ -27,6 +27,7 @@ There is currently a question of whether consortium leaders or RCPS members will
 
 The renewal form collects any award numbers for new awards for grants for projects that are using RCPS services, as well as publications based on work performed using RCPS services.
 
+We use this to determine the quantity of funding that was allocated to projects using RCPS services, so we want the grant quantity, which we can get from the award number. This can also be obtained using the Grant Code, but there's currently a question about the virtues of obtaining Grant Codes vs Award Numbers. As each Grant Code only has 1 Award Number, it is possible to uniquely determine the grant from the Grant Code as well as the Award Number. The concern is which users are more likely to be able to find out reliably -- Award Numbers are less visible to everyday users, but Grant Codes are easily confused with Grant Ledger Codes.
 
 ### Service Request
 
