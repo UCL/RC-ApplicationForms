@@ -1,5 +1,8 @@
+
+
 CREATE TABLE Consortia
-(
+( -- should be the name of the consortium on Legion 
+  -- e.g. TYCNano for the equivalent full-name "Thomas Young Centre - Nanoscience"
   id INTEGER AUTO_INCREMENT,
   full_name TEXT NOT NULL,
   short_name VARCHAR(23) NOT NULL,
@@ -20,7 +23,7 @@ CREATE TABLE Privileged_Users
 CREATE TABLE Consortium_Permissions
 (
   id INTEGER AUTO_INCREMENT,
-  user_id INTEGER,
+  privileged_user_id INTEGER,
   approves_for_consortium INTEGER,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES Privileged_Users(id),
@@ -34,12 +37,12 @@ CREATE TABLE Event_Types
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Request_Progress
+CREATE TABLE Account_Request_Progress
 (
   id INTEGER AUTO_INCREMENT,
   request_id INTEGER,
   event_type_id INTEGER,
-  acting_user INTEGER,
+  acting_user VARCHAR(7),
   object TEXT,
   update_time TIMESTAMP,
   PRIMARY KEY (id),
@@ -60,38 +63,35 @@ CREATE TABLE User_Experience_Levels
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Account_Request
+CREATE TABLE Account_Requests
 (
   id INTEGER AUTO_INCREMENT,
   username VARCHAR(7),
   user_upi VARCHAR(15),
   supervisor_upi VARCHAR(15),
-  user_type INTEGER,
+  user_type_id INTEGER,
   user_email_address TEXT,
   user_surname TEXT,
   user_forenames TEXT,
   user_forename_preferred TEXT,
   user_contact_number TEXT,
   user_dept TEXT,
-  user_experience_dropdown INTEGER,
+  user_experience_id INTEGER,
   user_experience TEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (user_type) REFERENCES User_Types(id),
   FOREIGN KEY (user_experience_dropdown) REFERENCES User_Experience_Levels(id)
 );
 
-CREATE TABLE Project
+CREATE TABLE Projects
 (
   id INTEGER AUTO_INCREMENT,
   username VARCHAR(7),
   request_id INTEGER,
-  grant_code VARCHAR(7),
+  award_number INTEGER,
   is_funded BOOLEAN,
   pi_username VARCHAR(7),
   consortium_id INTEGER,
-  wants_cfi_because TEXT,
-  cfi_impact TEXT,
-  cfi_usage TEXT,
   is_collab_bristol BOOLEAN,
   collab_bristol_person TEXT,
   is_collab_oxford BOOLEAN,
@@ -100,10 +100,9 @@ CREATE TABLE Project
   collab_soton_person TEXT,
   is_collab_other BOOLEAN,
   collab_other_institution TEXT,
-  collab_other_institution_name TEXT,
   collab_other_institution_person TEXT,
   PRIMARY KEY (id),
-  FOREIGN KEY (request_id) REFERENCES Account_Request(id),
+  FOREIGN KEY (request_id) REFERENCES Account_Requests(id),
   FOREIGN KEY (consortium_id) REFERENCES Consortia(id)
 );
 
@@ -119,6 +118,9 @@ CREATE TABLE Service_Requests
   id INTEGER AUTO_INCREMENT,
   project_id INTEGER,
   service_id INTEGER,
+  wants_cfi_because TEXT,
+  cfi_impact TEXT,
+  cfi_usage TEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (project_id) REFERENCES Projects(id),
   FOREIGN KEY (service_id) REFERENCES Services(id)
@@ -127,15 +129,17 @@ CREATE TABLE Service_Requests
 CREATE TABLE Publications
 (
   id INTEGER AUTO_INCREMENT,
-  username VARCHAR(7),
-  doi VARCHAR(255),
-  PRIMARY KEY (id)
+  account_id INTEGER,
+  url TEXT,
+  notable BOOLEAN,
+  PRIMARY KEY (id),
+  FOREIGN KEY (account_id) REFERENCES Account_Requests(id)
 );
 
 CREATE TABLE Publication_Services
 (
   id INTEGER AUTO_INCREMENT,
-  publication_id INTEGER,
+  publications_id INTEGER,
   service_used INTEGER,
   PRIMARY KEY (id),
   FOREIGN KEY (publication_id) REFERENCES Publications(id),
