@@ -7,7 +7,7 @@ Web stuff to handle UCL RC application process.
 
 ## Design
 
-As my brainmeats are currently designing, there are 5 entry points (forms) for interacting with the database:
+As currently designing, there are 5 entry points (forms) for interacting with the database:
 
 * initial application
 * renewal
