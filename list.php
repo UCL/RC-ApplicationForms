@@ -9,7 +9,7 @@ try{
 
 
   // Determine whether we're trying to approve something, view something, or list the things
-  if ( $action == "approve") or ( $action == "view") {
+  if ( ($action == "approve") or ( $action == "view") ) {
     $can_approve = $actor->is_approvable_by($object_id, $current_user);
     if ( ($can_approve == FALSE) or 
          ($actor->get_request_owner($object_id) != $current_user) ) 
