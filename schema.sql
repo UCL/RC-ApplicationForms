@@ -1,11 +1,25 @@
-
+/*
+ TABLE Consortia
+ TABLE Privileged_Users
+ TABLE Consortium_Permissions
+ TABLE Event_Types
+ TABLE Request_Progress
+ TABLE User_Types
+ TABLE User_Experience_Levels
+ TABLE Account_Requests
+ TABLE Projects
+ TABLE Services
+ TABLE Service_Requests
+ TABLE Publications
+ TABLE Publication_Services
+ */
 
 CREATE TABLE Consortia
 ( -- should be the name of the consortium on Legion 
   -- e.g. TYCNano for the equivalent full-name "Thomas Young Centre - Nanoscience"
   id INTEGER AUTO_INCREMENT,
   full_name TEXT NOT NULL,
-  short_name VARCHAR(23) NOT NULL,
+  short_name VARCHAR(23) NOT NULL, -- Consortium name in the Legion filesystem
   PRIMARY KEY (id)
 );
 
@@ -37,9 +51,10 @@ CREATE TABLE Event_Types
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Account_Request_Progress
+CREATE TABLE Request_Progress
 (
   id INTEGER AUTO_INCREMENT,
+  request_type ENUM('Account', 'Project', 'Service'),
   request_id INTEGER,
   event_type_id INTEGER,
   acting_user VARCHAR(7),

@@ -116,7 +116,7 @@ This table holds all users who have special levels of access, e.g. consortium le
 | user_experience         | text description of previous hpc experience      |
 
 
-##### Account Request Progress
+##### Request Progress
 
 | Row | Definition |
 |:---:|:----------:|
