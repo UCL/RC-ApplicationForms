@@ -60,128 +60,15 @@ Because of this structure:
 
 ### Current Questions
 
-I'm not entirely convinced that the information about submission and approval needs to be stored in a separate table -- I could have anything that requires approval have fields recording who a thing was approved by and when.
+#### Policy
 
-----
+ * Who should approve service requests
+ * In how much detail we want to record collaborator information (e.g. multiple collaborators from other institutions)
+ * Whether to record grant information at initial sign-up (or just annually retrospectively)
 
+#### Design
 
-
-
-## Schema
-
-There are a number of tables that are just lists of things to be referred to by other tables, so I'll list them first.
-
-; Consortia
-: The short name should be the name of the consortium on Legion -- e.g. TYCNano for the equivalent full-name "Thomas Young Centre - Nanoscience"
-; Event Types
-: Is just a list of possible events that can happen to a request -- e.g. submitted, approved, etc.
-; User Types
-: This should store categories of users, designed to refer to e.g. Research Staff, Postgraduate Student, Undergraduate Student, etc.
-; User Experience Levels
-: Should contain the list of possible experience levels users can report. Expected to contain something like ('Novice user with no identified support', 'Novice user with identified support', ...)
-; Services
-: A list of services users can apply for accounts on. Expected to contain "Legion", "Iridis", "Emerald" or something similar.
-
-#### Nontrivial Tables
-
-##### Privileged Users
-
-This table holds all users who have special levels of access, e.g. consortium leaders can approve requests. It also holds whether the user is a superuser, to avoid having to have an entry of every type for those users.
-
-| Row | Definition |
-|:---:|:----------:|
-| id                                   | just an index key                                  |
-| username                             | UCL username e.g. ccaaxxx                          |
-| full_name                            | User's name                                        |
-| super_special_rainbow_pegasus_powers | Whether the user is a superuser                    |
-| receives_emails                      | Whether the username can receive/respond to emails |
-| email_address                        | Their email address                                |
-
-##### Account Requests
-
-| Row | Definition |
-|:---:|:----------:|
-| id                      | just an index key                                |
-| username                | username for account                             |
-| user_upi                | UPI for account                                  |
-| supervisor_upi          | user's supervisor                                |
-| user_type_id            | what category from user_types the user fits into |
-| user_email_address      | user's email address                             |
-| user_surname            | user's surname                                   |
-| user_forenames          | all user's forenames                             |
-| user_forename_preferred | user's preferred forename                        |
-| user_contact_number     | contact telephone number for user                |
-| user_dept               | Department user is in                            |
-| user_experience_id      | what category from user_experience_levels        |
-| user_experience         | text description of previous hpc experience      |
-
-
-##### Request Progress
-
-| Row | Definition |
-|:---:|:----------:|
-| id            | just an index key                                     |
-| request_id    | key into account requests table                       |
-| event_type_id | key into event_types, to say what kind of event it is |
-| acting_user   | the user who instigated this event                    |
-| object TEXT   | arbitrary description field                           |
-| update_time   | timestamp for the event                               |
-
-
-##### Projects
-
-| Row | Definition |
-|:---:|:----------:|
-| id                              | just an index key
-| username                        | unnecessary duplicate of username field for simplicity?               |
-| request_id                      | key into account requests table                                       |
-| award_number                    | something grant-related that Clare wanted                             |
-| is_funded                       | whether the project has funding                                       |
-| pi_username                     | the username of the PI?                                               |
-| consortium_id                   | key into the consortia table                                          |
-| is_collab_bristol               | whether the project is a collaboration with Bristol                   |
-| collab_bristol_person           | who the project is a collaboration with                               |
-| is_collab_oxford                | whether the project is a collaboration with Oxford                    |
-| collab_oxford_person            | who the project is a collaboration with                               |
-| is_collab_soton                 | whether the project is a collaboration with Soton                     |
-| collab_soton_person             | who the project is a collaboration with                               |
-| is_collab_other                 | whether the project is a collaboration with a different institution   |
-| collab_other_institution        | which institution the project is a collaboration with                 |
-| collab_other_institution_person | who the project is a collaboration with                               |
-
-
-##### Service Requests
-
-A request for a service account for a project.
-
-| Row | Definition |
-|:---:|:----------:|
-| id                | just an index key                                                     |
-| project_id        | key into projects table                                               |
-| service_id        | key into services table                                               |
-| wants_cfi_because | arbitrary text entered to explain why user wants CfI resource         |
-| cfi_impact        | arbitrary text entered to waffle about how important your research is |
-| cfi_usage         | how the person plans to use the service if they have any clue         |
-
-##### Publications
-
-Publications arising from our services, updated annually.
-
-| Row | Definition |
-|:---:|:----------:|
-| id         | just an index key                                          |
-| account_id | key into account_requests table                            |
-| url        | link to publication                                        |
-| notable    | is this research the most special research ever performed? |
-
-##### Publication Services
-
-Each row records a service a publication used, in terms of ids from the services table.
-
-| Row | Definition |
-|:---:|:----------:|
-| id              | just an index key           |
-| publications_id | key into publications table |
-| service_used    | key into services table     |
+ * How exactly to record submission and approval (or lack thereof)
+ * How to inform people about renewal requirements
 
 
