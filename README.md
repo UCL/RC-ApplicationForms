@@ -65,6 +65,7 @@ Because of this structure:
  * Who should approve service requests
  * In how much detail we want to record collaborator information (e.g. multiple collaborators from other institutions)
  * Whether to record grant information at initial sign-up (or just annually retrospectively)
+ * Which information to obtain annually
 
 #### Design
 
