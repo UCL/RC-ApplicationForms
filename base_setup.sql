@@ -20,8 +20,8 @@ REPLACE INTO Consortia (id, short_name, full_name) VALUES
     (18, "MolQuantDynam"  , "Molecular Quantum Dynamics and Electronic Structure"                       ) ,
     (19, "NeuroSci"       , "Neuroscience"                                                              ) ,
     (20, "sochistsci"     , "Social and Historical Sciences"                                            ) ,
-    (21, "PENDING"        , "Special"                                                                   ) ,
-    (22, "SysBioMed"      , "Systems Biomedicine"                                                       ) 
+    (21, "SysBioMed"      , "Systems Biomedicine"                                                       ) ,
+    (22, "PENDING"        , "(None of these fit my research area)"                                      ) 
 );
 
 REPLACE INTO Services (id, name) VALUES
@@ -40,7 +40,8 @@ INSERT INTO Event_Types (event_type) VALUES
 
 INSERT INTO User_Types (user_type) VALUES
 (
-    ('Research Staff'),
+    ('Principle Investigator'),
+    ('Non-PI Researcher'),
     ('PhD/EngD Student'),
     ('Masters Student (Postgraduate)'),
     ('Masters Student (Undergraduate)'),
@@ -65,12 +66,12 @@ REPLACE INTO Privileged_Users
     (2, "ccaabcs", "Bruno Silva", TRUE, TRUE, "b.silva@ucl.ac.uk"),
     (3, "uccaiki", "Ian Kirker", TRUE, TRUE, "i.kirker@ucl.ac.uk"),
     (4, "uccaoke", "Owain Kenway", TRUE, TRUE, "o.kenway@ucl.ac.uk"),
-    (5, "ccaacla", "Clare Gryce", FALSE, TRUE, "c.gryce@ucl.ac.uk"),
+    (5, "ccaacla", "Clare Gryce", FALSE, TRUE, "c.gryce@ucl.ac.uk")
 );
 
 INSERT INTO Consortium_Permissions (privileged_user_id, approves_for_consortium) VALUES
 (
-    (5, 21) -- Clare for PENDING
+    (5, 22) -- Clare for PENDING
 );
 
 

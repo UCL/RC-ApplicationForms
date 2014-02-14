@@ -11,6 +11,7 @@ class sql_actor {
     private $user_experience_levels;
     private $event_types;
     private $services;
+    private $cache;
 
     public function __construct( ) {
         $this->my_db_hostname = "127.0.0.1";
@@ -18,6 +19,7 @@ class sql_actor {
         $this->my_db_port     = "3306";
         $this->my_db_username = "root";
         $this->my_db_password = ""; 
+        $this->cache          = array();
     }
 
     public function connect() {
@@ -138,7 +140,6 @@ class sql_actor {
         // Get all the information about a request as a hash plus 
         //  the two extra T/F columns mentioned that show 
         //  edit/approval permissions
-
     }
 
     public function get_requests_with_actions($user) {
@@ -150,16 +151,30 @@ class sql_actor {
 
     public function get_consortia() {
         // Get an array of hashes of consortia with their ids
-        if (isset($this->consortia)) {
-            return $this->consortia;
-        } else {
-            $dbh = $this->dbc->prepare("SELECT * from Consortia");
+        return $this->get_table("Consortia");
+    }
+
+    public function get_table($table) {
+        // Returns assoc array containing ids and contents for the list tables
+        if (! isset($this->cache[$table])) {
+            $dbh = $this->dbc->prepare("SELECT * from {$table}");
             $dbh->execute();
             $results = $dbh->fetchAll(PDO::FETCH_ASSOC);
-            $this->consortia = $results;
+            $this->cache[$table] = $results;
         }
+        return $this->cache[$table];
     }
-    
+
+    public function options_from_table($table, $column_name) {
+        // Returns HTML for filling a dropdown with id vs column entry.
+        $options = "";
+        $rows = get_list_table($table);
+        foreach ($rows as $row) {
+            $options += "<option value=\"".$rows['id']."\">".$rows[$column_name]."</option>\n";
+        }
+        return $options;
+    }
+
     public function get_user_experience_levels() {
         // Get an array of hashes of user_experience_levels with their ids
         if (isset($this->user_experience_levels)) {
@@ -175,15 +190,7 @@ class sql_actor {
 
     public function get_services() {
         // Get an array of hashes of services with their ids
-        if (isset($this->services)) {
-            return $this->services;
-        } else {
-            $dbh = $this->dbc->prepare("SELECT * from Services");
-            $dbh->execute();
-            $results = $dbh->fetchAll(PDO::FETCH_ASSOC);
-            $this->services = $results;
-            return $this->services;
-        }
+        return $this->get_table('Services');
     }
 
     public function get_event_types() {
@@ -230,7 +237,13 @@ class sql_actor {
 
     }
 
-    public function add_new_project ($account, $project) {
+    public function add_new_project_request ($account, $project) {
+        // check whether user has existing acct info
+        // add if not
+        // add project entry
+        // add submitted time
+        // add associated service requests
+        // mail should be handled elsewhere
     }
 
     public function add_new_service_request ($account, $project, $service_request) {
