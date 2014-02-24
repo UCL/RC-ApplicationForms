@@ -40,7 +40,7 @@ CREATE TABLE Consortium_Permissions
   privileged_user_id INTEGER,
   approves_for_consortium INTEGER,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES Privileged_Users(id),
+  FOREIGN KEY (privileged_user_id) REFERENCES Privileged_Users(id),
   FOREIGN KEY (approves_for_consortium) REFERENCES Consortia(id)
 );
 
@@ -155,7 +155,7 @@ CREATE TABLE Publications
 CREATE TABLE Publication_Services
 (
   id INTEGER AUTO_INCREMENT,
-  publications_id INTEGER,
+  publication_id INTEGER,
   service_used INTEGER,
   PRIMARY KEY (id),
   FOREIGN KEY (publication_id) REFERENCES Publications(id),
