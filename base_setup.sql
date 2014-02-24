@@ -1,27 +1,29 @@
-REPLACE INTO Consortia (id, short_name, full_name) VALUES
+REPLACE INTO Consortia (short_name, full_name) VALUES
 (
-    ( 1, "Astro"          , "Astrophysics and Remote Sensing"                                           ) ,
-    ( 2, "BioinfCompBio"  , "Bioinformatics and Computational Biology"                                  ) ,
-    ( 3, "BuiltEnv"       , "The Bartlett - Built Environment"                                          ) ,
-    ( 4, "Climate"        , "Climate Change and Earth Observation"                                      ) ,
-    ( 5, "ENGFEAandCFD"   , "Engineering - Finite Element Analysis & Computational Fluid Dynamics"      ) ,
-    ( 6, "EngDAandMD"     , "Engineering Sciences – Optimisation, Data Analysis and Molecular Dynamics" ) ,
-    ( 7, "Economics"      , "Economics"                                                                 ) ,
-    ( 8, "Epidemiology"   , "Epidemiology"                                                              ) ,
-    ( 9, "HEP"            , "High Energy Physics"                                                       ) ,
-    (10, "ISD"            , "Information Services Division"                                             ) ,
-    (11, "NGS"            , "Next Generation Sequencing"                                                ) ,
-    (12, "TYCOrgPharmMat" , "Thomas Young Centre - Organic and Pharmaceutical Materials"                ) ,
-    (13, "TYCEarthMat"    , "Thomas Young Centre - Earth Materials"                                     ) ,
-    (14, "TYCNano"        , "Thomas Young Centre - Nanoscience and Defects"                             ) ,
-    (15, "TYCCatSurf"     , "Thomas Young Centre - Surface Science and Catalysis"                       ) ,
-    (16, "Maths"          , "Mathematical Sciences"                                                     ) ,
-    (17, "MedImaging"     , "Medical Imaging"                                                           ) ,
-    (18, "MolQuantDynam"  , "Molecular Quantum Dynamics and Electronic Structure"                       ) ,
-    (19, "NeuroSci"       , "Neuroscience"                                                              ) ,
-    (20, "sochistsci"     , "Social and Historical Sciences"                                            ) ,
-    (21, "SysBioMed"      , "Systems Biomedicine"                                                       ) ,
-    (22, "PENDING"        , "(None of these fit my research area)"                                      ) 
+    ( "Astro"             , "Astrophysics and Remote Sensing"                                           ) ,
+    ( "BioinfCompBio"     , "Bioinformatics and Computational Biology"                                  ) ,
+    ( "BuiltEnv"          , "The Bartlett - Built Environment"                                          ) ,
+    ( "Climate"           , "Climate Change and Earth Observation"                                      ) ,
+    ( "digitalhumanities" , "Digital Humanities"                                                        ) ,
+    ( "ENGFEAandCFD"      , "Engineering - Finite Element Analysis & Computational Fluid Dynamics"      ) ,
+    ( "EngDAandMD"        , "Engineering Sciences – Optimisation, Data Analysis and Molecular Dynamics" ) ,
+    ( "Economics"         , "Economics"                                                                 ) ,
+    ( "Epidemiology"      , "Epidemiology"                                                              ) ,
+    ( "gatsbyneuro"       , "The Gatsby Computational Neuroscience Unit"                                ) ,
+    ( "HEP"               , "High Energy Physics"                                                       ) ,
+    ( "ISD"               , "Information Services Division"                                             ) ,
+    ( "NGS"               , "Next Generation Sequencing"                                                ) ,
+    ( "TYCOrgPharmMat"    , "Thomas Young Centre - Organic and Pharmaceutical Materials"                ) ,
+    ( "TYCEarthMat"       , "Thomas Young Centre - Earth Materials"                                     ) ,
+    ( "TYCNano"           , "Thomas Young Centre - Nanoscience and Defects"                             ) ,
+    ( "TYCCatSurf"        , "Thomas Young Centre - Surface Science and Catalysis"                       ) ,
+    ( "Maths"             , "Mathematical Sciences"                                                     ) ,
+    ( "MedImaging"        , "Medical Imaging"                                                           ) ,
+    ( "MolQuantDynam"     , "Molecular Quantum Dynamics and Electronic Structure"                       ) ,
+    ( "NeuroSci"          , "Neuroscience"                                                              ) ,
+    ( "sochistsci"        , "Social and Historical Sciences"                                            ) ,
+    ( "SysBioMed"         , "Systems Biomedicine"                                                       ) ,
+    ( "PENDING"           , "[None of these fit my research area]"                                      )
 );
 
 REPLACE INTO Services (id, name) VALUES
@@ -71,7 +73,7 @@ REPLACE INTO Privileged_Users
 
 INSERT INTO Consortium_Permissions (privileged_user_id, approves_for_consortium) VALUES
 (
-    (5, 22) -- Clare for PENDING
+    --(5, 22) -- Clare for PENDING
 );
 
 
