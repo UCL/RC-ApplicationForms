@@ -7,7 +7,6 @@ class SQLActor {
     private $my_db_username;
     private $my_db_password;
     private $dbc;
-    private $event_types;
     private $cache;
 
     public function __construct( ) {
