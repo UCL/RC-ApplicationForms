@@ -127,10 +127,36 @@
                     />
                 </td>
             </tr>
+            <tr>
+                <td>
+                    Supervisor (if applicable):
+                </td>
+                <td>
+                    <input
+                        type="text"
+                        name="supervisor"
+                        title="Your supervisor."
+                        placeholder="Dr Per Sonn"
+                    /> 
+                </td>
+                <td>
+                    Supervisor's email address:
+                </td>
+                <td>
+                    <input
+                        type="email"
+                        name="email"
+                        title="Your supervisor's UCL e-mail address." 
+                        placeholder="person@ucl.ac.uk"
+                        pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]"
+                    />
+                </td>
+            </tr>
+    
         </table>
-        <p class="note">
+        <!-- <p class="note">
             Most of this information should be automatically filled when you log in. If any of it is incorrect, you should contact the ISD Service Desk.
-        </p>
+        </p> --> <!--- Hahahahaha no -->
     </div>
     <div class="formSection">
         <h4 class="sectionTitle">
@@ -165,187 +191,148 @@
             Research Project Details
         </h4>
         <p class="note">
-            In this section we require information about your funding sources. This information is not used to charge for the service, but to allow us to track what types of research users are being funded to carry out.
+            In this section we require information about the work you are requesting resources for. When you renew your account, you will be required to provide funding information (including award numbers and/or grant codes) associated with this work, not to charge you, but to allow us to justify the continued existence and maintenance of the services.
         </p>
-        <p class="p">
-            How many projects are you planning to use Research Computing Platforms for over the next year?
-        </p>
-        <select name="number_of_projects" title="How many projects are you planning to use Research Computing Platforms for over the next year?">
-            <option value="0">0</option>    
-            <option value="1">1</option>    
-            <option value="2">2</option>    
-            <option value="3">3</option>    
-            <option value="4">4</option>    
-            <option value="5">5</option>    
-            <option value="6">6</option>    
-            <option value="7">7</option>    
-            <option value="8">8</option>    
-            <option value="9">9</option>    
-            <option value="10">10</option>    
-        </select>
 
-        <div id="projects">
-            <!-- We *could* dynamically generate these, but putting them in explicitly will make it much easier to save and reload data later, I think. -->
-            <?php
-                function make_project_section($index) {
-                    $consortia_options = options_from_consortia();
-                    echo <<<HEREDOC
-            <div id="project_{$index}">
-                <h4> Project {$index} </h4>
-                <input type="checkbox" style="display: none" name="project[{$index}]['is_used']" checked/> <!-- If we start modifying the visibility of these project sections, this is to tell the submission handler whether they're being used. -->
-                <table>
-                    <tr>
-                        <td>
-                            Is this project grant-funded?
-                        </td>
-                        <td>
-                            <select name="project[{$index}]['is_funded']">
-                                <option value="1"> Yes </option>
-                                <option value="0"> No </option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Research Project Account Code:
-                        </td>
-                        <td>
-                            <input 
-                                type="text"
-                                name="project[{$index}]['project_account_code']"
-                                placeholder="e.g. XXX0 or XX00"
-                                title="Project Account Code."
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Project PI Username:
-                        </td>
-                        <td>
-                            <input
-                                type="text"
-                                name="project[{$index}]['pi_userid']"
-                                placeholder="e.g. ccaaxxx"
-                                title="The username of the PI of this project."
-                                pattern="[A-Za-z0-9]{7}"
-        	                />
-                        </td>
-                    </tr>
-                </table>
-                <p class="p">
-                    Consortium:
-                    <select name="project[{$index}]['consortium']">
-                        $consortia_options
-                    </select>
-                </p>
-                <h5>Services Required</h5>
-                <p class="p">
-                    There are three services available. The Standard UCL Research Computing Services include Legion, Unity, Condor, and magical bean stalks. You may also apply for access to the CfI Iridis and Emerald services, which are facilities shared with a number of other universities.
-                </p>
-                <ul style="list-style-type: none;">
-                    <li><input type="checkbox" name="project[${index}]['requires_rcps']" />UCL Research Computing Services</li>
-                    <li><input type="checkbox" name="project[${index}]['requires_iridis']" />Iridis</li>
-                    <li><input type="checkbox" name="project[${index}]['requires_emerald']" />Emerald</li>
-                </ul>
+        <?php
+            $consortia_options = options_from_consortia();
+        ?>
+        <div id="project_{$index}">
+            <h4>Your Project</h4>
+            <table>
+                <tr>
+                    <td>
+                        Is this project grant-funded?
+                    </td>
+                    <td>
+                        <select name="project['is_funded']">
+                            <option value="1"> Yes </option>
+                            <option value="0"> No </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project PI Username:
+                    </td>
+                    <td>
+                        <input
+                            type="text"
+                            name="project['pi_userid']"
+                            placeholder="e.g. ccaaxxx"
+                            title="The username of the PI of this project."
+                            pattern="[A-Za-z0-9]{7}"
+                        />
+                    </td>
+                </tr>
+            </table>
+            <p class="p">
+                Consortium:
+                <select name="project['consortium']">
+                    <?php echo $consortia_options;?>
+                </select>
+            </p>
+            <h5>Types of Work</h5>
+            <p class="p">
+                There are several Research Computing services available at UCL, and the following will help us map your work requirements onto which services you need to have access to. If your work requirements change, please contact rc-support@ucl.ac.uk and we can ensure you have access to the services you need. If you don't know what you need and don't understand the terms used below, please ensure you give us as much information about what applications you're going to need, and we'll try to determine the most effective services for you to use.
+            </p>
+            <p class="p">
+                Types of work needed:
+            </p>
+            <ul style="list-style-type: none;">
+                <li><input type="checkbox" name="project['work_type']['basic']" /> Basic single core jobs</li>
+                <li><input type="checkbox" name="project['work_type']['array']" />Large (&gt;1000) numbers of single core jobs</li>
+                <li><input type="checkbox" name="project['work_type']['multithread']" />Multithreaded jobs</li>
+                <li><input type="checkbox" name="project['work_type']['all_the_ram']" />Extremely large quantities of RAM (&gt;64GB)</li>
+                <li><input type="checkbox" name="project['work_type']['small_mpi']" />Small MPI jobs (8-36 cores)</li>
+                <li><input type="checkbox" name="project['work_type']['mid_mpi']" />Medium-sized MPI jobs (36-256 cores)</li>
+                <li><input type="checkbox" name="project['work_type']['large_mpi']" />Large-sized MPI jobs (&gt;256 cores)</li>
+                <li><input type="checkbox" name="project['work_type']['small_gpu']" />At least one GPGPU</li>
+                <li><input type="checkbox" name="project['work_type']['large_gpu']" />At least ten GPGPUs</li>
+            </ul>
+            
+            <p class="p">
+                If you have technical requirements that do not fit any of these categories, please describe them here.
+            </p>
+            <textarea
+                    name="project['weird_tech_description']"
+                    rows=8
+                    cols=70
+                    title="If you have technical requirements that do not fit any of these categories, please describe them here."
+                ></textarea>
+            
+            <p class="p">
+                Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area. (This will be sent to the leader of the Consortium you have chosen for approval.)
+            </p>
+            <textarea
+                    name="project['work_description']"
+                    rows=8
+                    cols=70
+                    title="Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area."
+                ></textarea>
 
-                <p class="p">
-                    Please provide details of the computational work that you wish to use the CfI facilities for, in terms of job types, and approximate length and size.
-                </p>
+            <p class="p">
+                Please provide a list of any software you know you'll need, with approximate versions where known.
+            </p>
+            <textarea
+                    name="project['applications_description']"
+                    rows=8
+                    cols=70
+                    title="Please provide a list of any software you know you'll need, with approximate versions where known."
+                ></textarea>
 
-                <textarea 
-                    name="project[${index}]['cfi_details']" 
-                    rows=8 
-                    cols=75 
-                    title="Please provide details of the computational work that you wish to use the CfI facilities for; job types, length and size."
-                >
-                </textarea>
+            <h5>Collaboration</h5>
+            <p class="note">
+                This information is used to justify funding for regional resources across our partner institutions.
+            </p>
+            <table>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="project['is_collab_bristol']">
+                            Bristol
+                        </input>
+                    </td>
+                    <td>
+                        PI/lead CoI:
+                        <input type="text" name="project['collab_bristol_name']" placeholder="Name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="project['is_collab_oxford']" />
+                            Oxford
+                        </input>
+                    </td>
+                    <td>
+                        PI/lead CoI:
+                        <input type="text" name="project['collab_oxford_name']" placeholder="Name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="project['is_collab_soton']" />
+                            Southampton
+                        </input>
+                    </td>
+                    <td>
+                        PI/lead CoI:
+                        <input type="text" name="project['collab_soton_name']" placeholder="Name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="project['is_collab_other']" />
+                            Other: <input type="text" name="project['collab_other_institute']" placeholder="University" />
+                        </input>
+                    </td>
+                    <td>
+                        PI/lead CoI:
+                        <input type="text" name="project['collab_other_name']" placeholder="Name"/>
+                    </td>
+                </tr>
+            </table>
 
-                <p class="p">
-                    Please explain why it is more appropriate for this work to be performed on the requested CfI facilities, rather than on the Legion service or the national HECTOR or ARCHER services.
-                </p>
-
-                <textarea 
-                    name="project[${index}]['cfi_justify']" 
-                    rows=8 
-                    cols=75 
-                    title="Please explain why it is more appropriate for this work to be performed on the requested CfI facilities, rather than on the Legion service or the national HECTOR or ARCHER services."
-                >
-                </textarea>
-
-                <p class="p">
-                    With references to your responses above, please explain how this project will make use of the CfI facilities to deliver world-class research outcomes that would not otherwise be possible.
-                </p>
-
-                <textarea 
-                    name="project[${index}]['cfi_lie_through_your_teeth']" 
-                    rows=8 
-                    cols=75 
-                    title="With references to your responses above, please explain how this project will make use of the CfI facilities to deliver world-class research outcomes that would not otherwise be possible."
-                >
-                </textarea>
-
-                <h5>Collaboration</h5>
-                <p class="note">
-                    This information is used to justify CfI funding across the partner institutions.
-                </p>
-                <table>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="project[{$index}]['is_collab_bristol']">
-                                Bristol
-                            </input>
-                        </td>
-                        <td>
-                            PI/lead CoI:
-                            <input type="text" name="project[{$index}]['collab_bristol_name']" placeholder="Name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="project[{$index}]['is_collab_oxford']" />
-                                Oxford
-                            </input>
-                        </td>
-                        <td>
-                            PI/lead CoI:
-                            <input type="text" name="project[{$index}]['collab_oxford_name']" placeholder="Name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="project[{$index}]['is_collab_soton']" />
-                                Southampton
-                            </input>
-                        </td>
-                        <td>
-                            PI/lead CoI:
-                            <input type="text" name="project[{$index}]['collab_soton_name']" placeholder="Name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="project[{$index}]['is_collab_other']" />
-                                Other: <input type="text" name="project[{$index}]['collab_other_institute']" placeholder="University" />
-                            </input>
-                        </td>
-                        <td>
-                            PI/lead CoI:
-                            <input type="text" name="project[{$index}]['collab_other_name']" placeholder="Name"/>
-                        </td>
-                    </tr>
-                </table>
-
-            </div>
-HEREDOC;
-                };
-            make_project_section(0);
-            ?>
-        </div>
     </div>
-    <p class="p">
-        If you need additional resources beyond those normally available, you may make a request through the <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/services/legion-upgrade/resource_allocation/#requests">CRAG</a>.
-    </p>
     <p class="p">
         <input type="checkbox" name="tandc" value="tandc">I have read and accept the <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>.</input>
     </p>
