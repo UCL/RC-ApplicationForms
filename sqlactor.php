@@ -7,10 +7,7 @@ class SQLActor {
     private $my_db_username;
     private $my_db_password;
     private $dbc;
-    private $consortia;
-    private $user_experience_levels;
     private $event_types;
-    private $services;
     private $cache;
 
     public function __construct( ) {
@@ -170,22 +167,14 @@ class SQLActor {
         $options = "";
         $rows = get_list_table($table);
         foreach ($rows as $row) {
-            $options += "<option value=\"".$rows['id']."\">".$rows[$column_name]."</option>\n";
+            $options .= "<option value=\"".$row['id']."\">".$row[$column_name]."</option>\n";
         }
         return $options;
     }
 
     public function get_user_experience_levels() {
         // Get an array of hashes of user_experience_levels with their ids
-        if (isset($this->user_experience_levels)) {
-            return $this->user_experience_levels;
-        } else {
-            $dbh = $this->dbc->prepare("SELECT * from User_Experience_Levels");
-            $dbh->execute();
-            $results = $dbh->fetchAll(PDO::FETCH_ASSOC);
-            $this->user_experience_levels = $results;
-            return $this->user_experience_levels;
-        }
+        return $this->get_table("Experience_Levels");
     }
 
     public function get_services() {
@@ -195,21 +184,14 @@ class SQLActor {
 
     public function get_event_types() {
         // Get an array of hashes of services with their ids
-        if (isset($this->event_types)) {
-            return $this->event_types;
-        } else {
-            $dbh = $this->dbc->prepare("SELECT * from Event_Types");
-            $dbh->execute();
-            $results = $dbh->fetchAll(PDO::FETCH_ASSOC);
-            $this->event_types = $results;
-            return $this->event_types;
-        }
+        return $this->get_table("Event_Types");
     }
 
     public function get_event_id_by_name($event_name) {
+        // TODO: Replace with an SQL query
         // Returns the id for a given event name
         $event_types = $this->get_event_types();
-        foreach ($event_type as $event_types) {
+        foreach ($event_types as $event_type) {
             if ($event_type['event_type'] == $event_name) {
                 return $event_type['id'];
             }
@@ -218,10 +200,11 @@ class SQLActor {
     }
 
     public function get_event_name_by_id($event_id) {
+        //TODO: Replace with an SQL query
         // Returns the id for a given event name
         $event_types = $this->get_event_types();
-        foreach ($event_type as $event_types) {
-            if ($event_type['id'] == $event_name) {
+        foreach ($event_types as $event_type) {
+            if ($event_type['id'] == $event_id) {
                 return $event_type['event_type'];
             }
         }
@@ -304,8 +287,8 @@ class SQLActor {
             "({$named_params})"
         );
 
-        foreach ($value in $values_array) {
-            $dbh->bindValue(":{$value}", $request[$value]);
+        foreach ($values_array as $value) {
+            $dbh->bindParam(":{$value}", $request[$value]);
         };
         
         $dbh.execute();
