@@ -14,6 +14,21 @@
  TABLE Publication_Services
  */
 
+
+# Reset the world
+DROP TABLE Consortia;
+DROP TABLE Privileged_Users;
+DROP TABLE Consortium_Permissions;
+DROP TABLE Event_Types;
+DROP TABLE Request_Progress;
+DROP TABLE User_Types;
+DROP TABLE Experience_Levels;
+DROP TABLE Account_Requests;
+DROP TABLE Projects;
+DROP TABLE Services;
+DROP TABLE Publications;
+DROP TABLE Publication_Services;
+
 CREATE TABLE Consortia
 ( -- should be the name of the consortium on Legion 
   -- e.g. TYCNano for the equivalent full-name "Thomas Young Centre - Nanoscience"
@@ -127,19 +142,6 @@ CREATE TABLE Services
   id INTEGER AUTO_INCREMENT,
   name varchar(255),
   PRIMARY KEY (id)
-);
-
-CREATE TABLE Service_Requests
-(
-  id INTEGER AUTO_INCREMENT,
-  project_id INTEGER,
-  service_id INTEGER,
-  wants_cfi_because TEXT,
-  cfi_impact TEXT,
-  cfi_usage TEXT,
-  PRIMARY KEY (id),
-  FOREIGN KEY (project_id) REFERENCES Projects(id),
-  FOREIGN KEY (service_id) REFERENCES Services(id)
 );
 
 CREATE TABLE Publications
