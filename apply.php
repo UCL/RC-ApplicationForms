@@ -12,7 +12,7 @@
     <div class="section">
         <h3 class="sectionTitle">
             User Information
-        </h4>
+        </h3>
         <input type="text" value="Apply" name="submit_type" style="display:none" readonly/>
         <table> <!-- Shouldn't really use tables for layout, but I'm just copy/pasting at the moment. -->
             <tr>
@@ -181,7 +181,7 @@
     <div class="section">
         <h3 class="sectionTitle">
             Research Project Details
-        </h4>
+        </h3>
         <p class="note">
             In this section we require information about the work you are requesting resources for. When you renew your account, you will be required to provide funding information (including award numbers and/or grant codes) associated with this work, not to charge you, but to allow us to justify the continued existence and maintenance of the services.
         </p>
