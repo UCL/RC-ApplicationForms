@@ -16,10 +16,11 @@
         <input type="text" value="Apply" name="submit_type" style="display:none" readonly/>
         <table> <!-- Shouldn't really use tables for layout, but I'm just copy/pasting at the moment. -->
             <tr>
-                <td> UCL userid: </td>
+                <td> <label for="username">UCL userid:</label></td> <!-- label mostly to make PHPStorm not whine at me -->
                 <td>
                     <input 
-                        type="text" 
+                        type="text"
+                        id="username"
                         name="username" 
                         title="Your existing UCL userid." 
                         readonly 
@@ -41,11 +42,11 @@
             </tr>
             <tr>
                 <td>
-                    User Type:
+                    <label for="user_type_id">User Type:</label>
                 </td>
                 <td>
-                    <select name="user_type_id">
-                        <?php echo $user_type_options; ?>
+                    <select id="user_type_id" name="user_type_id">
+                        <?php echo $actor->options_from_table("User_Types", "user_type");?>
                     </select>
                 </td>
                 <td>
@@ -171,10 +172,10 @@
             Support Expectations
         </h5>
         <p class="p">
-            Which of these options best describes your experience and support level for this service?
+            <label for="experience_level_id">Which of these options best describes your experience and support level for this service?</label>
         </p>
-        <select name="experience_level_id" title="Which of these options best describes your experience and support level for this service?">
-            <?php echo $experience_level_options; ?>
+        <select id="experience_level_id" name="experience_level_id" title="Which of these options best describes your experience and support level for this service?">
+            <?php echo $actor->options_from_table("Experience_Levels", "level_text");?>
         </select>
     </div>
     
@@ -186,17 +187,14 @@
             In this section we require information about the work you are requesting resources for. When you renew your account, you will be required to provide funding information (including award numbers and/or grant codes) associated with this work, not to charge you, but to allow us to justify the continued existence and maintenance of the services.
         </p>
 
-        <?php
-            $consortia_options = options_from_consortia();
-        ?>
         <div id="project_{$index}">
             <table>
                 <tr>
                     <td>
-                        Is this project grant-funded? <!-- this should hide/not hide depending on person type -->
+                        <label for="is_funded">Is this project grant-funded?</label> <!-- this should hide/not hide depending on person type -->
                     </td>
                     <td>
-                        <select name="project['is_funded']">
+                        <select id="is_funded" name="project['is_funded']"> <!-- id is for hiding and label -->
                             <option value="1"> Yes </option>
                             <option value="0"> No </option>
                         </select>
@@ -219,10 +217,12 @@
                 </tr>
             </table>
             <p class="p">
-                Consortium:
-                <select name="project['consortium_id']">
-                    <?php echo $consortia_options;?>
-                </select>
+                <label>
+                    Consortium:
+                    <select name="project['consortium_id']">
+                        <?php echo $actor->options_from_table("Consortia", "full_name");?>
+                    </select>
+                </label>
             </p>
             <h5>Types of Work</h5>
             <p class="p">
@@ -232,15 +232,15 @@
                 Types of resource needed:
             </p>
             <ul style="list-style-type: none;">
-                <li><input type="checkbox" name="project['work_type']['basic']" />Individual single core jobs</li>
-                <li><input type="checkbox" name="project['work_type']['array']" />Large numbers (&gt;1000) of single core jobs</li>
-                <li><input type="checkbox" name="project['work_type']['multithread']" />Multithreaded jobs</li>
-                <li><input type="checkbox" name="project['work_type']['all_the_ram']" />Extremely large quantities of RAM (&gt;64GB)</li>
-                <li><input type="checkbox" name="project['work_type']['small_mpi']" />Small MPI jobs (8-36 cores)</li>
-                <li><input type="checkbox" name="project['work_type']['mid_mpi']" />Medium-sized MPI jobs (36-256 cores)</li>
-                <li><input type="checkbox" name="project['work_type']['large_mpi']" />Large-sized MPI jobs (&gt;256 cores)</li>
-                <li><input type="checkbox" name="project['work_type']['small_gpu']" />At least one GPGPU</li>
-                <li><input type="checkbox" name="project['work_type']['large_gpu']" />At least ten GPGPUs</li>
+                <li><label><input type="checkbox" name="project['work_type']['basic']" />Individual single core jobs</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['array']" />Large numbers (&gt;1000) of single core jobs</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['multithread']" />Multithreaded jobs</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['all_the_ram']" />Extremely large quantities of RAM (&gt;64GB)</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['small_mpi']" />Small MPI jobs (8-36 cores)</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['mid_mpi']" />Medium-sized MPI jobs (36-256 cores)</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['large_mpi']" />Large-sized MPI jobs (&gt;256 cores)</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['small_gpu']" />At least one GPGPU</label></li>
+                <li><label><input type="checkbox" name="project['work_type']['large_gpu']" />At least ten GPGPUs</label></li>
             </ul>
             
             <p class="p">
@@ -283,9 +283,9 @@
             <table>
                 <tr>
                     <td>
-                        <input type="checkbox" name="project['is_collab_bristol']">
+                        <label><input type="checkbox" name="project['is_collab_bristol']">
                             Bristol
-                        </input>
+                        </label>
                     </td>
                     <td>
                         PI/lead CoI:
@@ -294,9 +294,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" name="project['is_collab_oxford']" />
+                        <label><input type="checkbox" name="project['is_collab_oxford']" />
                             Oxford
-                        </input>
+                        </label>
                     </td>
                     <td>
                         PI/lead CoI:
@@ -305,9 +305,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" name="project['is_collab_soton']" />
+                        <label><input type="checkbox" name="project['is_collab_soton']" />
                             Southampton
-                        </input>
+                        </label>
                     </td>
                     <td>
                         PI/lead CoI:
@@ -316,9 +316,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" name="project['is_collab_other']" />
-                            Other: <input type="text" name="project['collab_other_institute']" placeholder="University" />
-                        </input>
+                        <label><input type="checkbox" name="project['is_collab_other']" />
+                            Other:</label> <input type="text" name="project['collab_other_institute']" placeholder="University" />
                     </td>
                     <td>
                         PI/lead CoI:
@@ -330,7 +329,7 @@
     </div>
     <p class="p">
         <!-- Has an id to let us use $("#tandc").checked -->
-        <input type="checkbox" id="tandc" name="tandc" value="tandc">Please tick this to acknowledge that you have read and accepted the <a target="_new" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>. <em>(This link should open in a new tab/window.)</em></input>
+        <label><input type="checkbox" id="tandc" name="tandc" value="tandc" />Please tick this to acknowledge that you have read and accepted the <a target="_new" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>. <em>(This link should open in a new tab/window.)</em></label>
     </p>
 
     <input type="submit" value="Submit" title="Submit application request." />
