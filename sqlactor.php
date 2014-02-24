@@ -1,6 +1,6 @@
 <?php 
 
-class sql_actor {
+class SQLActor {
     private $my_db_hostname;
     private $my_db_name    ;
     private $my_db_port    ;
@@ -150,7 +150,7 @@ class sql_actor {
     }
 
     public function get_consortia() {
-        // Get an array of hashes of consortia with their ids
+        // Get an array of assoc arrays of consortia + their ids
         return $this->get_table("Consortia");
     }
 
@@ -233,10 +233,6 @@ class sql_actor {
         //  database or in PHP, but if they're in the database this will retrieve them
     }
 
-    public function add_new_account ($account) {
-
-    }
-
     public function add_new_project_request ($account, $project) {
         // check whether user has existing acct info
         // add if not
@@ -246,8 +242,87 @@ class sql_actor {
         // mail should be handled elsewhere
     }
 
-    public function add_new_service_request ($account, $project, $service_request) {
+    public function does_user_have_existing_account_request($username) {
+        $dbh = $this->dbc->prepare("SELECT COUNT(id) from Account_Requests WHERE username = ?");
+        $dbh->bindValue(1,$username);
+        $dbh->execute();
+        $results = $dbh->fetchColumn(0);
+        if ($results != 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
+
+    public function get_consortium_id($consortium) {
+        $dbh = $this->dbc->prepare("SELECT id from Consortia WHERE full_name = ?");
+        $dbh->bindValue(1,$consortium);
+        $dbh->execute();
+        $results = $dbh->fetchColumn(0);
+        return $results;
+    }
+
+    public function get_consortium_leaders_to_mail($consortium_id) {   
+        $dbh = $this->dbc->prepare(
+            "SELECT pu.email_address FROM ".
+            "Privileged_Users pu, Consortium_Permissions cp WHERE".
+            "cp.privileged_user_id = pu.id AND ".
+            "cp.approves_for_consortium = ? AND".
+            "pu.receives_emails = TRUE"
+        );
+        $dbh.bindValue(1,$consortium_id, PDO::PARAM_INT);
+        $dbh->execute();
+        $results = $dbh->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $results;
+    }
+
+    public function create_new_account_request($request) {
+        // Create user account section
+        $values_array = array(
+            'username', 
+            'user_upi',
+            'user_type_id',
+            'user_email',
+            'user_contact_number',
+            'user_surname',
+            'user_forenames',
+            'user_forename_preferred',
+            'user_dept',
+            'supervisor_name',
+            'supervisor_email',
+            'experience_level_id',
+            'experience_text'
+        );
+        $values       = implode($values_array, ",");
+        $named_params = ":".implode($values,",:");
+        
+
+        $dbh = $this->dbc->prepare(
+            "INSERT INTO Account_Requests ".
+            "({$values})" .
+            " VALUES " .
+            "({$named_params})"
+        );
+
+        foreach ($value in $values_array) {
+            $dbh->bindValue(":{$value}", $request[$value]);
+        };
+        
+        $dbh.execute();
+
+        // Next, project section
+        // This one's a little more complicated because there are t/f fields that don't get submitted if not checked
+        // Current plan is to create a default project with all the t/f fields set to F and then overwrite it with the actual values, leaving only the unset Fs showing through
+        $default_project = array(
+
+        );
+
+        
+        // Finally, mark as submitted in the events table
+
+
+    }
+
 
 }
 

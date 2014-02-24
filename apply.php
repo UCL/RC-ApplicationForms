@@ -20,7 +20,7 @@
                 <td>
                     <input 
                         type="text" 
-                        name="userid" 
+                        name="username" 
                         title="Your existing UCL userid." 
                         readonly 
                         value="<?php echo "$current_user" ?>"
@@ -33,7 +33,7 @@
                 <td> <!-- See if you can gen this. -->
                     <input 
                         type="text"
-                        name="upi"
+                        name="user_upi"
                         title="Your UCL UPI. (It's on your swipecard.)"
                         placeholder="UPI"
                     />
@@ -44,12 +44,8 @@
                     User Type:
                 </td>
                 <td>
-                    <select name="usertype">
-                        <option value="research">Research Staff </option>
-                        <option value="postgrad">Postgraduate Student </option>
-                        <option value="undergrad">Undergraduate Student </option>
-                        <option value="support">Support Staff </option>
-                        <option value="other">Other </option>
+                    <select name="user_type_id">
+                        <?php echo $user_type_options; ?>
                     </select>
                 </td>
                 <td>
@@ -58,7 +54,7 @@
                 <td>
                     <input
                         type="text"
-                        name="surname"
+                        name="user_surname"
                         title="Your surname (or family name)."
                         placeholder="Surname"
                     />
@@ -71,7 +67,7 @@
                 <td>
                     <input
                         type="text"
-                        name="forenames"
+                        name="user_forenames"
                         title="Your forenames (or given names)."
                         placeholder="Forenames"
                     />
@@ -82,7 +78,7 @@
                 <td>
                     <input
                         type="text"
-                        name="name_preferred"
+                        name="user_forename_preferred"
                         title="Your preferred name."
                         placeholder="Preferred name"
                     />
@@ -95,7 +91,7 @@
                 <td>
                     <input
                         type="email"
-                        name="email"
+                        name="user_email"
                         title="Your UCL e-mail address. You are unable to use non-UCL e-mail address for Legion accounts."
                         placeholder="person@ucl.ac.uk"
                         pattern="[-0-9a-zA-Z.+_]+@(?:[a-z0-9.-]+.|)ucl\.ac\.uk"
@@ -107,7 +103,7 @@
                 <td>
                     <input
                         type="tel"
-                        name="phone"
+                        name="user_contact_number"
                         title="A telephone number (or UCL internal extension) we can contact you at."
                         placeholder="00000"
                     />
@@ -120,7 +116,7 @@
                 <td>
                     <input
                         type="text"
-                        name="dept"
+                        name="user_dept"
                         title="The department to which you belong."
                         placeholder="Dept"
                     />
@@ -133,7 +129,7 @@
                 <td>
                     <input
                         type="text"
-                        name="supervisor"
+                        name="supervisor_name"
                         title="Your supervisor."
                         placeholder="Dr Per Sonn"
                     /> 
@@ -144,7 +140,7 @@
                 <td>
                     <input
                         type="email"
-                        name="email"
+                        name="supervisor_email"
                         title="Your supervisor's UCL e-mail address." 
                         placeholder="person@ucl.ac.uk"
                         pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+"
@@ -165,7 +161,7 @@
             Please provide below a summary of your previous HPC/UNIX/Linux experience.
         </p>
         <textarea 
-            name="hpc_experience" 
+            name="experience_text" 
             rows=8 
             cols=75 
             title="Please provide a summary of your previous HPC/UNIX/Linux experience here." 
@@ -177,11 +173,8 @@
         <p class="p">
             Which of these options best describes your experience and support level for this service?
         </p>
-        <select name="support_level" title="Which of these options best describes your experience and support level for this service?">
-            <option value="Novice with No Local Support">I am a novice user with no local support</option>
-            <option value="Novice with Local Support">I am a novice user with local support</option>
-            <option value="Linux experience but no HPC">I am experienced with UNIX/Linux but not HPC</option>
-            <option value="Linux and HPC experience">I am experience with UNIX/Linux and HPC</option>
+        <select name="experience_level_id" title="Which of these options best describes your experience and support level for this service?">
+            <?php echo $experience_level_options; ?>
         </select>
     </div>
     
@@ -217,7 +210,7 @@
                     <td>
                         <input
                             type="email"
-                            name="email"
+                            name="pi_email"
                             title="Project PI's UCL e-mail address." 
                             placeholder="person@ucl.ac.uk"
                             pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+"
@@ -227,7 +220,7 @@
             </table>
             <p class="p">
                 Consortium:
-                <select name="project['consortium']">
+                <select name="project['consortium_id']">
                     <?php echo $consortia_options;?>
                 </select>
             </p>
@@ -236,7 +229,7 @@
                 There are several Research Computing services available at UCL, and the following will help us map your work requirements onto which services you need to have access to. If your work requirements change, please contact rc-support@ucl.ac.uk and we can ensure you have access to the services you need. If you don't know what you need and don't understand the terms used below, please ensure you give us as much information about what applications you're going to need, and we'll try to determine the most effective services for you to use.
             </p>
             <p class="p">
-                Types of work needed:
+                Types of resource needed:
             </p>
             <ul style="list-style-type: none;">
                 <li><input type="checkbox" name="project['work_type']['basic']" />Individual single core jobs</li>
@@ -258,6 +251,7 @@
                     rows=3
                     cols=70
                     title="If you have technical requirements that do not fit any of these categories, please describe them here."
+                    placeholder="E.g. I need to run 5-year-long simulations on 60 Raspberry Pis with Infiniband shields."
                 ></textarea>
             
             <p class="p">
@@ -268,6 +262,7 @@
                     rows=8
                     cols=70
                     title="Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area."
+                    placeholder="E.g. I will be using technique X to predict Y about Z, in the field of A. This involves doing B and C, with a potential of D."
                 ></textarea>
 
             <p class="p">
@@ -278,6 +273,7 @@
                     rows=8
                     cols=70
                     title="Please provide a list of any software you know you'll need, with approximate versions where known."
+                    placeholder="Gaussian 04.f, VASP 5.2.19, Braniac 5.0"
                 ></textarea>
 
             <h5>Collaboration</h5>
@@ -333,7 +329,8 @@
 
     </div>
     <p class="p">
-        <input type="checkbox" name="tandc" value="tandc">Please tick this to acknowledge that you have read and accepted the <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>.</input>
+        <!-- Has an id to let us use $("#tandc").checked -->
+        <input type="checkbox" id="tandc" name="tandc" value="tandc">Please tick this to acknowledge that you have read and accepted the <a target="_new" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>. <em>(This link should open in a new tab/window.)</em></input>
     </p>
 
     <input type="submit" value="Submit" title="Submit application request." />

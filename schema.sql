@@ -71,7 +71,7 @@ CREATE TABLE User_Types
   PRIMARY KEY (id)
 );
 
-CREATE TABLE User_Experience_Levels
+CREATE TABLE Experience_Levels
 (
   id INTEGER AUTO_INCREMENT,
   level_text text,
@@ -83,19 +83,20 @@ CREATE TABLE Account_Requests
   id INTEGER AUTO_INCREMENT,
   username VARCHAR(7),
   user_upi VARCHAR(15),
-  supervisor_upi VARCHAR(15),
   user_type_id INTEGER,
-  user_email_address TEXT,
+  user_email TEXT,
+  user_contact_number TEXT,
   user_surname TEXT,
   user_forenames TEXT,
   user_forename_preferred TEXT,
-  user_contact_number TEXT,
   user_dept TEXT,
-  user_experience_id INTEGER,
-  user_experience TEXT,
+  supervisor_name TEXT,
+  supervisor_email TEXT,
+  experience_level_id INTEGER,
+  experience_text TEXT,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_type) REFERENCES User_Types(id),
-  FOREIGN KEY (user_experience_dropdown) REFERENCES User_Experience_Levels(id)
+  FOREIGN KEY (user_type_id) REFERENCES User_Types(id),
+  FOREIGN KEY (experience_level_id) REFERENCES Experience_Levels(id)
 );
 
 CREATE TABLE Projects
