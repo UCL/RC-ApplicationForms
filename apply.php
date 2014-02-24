@@ -4,8 +4,8 @@
 
 <!-- Begin form -->
 <?php
-    include "includes_nodb.php";
     $current_user = $_SERVER['PHP_AUTH_USER'];
+    $actor = new SQLActor();
 ?>
 
 <form action="submit.php" method="post" enctype="multipart/form-data" id="application_form">
