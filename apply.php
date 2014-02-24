@@ -10,7 +10,7 @@
 
 <form action="submit.php" method="post" enctype="multipart/form-data" id="application_form">
     <div class="section">
-        <h4 class="sectionTitle">
+        <h3 class="sectionTitle">
             User Information
         </h4>
         <input type="text" value="Apply" name="submit_type" style="display:none" readonly/>
@@ -89,7 +89,6 @@
                 </td>
             </tr>
             <tr>
-                <!-- Hopefully we can autograb this, too, and possibly perform some validation. (e.g. no Gmail addresses, toolbags) -->
                 <td>
                     E-mail:
                 </td>
@@ -99,7 +98,7 @@
                         name="email"
                         title="Your UCL e-mail address. You are unable to use non-UCL e-mail address for Legion accounts."
                         placeholder="person@ucl.ac.uk"
-                        pattern="[-0-9a-zA-Z.+_]+@[a-z0-9.-]+ucl\.ac\.uk"
+                        pattern="[-0-9a-zA-Z.+_]+@(?:[a-z0-9.-]+.|)ucl\.ac\.uk"
                     />
                 </td>
                 <td>
@@ -129,7 +128,7 @@
             </tr>
             <tr>
                 <td>
-                    Supervisor (if applicable):
+                    Supervisor (if applicable): <!-- in a future version this label should change with person type -->
                 </td>
                 <td>
                     <input
@@ -148,7 +147,7 @@
                         name="email"
                         title="Your supervisor's UCL e-mail address." 
                         placeholder="person@ucl.ac.uk"
-                        pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]"
+                        pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+"
                     />
                 </td>
             </tr>
@@ -187,7 +186,7 @@
     </div>
     
     <div class="section">
-        <h4 class="sectionTitle">
+        <h3 class="sectionTitle">
             Research Project Details
         </h4>
         <p class="note">
@@ -198,11 +197,10 @@
             $consortia_options = options_from_consortia();
         ?>
         <div id="project_{$index}">
-            <h4>Your Project</h4>
             <table>
                 <tr>
                     <td>
-                        Is this project grant-funded?
+                        Is this project grant-funded? <!-- this should hide/not hide depending on person type -->
                     </td>
                     <td>
                         <select name="project['is_funded']">
@@ -213,15 +211,16 @@
                 </tr>
                 <tr>
                     <td>
-                        Project PI Username:
+                        Project PI e-mail address: <!-- this should hide/not hide depending on person type -->
+
                     </td>
                     <td>
                         <input
-                            type="text"
-                            name="project['pi_userid']"
-                            placeholder="e.g. ccaaxxx"
-                            title="The username of the PI of this project."
-                            pattern="[A-Za-z0-9]{7}"
+                            type="email"
+                            name="email"
+                            title="Project PI's UCL e-mail address." 
+                            placeholder="person@ucl.ac.uk"
+                            pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+"
                         />
                     </td>
                 </tr>
@@ -240,8 +239,8 @@
                 Types of work needed:
             </p>
             <ul style="list-style-type: none;">
-                <li><input type="checkbox" name="project['work_type']['basic']" /> Basic single core jobs</li>
-                <li><input type="checkbox" name="project['work_type']['array']" />Large (&gt;1000) numbers of single core jobs</li>
+                <li><input type="checkbox" name="project['work_type']['basic']" />Individual single core jobs</li>
+                <li><input type="checkbox" name="project['work_type']['array']" />Large numbers (&gt;1000) of single core jobs</li>
                 <li><input type="checkbox" name="project['work_type']['multithread']" />Multithreaded jobs</li>
                 <li><input type="checkbox" name="project['work_type']['all_the_ram']" />Extremely large quantities of RAM (&gt;64GB)</li>
                 <li><input type="checkbox" name="project['work_type']['small_mpi']" />Small MPI jobs (8-36 cores)</li>
@@ -252,11 +251,11 @@
             </ul>
             
             <p class="p">
-                If you have technical requirements that do not fit any of these categories, please describe them here.
+                If you have technical requirements that do not fit any of these categories, please describe them here:
             </p>
             <textarea
                     name="project['weird_tech_description']"
-                    rows=8
+                    rows=3
                     cols=70
                     title="If you have technical requirements that do not fit any of these categories, please describe them here."
                 ></textarea>
@@ -283,7 +282,7 @@
 
             <h5>Collaboration</h5>
             <p class="note">
-                This information is used to justify funding for regional resources across our partner institutions.
+                Statistical information on collaboration is used in reports to various funding bodies, especially in relation to the <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/CfI">Centre for Innovation</a>.
             </p>
             <table>
                 <tr>
@@ -334,7 +333,7 @@
 
     </div>
     <p class="p">
-        <input type="checkbox" name="tandc" value="tandc">I have read and accept the <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>.</input>
+        <input type="checkbox" name="tandc" value="tandc">Please tick this to acknowledge that you have read and accepted the <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>.</input>
     </p>
 
     <input type="submit" value="Submit" title="Submit application request." />
