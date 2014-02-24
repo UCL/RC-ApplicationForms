@@ -16,7 +16,7 @@ try {
     $actor = new SQLActor();
     $actor->connect();
 
-    if ($actor->does_user_have_existing_account_request($request['userid']) {
+    if ($actor->does_user_have_existing_account_request($request['userid'])) {
         echo "<p class='p'><em>You already have an account request in progress -- you cannot submit another. If you have realised that you made a significant mistake, or for any other problem with the process, please contact rc-support@ucl.ac.uk.</em></p>\n";
     } else {
         $result = $actor->create_new_account_request($request);
