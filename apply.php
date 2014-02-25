@@ -5,7 +5,12 @@
 <!-- Begin form -->
 <?php
     $current_user = $_SERVER['PHP_AUTH_USER'];
+    include "sqlactor.php";
     $actor = new SQLActor();
+    $actor->connect();
+    $user_type_options        = $actor->options_from_table("User_Types", "user_type");
+    $experience_level_options = $actor->options_from_table("Experience_Levels", "level_text");
+    $consortium_options       = $actor->options_from_table("Consortia", "full_name");
 ?>
 
 <form action="submit.php" method="post" enctype="multipart/form-data" id="application_form">
@@ -46,7 +51,7 @@
                 </td>
                 <td>
                     <select id="user_type_id" name="user_type_id">
-                        <?php echo $actor->options_from_table("User_Types", "user_type");?>
+                        <?php echo $user_type_options; ?>
                     </select>
                 </td>
                 <td>
@@ -175,7 +180,7 @@
             <label for="experience_level_id">Which of these options best describes your experience and support level for this service?</label>
         </p>
         <select id="experience_level_id" name="experience_level_id" title="Which of these options best describes your experience and support level for this service?">
-            <?php echo $actor->options_from_table("Experience_Levels", "level_text");?>
+            <?php echo $experience_level_options;?>
         </select>
     </div>
     
@@ -194,7 +199,7 @@
                         <label for="is_funded">Is this project grant-funded?</label> <!-- this should hide/not hide depending on person type -->
                     </td>
                     <td>
-                        <select id="is_funded" name="project['is_funded']"> <!-- id is for hiding and label -->
+                        <select id="is_funded" name="project[is_funded]"> <!-- id is for hiding and label -->
                             <option value="1"> Yes </option>
                             <option value="0"> No </option>
                         </select>
@@ -208,7 +213,7 @@
                     <td>
                         <input
                             type="email"
-                            name="pi_email"
+                            name="project[pi_email]"
                             title="Project PI's UCL e-mail address." 
                             placeholder="person@ucl.ac.uk"
                             pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+"
@@ -219,8 +224,8 @@
             <p class="p">
                 <label>
                     Consortium:
-                    <select name="project['consortium_id']">
-                        <?php echo $actor->options_from_table("Consortia", "full_name");?>
+                    <select name="project[consortium_id]">
+                        <?php echo $consortium_options;?>
                     </select>
                 </label>
             </p>
@@ -232,22 +237,22 @@
                 Types of resource needed:
             </p>
             <ul style="list-style-type: none;">
-                <li><label><input type="checkbox" name="project['work_type']['basic']" />Individual single core jobs</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['array']" />Large numbers (&gt;1000) of single core jobs</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['multithread']" />Multithreaded jobs</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['all_the_ram']" />Extremely large quantities of RAM (&gt;64GB)</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['small_mpi']" />Small MPI jobs (8-36 cores)</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['mid_mpi']" />Medium-sized MPI jobs (36-256 cores)</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['large_mpi']" />Large-sized MPI jobs (&gt;256 cores)</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['small_gpu']" />At least one GPGPU</label></li>
-                <li><label><input type="checkbox" name="project['work_type']['large_gpu']" />At least ten GPGPUs</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_basic]" />Individual single core jobs</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_array]" />Large numbers (&gt;1000) of single core jobs</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_multithread]" />Multithreaded jobs</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_all_the_ram]" />Extremely large quantities of RAM (&gt;64GB)</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_small_mpi]" />Small MPI jobs (8-36 cores)</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_mid_mpi]" />Medium-sized MPI jobs (36-256 cores)</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_large_mpi]" />Large-sized MPI jobs (&gt;256 cores)</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_small_gpu]" />At least one GPGPU</label></li>
+                <li><label><input type="checkbox" name="project[checkboxes][work_type_large_gpu]" />At least ten GPGPUs</label></li>
             </ul>
             
             <p class="p">
                 If you have technical requirements that do not fit any of these categories, please describe them here:
             </p>
             <textarea
-                    name="project['weird_tech_description']"
+                    name="project[weird_tech_description]"
                     rows=3
                     cols=70
                     title="If you have technical requirements that do not fit any of these categories, please describe them here."
@@ -258,7 +263,7 @@
                 Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area. (This will be sent to the leader of the Consortium you have chosen for approval.)
             </p>
             <textarea
-                    name="project['work_description']"
+                    name="project[work_description]"
                     rows=8
                     cols=70
                     title="Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area."
@@ -269,7 +274,7 @@
                 Please provide a list of any software you know you'll need, with approximate versions where known.
             </p>
             <textarea
-                    name="project['applications_description']"
+                    name="project[applications_description]"
                     rows=8
                     cols=70
                     title="Please provide a list of any software you know you'll need, with approximate versions where known."
@@ -283,45 +288,45 @@
             <table>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project['is_collab_bristol']">
+                        <label><input type="checkbox" name="project[checkboxes][is_collab_bristol]">
                             Bristol
                         </label>
                     </td>
                     <td>
                         PI/lead CoI:
-                        <input type="text" name="project['collab_bristol_name']" placeholder="Name"/>
+                        <input type="text" name="project[collab_bristol_name]" placeholder="Name"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project['is_collab_oxford']" />
+                        <label><input type="checkbox" name="project[checkboxes][is_collab_oxford]" />
                             Oxford
                         </label>
                     </td>
                     <td>
                         PI/lead CoI:
-                        <input type="text" name="project['collab_oxford_name']" placeholder="Name"/>
+                        <input type="text" name="project[collab_oxford_name]" placeholder="Name"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project['is_collab_soton']" />
+                        <label><input type="checkbox" name="project[checkboxes][is_collab_soton]" />
                             Southampton
                         </label>
                     </td>
                     <td>
                         PI/lead CoI:
-                        <input type="text" name="project['collab_soton_name']" placeholder="Name"/>
+                        <input type="text" name="project[collab_soton_name]" placeholder="Name"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project['is_collab_other']" />
-                            Other:</label> <input type="text" name="project['collab_other_institute']" placeholder="University" />
+                        <label><input type="checkbox" name="project[checkboxes][is_collab_other]" />
+                            Other:</label> <input type="text" name="project[collab_other_institute]" placeholder="University" />
                     </td>
                     <td>
                         PI/lead CoI:
-                        <input type="text" name="project['collab_other_name']" placeholder="Name"/>
+                        <input type="text" name="project[collab_other_name]" placeholder="Name"/>
                     </td>
                 </tr>
             </table>

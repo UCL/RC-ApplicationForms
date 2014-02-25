@@ -15,19 +15,19 @@
  */
 
 
-# Reset the world
-DROP TABLE Consortia;
-DROP TABLE Privileged_Users;
+# Reset the world. These have to be in a certain order to reverse-satisfy fkey constraints.
 DROP TABLE Consortium_Permissions;
-DROP TABLE Event_Types;
+DROP TABLE Publication_Services;
+DROP TABLE Publications;
+DROP TABLE Projects;
+DROP TABLE Account_Requests;
+DROP TABLE Privileged_Users;
+DROP TABLE Consortia;
 DROP TABLE Request_Progress;
+DROP TABLE Event_Types;
 DROP TABLE User_Types;
 DROP TABLE Experience_Levels;
-DROP TABLE Account_Requests;
-DROP TABLE Projects;
 DROP TABLE Services;
-DROP TABLE Publications;
-DROP TABLE Publication_Services;
 
 CREATE TABLE Consortia
 ( -- should be the name of the consortium on Legion 
@@ -119,19 +119,30 @@ CREATE TABLE Projects
   id INTEGER AUTO_INCREMENT,
   username VARCHAR(7),
   request_id INTEGER,
-  award_number INTEGER,
-  is_funded BOOLEAN,
-  pi_username VARCHAR(7),
   consortium_id INTEGER,
+  is_funded BOOLEAN,
+  work_type_basic BOOLEAN,
+  work_type_array BOOLEAN,
+  work_type_multithread BOOLEAN,
+  work_type_all_the_ram BOOLEAN,
+  work_type_small_mpi BOOLEAN,
+  work_type_mid_mpi BOOLEAN,
+  work_type_large_mpi BOOLEAN,
+  work_type_small_gpu BOOLEAN,
+  work_type_large_gpu BOOLEAN,
   is_collab_bristol BOOLEAN,
-  collab_bristol_person TEXT,
   is_collab_oxford BOOLEAN,
-  collab_oxford_person TEXT,
   is_collab_soton BOOLEAN,
-  collab_soton_person TEXT,
   is_collab_other BOOLEAN,
-  collab_other_institution TEXT,
-  collab_other_institution_person TEXT,
+  pi_email TEXT,
+  weird_tech_description TEXT,
+  work_description TEXT,
+  applications_description TEXT,
+  collab_bristol_name TEXT,
+  collab_oxford_name TEXT,
+  collab_soton_name TEXT,
+  collab_other_institute TEXT,
+  collab_other_name TEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (request_id) REFERENCES Account_Requests(id),
   FOREIGN KEY (consortium_id) REFERENCES Consortia(id)

@@ -46,7 +46,7 @@ REPLACE INTO User_Types (id, user_type) VALUES
   (6, 'Other Undergraduate')
 ;
 
-REPLACE INTO User_Experience_Levels (id,level_text) VALUES
+REPLACE INTO Experience_Levels (id,level_text) VALUES
   (1, 'Novice with No Local Support'),
   (2, 'Novice with Local Support'),
   (3, 'Some Linux experience but no HPC'),
@@ -60,17 +60,18 @@ REPLACE INTO Privileged_Users
  super_special_rainbow_pegasus_powers,
  receives_emails, email_address)
 VALUES
-  (0, 'ccaaxxx', 'Test Non-special user', FALSE, FALSE, 'ccaaxxx@ucl.ac.uk'),
-  (1, 'ccaabaa', 'Brian Alston', TRUE, TRUE, 'b.alston@ucl.ac.uk'),
-  (2, 'ccaabcs', 'Bruno Silva', TRUE, TRUE, 'b.silva@ucl.ac.uk'),
-  (3, 'uccaiki', 'Ian Kirker', TRUE, TRUE, 'i.kirker@ucl.ac.uk'),
-  (4, 'uccaoke', 'Owain Kenway', TRUE, TRUE, 'o.kenway@ucl.ac.uk'),
-  (5, 'ccaacla', 'Clare Gryce', FALSE, TRUE, 'c.gryce@ucl.ac.uk')
+  (1, 'ccaaxxx', 'Test Non-special user', FALSE, FALSE, 'ccaaxxx@ucl.ac.uk'),
+  (2, 'ccaabaa', 'Brian Alston', TRUE, TRUE, 'b.alston@ucl.ac.uk'),
+  (3, 'ccaabcs', 'Bruno Silva', TRUE, TRUE, 'b.silva@ucl.ac.uk'),
+  (4, 'uccaiki', 'Ian Kirker', TRUE, TRUE, 'i.kirker@ucl.ac.uk'),
+  (5, 'uccaoke', 'Owain Kenway', TRUE, TRUE, 'o.kenway@ucl.ac.uk'),
+  (6, 'ccaacla', 'Clare Gryce', FALSE, TRUE, 'c.gryce@ucl.ac.uk')
 ;
 
-SELECT id FROM Consortia WHERE short_name = 'PENDING' INTO @temp;
+SELECT id FROM Consortia WHERE short_name = 'PENDING' INTO @temp_consortium;
+SELECT id FROM Privileged_Users WHERE username = 'ccaacla' INTO @temp_name;
 INSERT INTO Consortium_Permissions (privileged_user_id, approves_for_consortium) VALUES
-  (5, @pending)
+  (@temp_name, @temp_consortium)
 ;
 
 

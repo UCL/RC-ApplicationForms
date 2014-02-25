@@ -164,7 +164,7 @@ class SQLActor {
     public function options_from_table($table, $column_name) {
         // Returns HTML for filling a dropdown with id vs column entry.
         $options = "";
-        $rows = get_list_table($table);
+        $rows = $this->get_table($table);
         foreach ($rows as $row) {
             $options .= "<option value=\"".$row['id']."\">".$row[$column_name]."</option>\n";
         }
@@ -247,12 +247,12 @@ class SQLActor {
     public function get_consortium_leaders_to_mail($consortium_id) {   
         $dbh = $this->dbc->prepare(
             "SELECT pu.email_address FROM ".
-            "Privileged_Users pu, Consortium_Permissions cp WHERE".
+            "Privileged_Users pu, Consortium_Permissions cp WHERE ".
             "cp.privileged_user_id = pu.id AND ".
-            "cp.approves_for_consortium = ? AND".
+            "cp.approves_for_consortium = ? AND ".
             "pu.receives_emails = TRUE"
         );
-        $dbh.bindValue(1,$consortium_id, PDO::PARAM_INT);
+        $dbh->bindValue(1,$consortium_id, PDO::PARAM_INT);
         $dbh->execute();
         $results = $dbh->fetchAll(PDO::FETCH_COLUMN, 0);
         return $results;
@@ -275,8 +275,8 @@ class SQLActor {
             'experience_level_id',
             'experience_text'
         );
-        $values       = implode($values_array, ",");
-        $named_params = ":".implode($values,",:");
+        $values       = implode(",", $values_array);
+        $named_params = ":" . implode(",:", $values_array);
         
 
         $dbh = $this->dbc->prepare(
@@ -290,19 +290,90 @@ class SQLActor {
             $dbh->bindParam(":{$value}", $request[$value]);
         };
         
-        $dbh.execute();
+        $dbh->execute();
 
         // Next, project section
         // This one's a little more complicated because there are t/f fields that don't get submitted if not checked
-        // Current plan is to create a default project with all the t/f fields set to F and then overwrite it with the actual values, leaving only the unset Fs showing through
-        $default_project = array(
+        // So, we keep them separately to the main data fields, and check and set them in the main array
 
+        $project = $request['project'];
+
+        $list_of_checkboxes = array(
+            'work_type_basic',
+            'work_type_array',
+            'work_type_multithread',
+            'work_type_all_the_ram',
+            'work_type_small_mpi',
+            'work_type_mid_mpi',
+            'work_type_large_mpi',
+            'work_type_small_gpu',
+            'work_type_large_gpu',
+            'is_collab_bristol',
+            'is_collab_oxford',
+            'is_collab_soton',
+            'is_collab_other'
+        );
+        foreach ($list_of_checkboxes as $key) {
+            if (isset($project['checkboxes'][$key])) {
+                $project[$key] = 1;
+            } else {
+                $project[$key] = 0;
+            }
+        }
+
+        $project['checkboxes']="";
+        unset($project['checkboxes']);
+
+        // Then use the same procedure as above. Slight tweak to add 
+        //  username and request id prevents straight code re-use.
+        $values_array = array(
+            'is_funded',
+            'consortium_id',
+            'weird_tech_description',
+            'work_description',
+            'applications_description',
+            'collab_bristol_name',
+            'collab_oxford_name',
+            'collab_soton_name',
+            'collab_other_institute',
+            'collab_other_name',
+            'pi_email',
+            'work_type_basic',
+            'work_type_array',
+            'work_type_multithread',
+            'work_type_all_the_ram',
+            'work_type_small_mpi',
+            'work_type_mid_mpi',
+            'work_type_large_mpi',
+            'work_type_small_gpu',
+            'work_type_large_gpu',
+            'is_collab_bristol',
+            'is_collab_oxford',
+            'is_collab_soton',
+            'is_collab_other'
+        );
+        $values       = implode(",", $values_array);
+        $named_params = ":" . implode(",:", $values_array);
+
+        $dbh = $this->dbc->prepare(
+            "INSERT INTO Projects ".
+            "(username, request_id, $values)" .
+            " VALUES " .
+            "(:username, :request_id, $named_params)"
         );
 
+        $dbh->bindParam(":username", $request['username']);
+        $dbh->bindParam(":request_id", $this->dbc->lastInsertId());
+        foreach ($values_array as $value) {
+            $dbh->bindParam(":$value", $project[$value]);
+        };
+        
+        $dbh->execute();
         
         // Finally, mark as submitted in the events table
 
-
+        // And return TRUE if everything worked, otherwise a message.
+        return TRUE;
     }
 
 

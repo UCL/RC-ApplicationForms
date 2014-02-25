@@ -1,6 +1,7 @@
 <?php
 
 include "header.php";
+include "sqlactor.php";
 
 $referrer_file_name = array_pop(explode("/", $_SERVER["HTTP_REFERER"])); 
 
@@ -16,6 +17,7 @@ try {
     $actor = new SQLActor();
     $actor->connect();
 
+    $request = $_POST;
     if ($actor->does_user_have_existing_account_request($request['userid'])) {
         echo "<p class='p'><em>You already have an account request in progress -- you cannot submit another. If you have realised that you made a significant mistake, or for any other problem with the process, please contact rc-support@ucl.ac.uk.</em></p>\n";
     } else {
@@ -33,19 +35,19 @@ try {
             echo "<h4>Error in creating the account request: $result</h4>\n";
         }
     }
-}
-catch(\PDOException $ex){
+} catch(\PDOException $ex) {
     print("\n<p>" . $ex->getMessage() . "</p>\n");
 }
 
-echo "referrer_file_name = $referrer_file_name\n";
 
-$arr = get_defined_vars();
-print_r($arr["_SERVER"]);
-print_r($arr["_REQUEST"]);
-print_r($arr["_POST"]);
+//echo "referrer_file_name = $referrer_file_name\n";
 
-print_r(array_keys(get_defined_vars()));
+//$arr = get_defined_vars();
+//print_r($arr["_SERVER"]);
+//print_r($arr["_REQUEST"]);
+//print_r($arr["_POST"]);
+
+//print_r(array_keys(get_defined_vars()));
 
 include "footer.php";
 
