@@ -1,7 +1,9 @@
 <?php
     include "header.php";
 ?>
-
+<script type="text/javascript">
+    document.write("\<script src='//ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' type='text/javascript'>\<\/script>");
+</script>
 <!-- Begin form -->
 <?php
     $current_user = $_SERVER['PHP_AUTH_USER'];
@@ -13,7 +15,7 @@
     $consortium_options       = $actor->options_from_table("Consortia", "full_name");
 ?>
 
-<form action="submit.php" method="post" enctype="multipart/form-data" id="application_form">
+<form id="application_form" action="submit.php" method="post" enctype="multipart/form-data" id="application_form">
     <div class="section">
         <h3 class="sectionTitle">
             User Information
@@ -339,9 +341,22 @@
         <label><input type="checkbox" id="tandc" name="tandc" value="tandc" />Please tick this to acknowledge that you have read and accepted the <a target="_new" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>. <em>(This link should open in a new tab/window.)</em></label>
     </p>
 
-    <input type="submit" value="Submit" title="Submit application request." />
+    <div id="error" style="color: #cc0000;"></div>
+
+    <input type="submit" id="form_submit_button" value="Submit" title="Submit application request." />
 </form>
 
+    <script>
+    $( '#application_form' ).submit( function( event ) {
+        if ( $('#tandc').is( ":checked" ) != true  ) {
+            $( '#error' ).text("You must accept the Terms and Conditions to apply.").show();
+            event.preventDefault();
+        } else {
+            $( '#notice' ).text("").show();
+            return;
+        }
+    });
+    </script>
 
 <?php
     include "footer.php";
