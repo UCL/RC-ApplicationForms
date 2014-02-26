@@ -247,6 +247,7 @@
                 <li><label><input type="checkbox" name="project[checkboxes][work_type_small_gpu]" />At least one GPGPU</label></li>
                 <li><label><input type="checkbox" name="project[checkboxes][work_type_large_gpu]" />At least ten GPGPUs</label></li>
             </ul>
+            <input type="hidden" name="project[work_required_collated]" />
             
             <p class="p">
                 If you have technical requirements that do not fit any of these categories, please describe them here:
@@ -330,6 +331,7 @@
                     </td>
                 </tr>
             </table>
+            <input type="hidden" name="project[collaboration_collated]" value="(No collaborators specified.)" />
 
     </div>
     <p class="p">

@@ -1,0 +1,36 @@
+{:stored_addresses_imploded}
+
+A request for a new account has been submitted, with a project associated with the "{:consortium_name}" consortium.
+
+Please review the following information, and either use the links below to approve it, or contact the user directly is you have any questions that require clarification.
+  
+  Approve: http://avon.ucl.ac.uk/acct/approve.php?id={:created_id}
+
+  User ID:    {:username}
+  Name:       {:user_forenames} {:user_surname}
+  Email:      {:user_email}
+  Dept:       {:user_dept}
+  Supervisor: {:supervisor_name} <{:supervisor_email}>
+
+  Project Information
+  ===================
+
+  PI: {:project.pi_email}
+
+-- Project Description
+  {:project.work_description}
+
+-- Applications Required  
+  {:project.applications_description}
+
+-- Types of Work Required
+  {:project.work_required_collated}
+
+-- Unusual Technical Requirements
+  {:project.weird_tech_description}
+
+-- Collaboration
+  {:project.collaboration_collated}
+
+This mail was automatically generated.
+

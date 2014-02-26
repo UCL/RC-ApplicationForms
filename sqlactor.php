@@ -244,6 +244,14 @@ class SQLActor {
         return $results;
     }
 
+    public function get_consortium_name($consortium_id) {
+        $dbh = $this->dbc->prepare("SELECT full_name from Consortia WHERE id = ?");
+        $dbh->bindValue(1,$consortium_id);
+        $dbh->execute();
+        $results = $dbh->fetchColumn(0);
+        return $results;
+    }
+
     public function get_consortium_leaders_to_mail($consortium_id) {   
         $dbh = $this->dbc->prepare(
             "SELECT pu.email_address FROM ".
@@ -290,7 +298,7 @@ class SQLActor {
             $dbh->bindParam(":{$value}", $request[$value]);
         };
         
-        $dbh->execute();
+        $account_request_creation_result = $dbh->execute();
 
         // Next, project section
         // This one's a little more complicated because there are t/f fields that don't get submitted if not checked
@@ -362,18 +370,24 @@ class SQLActor {
             "(:username, :request_id, $named_params)"
         );
 
+        $account_request_id = $this->dbc->lastInsertId();
         $dbh->bindParam(":username", $request['username']);
-        $dbh->bindParam(":request_id", $this->dbc->lastInsertId());
+        $dbh->bindParam(":request_id", $account_request_id);
         foreach ($values_array as $value) {
             $dbh->bindParam(":$value", $project[$value]);
         };
         
-        $dbh->execute();
+        $project_request_creation_result = $dbh->execute();
         
         // Finally, mark as submitted in the events table
 
-        // And return TRUE if everything worked, otherwise a message.
-        return TRUE;
+        // And return the request id if everything worked
+        if ($account_request_creation_result &&
+            $project_request_creation_result ) {
+            return $account_request_id;
+        } else {
+            return FALSE;
+        }
     }
 
 
