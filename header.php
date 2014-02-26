@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Request User Account</title>
 
 <link rel="shortcut icon" href="http://www.ucl.ac.uk/isd/++resource++images/favicon2.ico" />
