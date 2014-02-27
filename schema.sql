@@ -69,11 +69,11 @@ CREATE TABLE Event_Types
 CREATE TABLE Request_Progress
 (
   id INTEGER AUTO_INCREMENT,
-  request_type ENUM('Account', 'Project', 'Service'),
-  request_id INTEGER,
+  account_id INTEGER,
+  project_id INTEGER,
   event_type_id INTEGER,
   acting_user VARCHAR(7),
-  object TEXT,
+  with_comment TEXT,
   update_time TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (event_type_id) REFERENCES Event_Types(id)

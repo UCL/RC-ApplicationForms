@@ -252,6 +252,14 @@ class SQLActor {
         return $results;
     }
 
+    public function get_status_id($status_name) {
+        $dbh = $this->dbc->prepare("SELECT id from Event_Types WHERE event_type = ?");
+        $dbh->bindValue(1,$status_name);
+        $dbh->execute();
+        $results = $dbh->fetchColumn(0);
+        return $results;
+    }
+
     public function get_consortium_leaders_to_mail($consortium_id) {   
         $dbh = $this->dbc->prepare(
             "SELECT pu.email_address FROM ".
@@ -378,18 +386,40 @@ class SQLActor {
         };
         
         $project_request_creation_result = $dbh->execute();
+        $project_request_id = $this->dbc->lastInsertId();
         
         // Finally, mark as submitted in the events table
 
         // And return the request id if everything worked
         if ($account_request_creation_result &&
             $project_request_creation_result ) {
-            return $account_request_id;
+                return array('account_request_id' => $account_request_id, 
+                             'project_request_id' => $project_request_id
+                         );
         } else {
             return FALSE;
         }
     }
 
 
-}
+    function mark_request_status($request, $acting_user, $status_string, $comment) {
+        $status_id = $this->get_status_id($status_string);
+
+        $dbh = $this->dbc->prepare(
+            "INSERT INTO Request_Progress ".
+            "(account_id, project_id, event_type_id, acting_user, with_comment)" .
+            " VALUES " .
+            "(:account_id, :project_id, :event_type_id, :acting_user, :with_comment)"
+        );
+
+        $dbh->bindParam(":account_id", $request['created_id']);
+        $dbh->bindParam(":project_id", $request['project']['created_id']);
+        $dbh->bindParam(":event_type_id", $status_id);
+        $dbh->bindParam(":acting_user", $acting_user);
+        $dbh->bindParam(":with_comment", $comment);
+
+        return $dbh->execute();
+    }
+
+} // End of class
 

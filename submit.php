@@ -19,7 +19,7 @@ try {
     $actor->connect();
 
     $request = $_POST;
-    if ($actor->does_user_have_existing_account_request($request['userid'])) {
+    if ($actor->does_user_have_existing_account_request('a'.$request['username'])) {
         echo "<p class='p'><em>You already have an account request ". 
              "in progress -- you cannot submit another. If you have".
              " realised that you made a significant mistake, or for".
@@ -28,8 +28,12 @@ try {
     } else {
         $creation_result = $actor->create_new_account_request($request);
         if ($creation_result !== FALSE) {
-            $request['created_id'] = $creation_result; // Stuff that in there so we can use it in mail
+            // Add some result information we want to let us id the request
+            $request['created_id'] = $creation_result['account_request_id']; 
+            $request['project']['created_id'] = $creation_result['project_request_id']; 
             $request['consortium_name'] = $actor->get_consortium_name($request['project']['consortium_id']);
+
+            $actor->mark_request_status($request, $request['username'], 'submitted', "automatically");
 
             $addresses_to_mail = $actor->get_consortium_leaders_to_mail($request['project']['consortium_id']);
 
@@ -42,7 +46,6 @@ try {
                      "</h4>\n".$result."\n";
                 print_r($request);
             } else {
-                echo "<p class='p'>{$mail_result}</p>";
                 echo "<p class='p'>Successfully mailed requests for approval. If you do not receive any further information within 3 days, please contact rc-support@ucl.ac.uk.</p>\n";
             }
         } 
