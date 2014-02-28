@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Request User Account</title>
+<title><?php echo $page_title;?></title>
 
 <link rel="shortcut icon" href="http://www.ucl.ac.uk/isd/++resource++images/favicon2.ico" />
 <link rel="stylesheet" href="http://www.ucl.ac.uk/isd/++resource++styles/default.css" type="text/css" media="screen" />
@@ -119,7 +119,7 @@ div.subsection {
     <!--[if gte IE 5]>&raquo;<![endif]-->
   </li>
   <li>
-    <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account">Request User Account</a>
+  <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account"><?php echo $page_title;?></a>
     
   </li>
 </ul>
@@ -142,6 +142,6 @@ div.subsection {
                     <div id="rendered-doc-area">
 					<!--Start center content area-->
 <div class="heading">
-<h2 class="heading">Request User Account</h2>
+<h2 class="heading"><?php echo $page_title;?></h2>
 </div>
 
