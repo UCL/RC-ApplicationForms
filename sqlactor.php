@@ -1,5 +1,17 @@
 <?php 
 
+class debugUtils {
+    public static function callStack($stacktrace) {
+        print str_repeat("=", 50) ."\n";
+        $i = 1;
+        foreach($stacktrace as $node) {
+            print "$i. ".basename($node['file']) .":" .$node['function'] ."(" .$node['line'].")\n";
+            $i++;
+        }
+    } 
+}
+//debugUtils::callStack(debug_backtrace());
+
 class SQLActor {
     private $my_db_hostname;
     private $my_db_name    ;
@@ -60,89 +72,100 @@ class SQLActor {
         }
     }
 
-    public function is_superuser($user) {
-        // Should return T/F whether a user has all permissions.
-        $dbh = $this->dbc->prepare(
-            "SELECT COUNT(id) FROM Privileged_Users ". 
-            "WHERE username = ? AND super_special_rainbow_pegasus_powers = TRUE"
-        );
-        $dbh->bindValue(1,$user);
+    public function get_user_id_consortium_permissions($user_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Consortium_Permissions WHERE privileged_user_id = ?");
+        $dbh->bindValue(1, $user_id);
         $dbh->execute();
-        $result = $dbh->fetchColumn(0);
-        if ($result > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        return $dbh->fetchAll();
     }
 
-    public function is_approvable_by($object_id, $user) {
-        // Should simply return true if $user can approve $object_id, otherwise false
-        
-        // need consortium of request, joined against consortia user can approve
-
-        // also need to check whether request is already approved
-        $dbh = $this->dbc->prepare("SELECT COUNT(id) FROM Requests");
-
+    public function get_user_info($username) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Privileged_Users WHERE username = ?");
+        $dbh->bindValue(1, $username);
+        $dbh->execute();
+        return $dbh->fetch();
     }
 
-    public function approve_request($object_id, $user) {
+    public function approve_request($account_id, $project_id, $user) {
         // Should mark a thing as approved.
         // Mail should happen elsewhere.
-        if ($this->is_approvable_by($object_id, $user) == FALSE) {
-            return FALSE;
-        };
         $dbh = $this->dbc->prepare(
             "INSERT INTO Request_Progress ".
-            " (request_id, event_type_id, acting_user, object) ".
-            " VALUES (?, ?, ?, ?)"
+            " (account_id, project_id, event_type_id, acting_user, with_comment) ".
+            " VALUES (?, ?, ?, ?, ?)"
         );
-        $dbh->bindValue(1, $object_id, PDO::PARAM_INT);
-        $dbh->bindValue(2, $this->get_event_id_by_name("approved"));
-        $dbh->bindValue(3, $user);
-        $dbh->bindValue(4, "");
+        $dbh->bindValue(1, $account_id, PDO::PARAM_INT);
+        $dbh->bindValue(2, $project_id, PDO::PARAM_INT);
+        $dbh->bindValue(3, $this->get_event_id_by_name("approved"));
+        $dbh->bindValue(4, $user);
+        $dbh->bindValue(5, "");
         return $dbh->execute();
     }
 
-    public function get_request_status($object_id, $user) {
+    public function get_last_status_info($project_id) {
         // Should return the current status (textual) of a request.
         $dbh = $this->dbc->prepare(
-            "SELECT * FROM Request_Progress".
-            " WHERE request_id = ? ".
-            " ORDER BY update_time DESC LIMIT 1;"
+            "SELECT event_type,update_time,acting_user FROM Event_Types".
+            " RIGHT JOIN Request_Progress".
+            " ON (Request_Progress.event_type_id = Event_Types.id)".
+            " WHERE Request_Progress.project_id=?".
+            " ORDER BY Request_Progress.update_time".
+            " DESC LIMIT 1"
         );
-        $dbh->bindValue(1, $object_id);
+        $dbh->bindValue(1, $project_id);
         $dbh->execute();
-        $result = $dbh->fetch(PDO::FETCH_ASSOC);
-        if ( $this->can_view($object_id, $user) or
-             $this->is_approvable_by($object_id, $user) )
-        {
-            return $this->event_name_by_id($result['event_type_id']);
-        } else {
-            return FALSE;
-        }
+        $result = $dbh->fetch();
+        return $result; // Returns FALSE if there are no rows
     }
 
-    public function get_request_owner($object_id) {
+    public function get_last_status_text($project_id) {
+        $status_info = $this->get_last_status_info($project_id);
+        return $status_info['event_type'];
+    }
+    
+    public function get_last_status_time($project_id) {
+        $status_info = $this->get_last_status_info($project_id);
+        return $status_info['update_time'];
+    }
+    
+    public function get_last_status_user($project_id) {
+        $status_info = $this->get_last_status_info($project_id);
+        return $status_info['acting_user'];
+    }
+
+    public function get_account_request_owner($account_request_id) {
         // Return the username associated with $object_id
-        $dbh = $this->dbc->prepare("SELECT username FROM XXXX WHERE id=?;");
-        $dbh->bindValue(1, $object_id, PDO::PARAM_INT);
+        $dbh = $this->dbc->prepare("SELECT username FROM Account_Requests WHERE id=?;");
+        $dbh->bindValue(1, $account_request_id, PDO::PARAM_INT);
         $dbh->execute();
         $result = $dbh->fetchAll(PDO::FETCH_NUM); // Should only return one row, one value. Look up appropriate call for this.
         return $result;
     }
 
-    public function get_request_with_actions($object_id, $user) {
-        // Get all the information about a request as a hash plus 
-        //  the two extra T/F columns mentioned that show 
-        //  edit/approval permissions
+    public function get_account_request($account_request_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Account_Requests WHERE id=?");
+        $dbh->bindValue(1, $account_request_id, PDO::PARAM_INT);
+        $dbh->execute();
+        $result = $dbh->fetch();
+        return $result;
     }
 
-    public function get_requests_with_actions($user) {
-        // Get an array of hashes representing all the requests 
-        //  visible to a user *plus* two extra TRUE/FALSE columns 
-        //  showing whether they have permission to edit and/or approve
-        //  those requests
+    public function get_project_request($project_request_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Projects WHERE id=?");
+        $dbh->bindValue(1, $project_request_id, PDO::PARAM_INT);
+        $dbh->execute();
+        $result = $dbh->fetch();
+        return $result;
+    }
+
+    public function get_request_pair($account_request_id, $project_request_id) {
+        $project = $this->get_project_request($project_request_id);
+        $account = $this->get_account_request($project['request_id']);
+        if ($project['request_id'] != $account_request_id) {
+            return FALSE;
+        } else {
+            return array($account,$project);
+        }
     }
 
     public function get_consortia() {
@@ -293,7 +316,6 @@ class SQLActor {
         );
         $values       = implode(",", $values_array);
         $named_params = ":" . implode(",:", $values_array);
-        
 
         $dbh = $this->dbc->prepare(
             "INSERT INTO Account_Requests ".
@@ -354,6 +376,8 @@ class SQLActor {
             'collab_other_institute',
             'collab_other_name',
             'pi_email',
+            'work_required_collated',
+            'collaboration_collated',
             'work_type_basic',
             'work_type_array',
             'work_type_multithread',

@@ -130,6 +130,7 @@ CREATE TABLE Projects
   work_type_large_mpi BOOLEAN,
   work_type_small_gpu BOOLEAN,
   work_type_large_gpu BOOLEAN,
+  work_required_collated TEXT,
   is_collab_bristol BOOLEAN,
   is_collab_oxford BOOLEAN,
   is_collab_soton BOOLEAN,
@@ -143,6 +144,7 @@ CREATE TABLE Projects
   collab_soton_name TEXT,
   collab_other_institute TEXT,
   collab_other_name TEXT,
+  collaboration_collated TEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (request_id) REFERENCES Account_Requests(id),
   FOREIGN KEY (consortium_id) REFERENCES Consortia(id)

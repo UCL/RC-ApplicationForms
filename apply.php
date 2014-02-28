@@ -1,4 +1,5 @@
 <?php
+    $page_title = "Request User Account";
     include "header.php";
 ?>
 <script type="text/javascript">
