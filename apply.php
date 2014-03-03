@@ -240,17 +240,107 @@
                 Types of resource needed:
             </p>
             <ul style="list-style-type: none;">
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_basic]" />Individual single core jobs</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_array]" />Large numbers (&gt;1000) of single core jobs</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_multithread]" />Multithreaded jobs</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_all_the_ram]" />Extremely large quantities of RAM (&gt;64GB)</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_small_mpi]" />Small MPI jobs (8-36 cores)</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_mid_mpi]" />Medium-sized MPI jobs (36-256 cores)</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_large_mpi]" />Large-sized MPI jobs (&gt;256 cores)</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_small_gpu]" />At least one GPGPU</label></li>
-                <li><label><input type="checkbox" name="project[checkboxes][work_type_large_gpu]" />At least ten GPGPUs</label></li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_basic" 
+                               name="project[checkboxes][work_type_basic]"
+                               collating_value="Individual single core jobs"
+                         />
+                        Individual single core jobs
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_array" 
+                               name="project[checkboxes][work_type_array]" 
+                               collating_value="Large numbers of single core jobs"
+                         />
+                        Large numbers (&gt;1000) of single core jobs
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_multithread" 
+                               name="project[checkboxes][work_type_multithread]" 
+                               collating_value="Multithreaded jobs"
+                         />
+                        Multithreaded jobs
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_all_the_ram" 
+                               name="project[checkboxes][work_type_all_the_ram]" 
+                               collating_value="Extremely large quantities of RAM"
+                         />
+                        Extremely large quantities of RAM (&gt;64GB)
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_small_mpi" 
+                               name="project[checkboxes][work_type_small_mpi]" 
+                               collating_value="Small MPI jobs (<36 cores)"
+                         />
+                        Small MPI jobs (&lt;36 cores)
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_mid_mpi" 
+                               name="project[checkboxes][work_type_mid_mpi]" 
+                               collating_value="Medium MPI jobs (36-256 cores)"
+                         />
+                        Medium-sized MPI jobs (36-256 cores)
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_large_mpi" 
+                               name="project[checkboxes][work_type_large_mpi]" 
+                               collating_value="Large MPI jobs (<256 cores)"
+                         />
+                        Large-sized MPI jobs (&gt;256 cores)
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_small_gpu" 
+                               name="project[checkboxes][work_type_small_gpu]" 
+                               collating_value=">0 GPUs"
+                         />
+                        At least one GPGPU
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" 
+                               class="work_type_checkbox"
+                               id="work_type_large_gpu" 
+                               name="project[checkboxes][work_type_large_gpu]" 
+                               collating_value=">10 GPUs"
+                         />
+                        At least ten GPGPUs
+                    </label>
+                </li>
             </ul>
-            <input type="hidden" name="project[work_required_collated]" />
+            <input type="hidden" id="work_required_collated" name="project[work_required_collated]" />
             
             <p class="p">
                 If you have technical requirements that do not fit any of these categories, please describe them here:
@@ -292,7 +382,7 @@
             <table>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project[checkboxes][is_collab_bristol]">
+                        <label><input class="collab_checkbox" collating_value="Bristol: " type="checkbox" name="project[checkboxes][is_collab_bristol]">
                             Bristol
                         </label>
                     </td>
@@ -303,7 +393,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project[checkboxes][is_collab_oxford]" />
+                        <label><input class="collab_checkbox" collating_value="Oxford: " type="checkbox" name="project[checkboxes][is_collab_oxford]" />
                             Oxford
                         </label>
                     </td>
@@ -314,7 +404,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project[checkboxes][is_collab_soton]" />
+                        <label><input class="collab_checkbox" collating_value="Southampton: " type="checkbox" name="project[checkboxes][is_collab_soton]" />
                             Southampton
                         </label>
                     </td>
@@ -325,7 +415,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><input type="checkbox" name="project[checkboxes][is_collab_other]" />
+                        <label><input class="collab_checkbox" collating_value="Other" type="checkbox" name="project[checkboxes][is_collab_other]" />
                             Other:</label> <input type="text" name="project[collab_other_institute]" placeholder="University" />
                     </td>
                     <td>
@@ -348,11 +438,58 @@
 </form>
 
     <script>
+
+    function update_collated_fields() {
+        update_work_collated();
+        update_collab_collated();
+    }
+
+    function update_work_collated() {
+        value_string = "";
+        work_types = document.getElementsByClassName('work_type_checkbox');
+
+        for (var i=0; i < work_types.length ; i++) {
+            if (work_types[i].checked == true) {
+                value_string = value_string.concat(" * ", work_types[i].attributes['collating_value'].value, "\n");
+            }
+        }
+        document.getElementById( 'work_required_collated' ).value = value_string;
+    }
+
+    function update_collab_collated() {
+        value_string = "";
+        institutes = ['bristol','oxford','soton','other'];
+        for (var i=0;i < institutes.length; i++) {
+            checkboxes = document.getElementsByName(''.concat('project[checkboxes][is_collab_',institutes[i],']'));
+            checkbox = checkboxes[0];
+            console.log('Czech box: ' + checkbox);
+            if (checkbox.checked == true) {
+                console.log(''.concat('project[collab_',institutes[i],'_name]'));
+                name_fields = document.getElementsByName(''.concat('project[collab_',institutes[i],'_name]'));
+                name_field = name_fields[0];
+                console.log('Name_field ' + name_field);
+                if (institutes[i] != 'other') {
+                    label = checkbox.attributes['collating_value'].value;
+                } else {
+                    institute_fields = document.getElementsByName('project[collab_other_institute]');
+                    institute_field  = institute_fields[0];
+                    label = ''.concat( institute_field.value, ": ");
+                }
+                value_string = value_string.concat(label, name_field.value, "\n");
+                
+            }
+        }
+        target_elements = document.getElementsByName('project[collaboration_collated]');
+        target_elements[0].value = value_string;
+    }
+
     $( '#application_form' ).submit( function( event ) {
         if ( $('#tandc').is( ":checked" ) != true  ) {
             $( '#error' ).text("You must accept the Terms and Conditions to apply.").show();
             event.preventDefault();
         } else {
+            update_collated_fields();
+            
             $( '#notice' ).text("").show();
             return;
         }
