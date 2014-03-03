@@ -29,7 +29,10 @@ function test_array_as_text_list() {
 
 
 
-function table_keyval($label, $value, $columns=2) {
+function table_keyval($label, $value, $columns=2, $preformatted=FALSE) {
+    $label = htmlspecialchars($label);
+    $value = htmlspecialchars($value);
+    if ($preformatted) { $value = "<pre>" . $value . "</pre>"; }
     if ($columns == 2) {
         $html  = "";
         $html .= "    <tr class='even'>\n";

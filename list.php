@@ -125,11 +125,11 @@ class RequestPair {
          . "</table><table class='silvatable grid'><tr class='odd'><td colspan=2><strong>Project</strong></td></tr>"
          . table_keyval("PI", $this->project['pi_email'])
          . table_keyval("Consortium Requested", $this->consortium())
-         . table_keyval("Project Description", $this->project['work_description'], 1)
-         . table_keyval("Applications Required", $this->project['applications_description'], 1)
-         . table_keyval("Work Required", $this->project['work_required_collated'], 1)
-         . table_keyval("Unusual Technical Requirements", $this->project['weird_tech_description'], 1)
-         . table_keyval("Collaboration (if any)", $this->project['collaboration_collated'], 1)
+         . table_keyval("Project Description", $this->project['work_description'], 1, TRUE)
+         . table_keyval("Applications Required", $this->project['applications_description'], 1, TRUE)
+         . table_keyval("Work Required", $this->project['work_required_collated'], 1, TRUE)
+         . table_keyval("Unusual Technical Requirements", $this->project['weird_tech_description'], 1, TRUE)
+         . table_keyval("Collaboration (if any)", $this->project['collaboration_collated'], 1, TRUE)
          . "</table>"
          ;
         return $html;
