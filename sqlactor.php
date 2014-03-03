@@ -1,17 +1,5 @@
 <?php 
 
-class debugUtils {
-    public static function callStack($stacktrace) {
-        print str_repeat("=", 50) ."\n";
-        $i = 1;
-        foreach($stacktrace as $node) {
-            print "$i. ".basename($node['file']) .":" .$node['function'] ."(" .$node['line'].")\n";
-            $i++;
-        }
-    } 
-}
-//debugUtils::callStack(debug_backtrace());
-
 class SQLActor {
     private $my_db_hostname;
     private $my_db_name    ;
@@ -133,15 +121,6 @@ class SQLActor {
         return $status_info['acting_user'];
     }
 
-    public function get_account_request_owner($account_request_id) {
-        // Return the username associated with $object_id
-        $dbh = $this->dbc->prepare("SELECT username FROM Account_Requests WHERE id=?;");
-        $dbh->bindValue(1, $account_request_id, PDO::PARAM_INT);
-        $dbh->execute();
-        $result = $dbh->fetchAll(PDO::FETCH_NUM); // Should only return one row, one value. Look up appropriate call for this.
-        return $result;
-    }
-
     public function get_account_request($account_request_id) {
         $dbh = $this->dbc->prepare("SELECT * FROM Account_Requests WHERE id=?");
         $dbh->bindValue(1, $account_request_id, PDO::PARAM_INT);
@@ -233,19 +212,19 @@ class SQLActor {
         return -1;
     }
 
-    public function get_mail_template($template_name) {
+    //public function get_mail_template($template_name) {
         // I'm not sure whether to store the email templates in the
         //  database or in PHP, but if they're in the database this will retrieve them
-    }
+    //}
 
-    public function add_new_project_request ($account, $project) {
+    //public function add_new_project_request ($account, $project) {
         // check whether user has existing acct info
         // add if not
         // add project entry
         // add submitted time
         // add associated service requests
         // mail should be handled elsewhere
-    }
+    //}
 
     public function does_user_have_existing_account_request($username) {
         $dbh = $this->dbc->prepare("SELECT COUNT(id) from Account_Requests WHERE username = ?");
