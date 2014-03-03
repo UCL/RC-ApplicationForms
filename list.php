@@ -3,33 +3,10 @@
 $page_title = "View Account Request";
 include "header.php";
 include "sqlactor.php";
+include "misc_functions.php";
+include "mailmailer.php";
 
-function table_keyval($label, $value, $columns=2) {
-    if ($columns == 2) {
-        $html  = "";
-        $html .= "    <tr class='even'>\n";
-        $html .= "        <td>\n";
-        $html .= "            <strong>{$label}</strong>\n";
-        $html .= "        </td>\n";
-        $html .= "        <td>\n";
-        $html .= "            {$value}\n";
-        $html .= "        </td>\n";
-        $html .= "    </tr>\n";
-    } elseif ($columns == 1) {
-        $html  = "";
-        $html .= "    <tr>\n";
-        $html .= "        <td colspan=2 class='odd'>\n";
-        $html .= "            <strong>{$label}</strong>\n";
-        $html .= "        </td>\n";
-        $html .= "    </tr>\n";
-        $html .= "    <tr>\n";
-        $html .= "        <td colspan=2 class='even'>\n";
-        $html .= "            {$value}\n";
-        $html .= "        </td>\n";
-        $html .= "    </tr>\n";
-    }
-    return $html;
-}
+
 
 class RequestPair {
     private $account_request_id;
@@ -76,13 +53,16 @@ class RequestPair {
         if (! $this->can_be_approved_by($user)) {
             die("Permissions error.\n");
         } else {
-            echo "HERPADERPA";
             return $this->actor->approve_request($this->account_request_id, $this->project_id, $user->username());
         }
     }
 
     public function owner() {
         return $this->project['username'];
+    }
+
+    public function user_email() {
+        return $this->account_request['user_email'];
     }
 
     public function consortium() {
@@ -108,6 +88,27 @@ class RequestPair {
                "&idp=" . $this->project_id .
                "&action=approve".
                "\">Approve this Request</a>\n";
+    }
+
+    public function services_text_from_work() {
+        $services_array = array();
+        $work_service_mapping = array(
+            'work_type_basic' => 'Legion',
+            'work_type_array' => 'Legion',
+            'work_type_multithread' => 'Legion',
+            'work_type_all_the_ram' => 'Legion',
+            'work_type_small_mpi' => 'Legion', 
+            'work_type_mid_mpi' => 'Iridis',
+            'work_type_large_mpi' => 'Iridis',
+            'work_type_small_gpu' => 'Emerald',
+            'work_type_large_gpu' => 'Emerald'
+        );
+        foreach ($work_service_mapping as $work_type => $service) {
+            if ($this->project[$work_type] == TRUE) {
+                array_push($services_array, $service);
+            }
+        }
+        return array_as_text_list(array_unique($services_array));
     }
 
     public function as_table() {
@@ -211,8 +212,20 @@ try{
             if ($req_action == "approve") {
                 $result = $request_pair->approve_by($current_user);
                 if ($result == TRUE) {
+                    $mailer = new MailMailer();
+                    $mail_result = $mailer->send_mail(
+                                                "new_account_request_approval", 
+                                                $request_pair->user_email(), 
+                                                array('recommendations'=>
+                                                  $request_pair->services_text_from_work())
+                                              );
+                    if ($mail_result != TRUE) {
+                        $mail_not_sent = " but notification mails could not be sent. Please contact rc-support@ucl.ac.uk.";
+                    } else {
+                        $mail_not_sent = "";
+                    }
                     $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
-                                    "Request Approved".
+                                    "Request Approved{$mail_not_sent}".
                                     "</div>";
                 } elseif ($result == FALSE) {
                     $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .

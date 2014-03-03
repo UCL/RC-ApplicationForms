@@ -13,6 +13,10 @@ class MailMailer {
             "new_account_for_approval" => array (
                 'subject' => "RCPS: New Account Request - {:user_forenames} {:user_surname}",
                 'body'    => file_get_contents("new_account_for_approval.txt")
+            ),
+            "new_account_request_approval" => array (
+                'subject' => "RCPS: Request Approved",
+                'body'    => file_get_contents("new_account_request_approval.txt")
             )
         );
 
@@ -41,6 +45,9 @@ class MailMailer {
     }
 
     public function send_mail($template_name, $addresses_to_mail, $info) {
+        if (is_string($addresses_to_mail)) {
+            $addresses_to_mail = array($addresses_to_mail);
+        }
         if (MailMailer::$override_mail) {
             $stored_addresses = $addresses_to_mail;
             $info['stored_addresses_imploded'] = implode("&x10;",$stored_addresses);
