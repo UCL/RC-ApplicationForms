@@ -17,6 +17,12 @@ class RequestPair {
     private $valid;
 
     public function __construct($con_account_request_id, $con_project_id) {
+        if (is_null($con_account_request_id) || is_null($con_project_id)) {
+            // Shortcut if either is null
+            $this->valid=FALSE;
+            return FALSE;
+        }
+        
         $this->actor=new SQLActor();
         $this->actor->connect();
         $this->account_request_id = $con_account_request_id;
@@ -109,6 +115,15 @@ class RequestPair {
             }
         }
         return array_as_text_list(array_unique($services_array));
+    }
+
+    public function as_list_table_row() {
+        $html = table_keyval( 
+                    $this->account_request['forenames'] . " " . 
+                    $this->account_request['user_surname'],
+                    $this->get_approval_link() 
+                );
+        return $html;
     }
 
     public function as_table() {
@@ -205,7 +220,7 @@ try{
 
     $request_pair = new RequestPair($req_account_request_id, $req_project_id);
     if ($request_pair->is_valid() == FALSE) {
-        echo "<h4>Invalid Entry Requested. If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
+        echo "<h4>Invalid Request. If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
 
         if ($request_pair->can_be_approved_by($current_user)) {
