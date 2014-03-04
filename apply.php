@@ -1,4 +1,6 @@
 <?php
+    include "auth_user_replacement.php";
+
     $page_title = "Request User Account";
     include "header.php";
 ?>
@@ -7,7 +9,6 @@
 </script>
 <!-- Begin form -->
 <?php
-    $current_user = $_SERVER['PHP_AUTH_USER'];
     include "sqlactor.php";
     $actor = new SQLActor();
     $actor->connect();
@@ -32,7 +33,7 @@
                         name="username" 
                         title="Your existing UCL userid." 
                         readonly 
-                        value="<?php echo "$current_user" ?>"
+                        value="<?php echo "$current_username" ?>"
                         pattern="[A-Za-z0-9]{7}"
                     />
                 </td>

@@ -1,4 +1,5 @@
 <?php
+include "auth_user_replacement.php";
 
 $page_title = "View Account Request";
 include "header.php";
@@ -205,10 +206,6 @@ class User {
         return $this->username;
     }
 }
-
-
-//$current_username = $_SERVER['PHP_AUTH_USER'];
-$current_username = "uccaiki";
 
 $req_account_request_id = $_GET['ida'];
 $req_project_id         = $_GET['idp'];
