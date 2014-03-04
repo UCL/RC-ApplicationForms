@@ -33,7 +33,11 @@ try {
             $request['project']['created_id'] = $creation_result['project_request_id']; 
             $request['consortium_name'] = $actor->get_consortium_name($request['project']['consortium_id']);
 
-            $actor->mark_request_status($request, $request['username'], 'submitted', "automatically");
+            $actor->mark_request_status($request['created_id'], 
+                                        $request['project']['created_id'],
+                                        $request['username'], 
+                                        'submitted', 
+                                        "automatically");
 
             $addresses_to_mail = $actor->get_consortium_leaders_to_mail($request['project']['consortium_id']);
 

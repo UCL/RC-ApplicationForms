@@ -56,11 +56,31 @@ class RequestPair {
         }
     }
 
-    public function approve_by ($user) {
+    public function approve_by ($user, $comments="") {
         if (! $this->can_be_approved_by($user)) {
             die("Permissions error.\n");
         } else {
-            return $this->actor->approve_request($this->account_request_id, $this->project_id, $user->username());
+            return $this->actor->mark_request_status(
+                $this->account_request_id,
+                $this->project_id,
+                $user->username(),
+                "approved",
+                $comments
+                );
+        }
+    }
+
+    public function decline_by ($user, $comments="") {
+        if (! $this->can_be_approved_by($user)) {
+            die("Permissions error.\n");
+        } else {
+            return $this->actor->mark_request_status(
+                $this->account_request_id,
+                $this->project_id,
+                $user->username(),
+                "declined",
+                $comments
+                );
         }
     }
 
@@ -207,9 +227,24 @@ class User {
     }
 }
 
-$req_account_request_id = $_GET['ida'];
-$req_project_id         = $_GET['idp'];
-$req_action             = $_GET["action"];
+$req_method = $_SERVER['REQUEST_METHOD'];
+
+if ($req_method == "POST") {
+    $req_account_request_id = $_POST['account_request_id'];
+    $req_project_id         = $_POST['project_id'];
+    $req_action             = $_POST['action_choice'];
+    $post_comments          = $_POST['comments'];
+} elseif ($req_method == "GET") {
+    $req_account_request_id = $_GET['ida'];
+    $req_project_id         = $_GET['idp'];
+    $req_action             = $_GET["action"];
+    $post_comments          = "(via a direct link)";
+} else {
+    die("Please stop trying to break our form.\n");
+}
+
+
+
 
 try{
     $actor = new SQLActor();
@@ -217,16 +252,25 @@ try{
 
     $request_pair = new RequestPair($req_account_request_id, $req_project_id);
     if ($request_pair->is_valid() == FALSE) {
-        echo "<h4>Invalid Request. If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
+        echo "<h4>Invalid Request [{$req_account_request_id},{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
 
         if ($request_pair->can_be_approved_by($current_user)) {
             if ($req_action == "approve") {
-                $result = $request_pair->approve_by($current_user);
+                $result = $request_pair->approve_by($current_user, $post_comments);
+                $mail_template_name = "new_account_request_approval";
+                $taking_action = TRUE;
+            } elseif ($req_action == "decline") {
+                $result = $request_pair->decline_by($current_user, $post_comments);
+                $mail_template_name = "new_account_request_declined";
+                $taking_action = TRUE;
+            }
+
+            if ($taking_action == TRUE) {
                 if ($result == TRUE) {
                     $mailer = new MailMailer();
                     $mail_result = $mailer->send_mail(
-                                                "new_account_request_approval", 
+                                                $mail_template_name,
                                                 $request_pair->user_email(), 
                                                 array('recommendations'=>
                                                   $request_pair->services_text_from_work())
@@ -237,11 +281,11 @@ try{
                         $mail_not_sent = "";
                     }
                     $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
-                                    "Request Approved{$mail_not_sent}".
+                                    "Request {$req_action}d{$mail_not_sent}".
                                     "</div>";
                 } elseif ($result == FALSE) {
                     $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
-                                    "There was an error approving the request. ".
+                                    "There was an error updating the request. ".
                                     "Please contact rc-support@ucl.ac.uk.".
                                     "</div>";
                 }
@@ -249,7 +293,52 @@ try{
             
             if ($request_pair->last_status_text() == "submitted") { 
                 $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
-                                $request_pair->get_approval_link() .
+                                "   <form id=\"application_form\"" . 
+                                "          action=\"list.php\" " .
+                                "          method=\"post\"       " .
+                                "          enctype=\"multipart/form-data\" ".
+                                "     > " .
+                                "   <input type=\"hidden\" " .
+                                "          name=\"account_request_id\" " .
+                                "          value=\"" . $req_account_request_id . "\" " .
+                                "    />" .
+                                "   <input type=\"hidden\" " .
+                                "          name=\"project_id\" " .
+                                "          value=\"" . $req_project_id . "\" " .
+                                "    />" .
+                                "   <table style='margin-left:auto;margin-right:auto;'>" .
+                                "   <tr><td>" .
+                                "   <label for=\"approve_radio\"> " .
+                                "      <input type=\"radio\" " .
+                                "             id=\"approve_radio\" " .
+                                "             name=\"action_choice\" " . 
+                                "             value=\"approve\"> " .
+                                "         Approve" .
+                                "   </label>" .
+                                "   </td><td>" .
+                                "   <label for=\"decline_radio\"> " .
+                                "      <input type=\"radio\" " .
+                                "             id=\"decline_radio\" " .
+                                "             name=\"action_choice\" " . 
+                                "             value=\"decline\"> " .
+                                "         Decline" .
+                                "   </label>" .
+                                "   </td></tr>" .
+                                "   <tr><td colspan=2>" .
+                                "   <textarea name=\"comments\" " .
+                                "             rows=2 " .
+                                "             cols=60 " . 
+                                "             placeholder=\"Please enter any additional comments here." .
+                                " These will not be seen by the applicant.\" " .
+                                "    ></textarea>" .
+                                "   </td></tr><tr><td colspan=2>" .
+                                "   <input type=\"submit\" " .
+                                "          id=\"form_submit_button\" " .
+                                "          value=\"Submit\" " .
+                                "          title=\"Submit approve/decline.\" " .
+                                "    />" .
+                                "   </td></tr></table>" .
+                                "   </form>" .
                                 "</div>";
             }
         } else {
@@ -265,6 +354,9 @@ try{
             case "approved":
                 echo "<p class='p'>This request was approved on: ".$request_pair->last_status_time()."</p>";
                 break;
+            case "declined":
+                echo "<p class='p'>This request was declined on: ".$request_pair->last_status_time()."</p>";
+                break;
             case "expired":
                 echo "<p class='p'>This project expired on: ".$request_pair->last_status_time()."</p>";
                 break;
@@ -272,7 +364,9 @@ try{
                 echo "<p class='p'>This request was marked as broken on: ".$request_pair->last_status_time()."</p>";
                 break;
             default:
-                echo "<h4>This request is in an unexpected state: {$request_pair->last_status_text()}. Please contact rc-support@ucl.ac.uk and let them know.</h4>";
+                echo "<h4>This request is in an unexpected state: ". 
+                     htmlspecialchars( $request_pair->last_status_text() ) . 
+                     " Please contact rc-support@ucl.ac.uk and let them know.</h4>";
         }
 
         echo $approval_div;

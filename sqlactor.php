@@ -74,7 +74,7 @@ class SQLActor {
         return $dbh->fetch();
     }
 
-    public function approve_request($account_id, $project_id, $user) {
+    public function approve_request($account_id, $project_id, $user, $comments="") {
         // Should mark a thing as approved.
         // Mail should happen elsewhere.
         $dbh = $this->dbc->prepare(
@@ -86,7 +86,7 @@ class SQLActor {
         $dbh->bindValue(2, $project_id, PDO::PARAM_INT);
         $dbh->bindValue(3, $this->get_event_id_by_name("approved"));
         $dbh->bindValue(4, $user);
-        $dbh->bindValue(5, "");
+        $dbh->bindValue(5, $comments);
         return $dbh->execute();
     }
 
@@ -405,7 +405,7 @@ class SQLActor {
     }
 
 
-    function mark_request_status($request, $acting_user, $status_string, $comment) {
+    function mark_request_status($account_request_id, $project_id, $acting_user, $status_string, $comment) {
         $status_id = $this->get_status_id($status_string);
 
         $dbh = $this->dbc->prepare(
@@ -415,8 +415,8 @@ class SQLActor {
             "(:account_id, :project_id, :event_type_id, :acting_user, :with_comment)"
         );
 
-        $dbh->bindParam(":account_id", $request['created_id']);
-        $dbh->bindParam(":project_id", $request['project']['created_id']);
+        $dbh->bindParam(":account_id", $account_request_id);
+        $dbh->bindParam(":project_id", $project_id);
         $dbh->bindParam(":event_type_id", $status_id);
         $dbh->bindParam(":acting_user", $acting_user);
         $dbh->bindParam(":with_comment", $comment);
