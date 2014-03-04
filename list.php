@@ -100,15 +100,15 @@ class RequestPair {
     public function services_text_from_work() {
         $services_array = array();
         $work_service_mapping = array(
-            'work_type_basic' => 'Legion',
-            'work_type_array' => 'Legion',
+            'work_type_basic'       => 'Legion',
+            'work_type_array'       => 'Legion',
             'work_type_multithread' => 'Legion',
             'work_type_all_the_ram' => 'Legion',
-            'work_type_small_mpi' => 'Legion', 
-            'work_type_mid_mpi' => 'Iridis',
-            'work_type_large_mpi' => 'Iridis',
-            'work_type_small_gpu' => 'Emerald',
-            'work_type_large_gpu' => 'Emerald'
+            'work_type_small_mpi'   => 'Legion',
+            'work_type_mid_mpi'     => 'Iridis',
+            'work_type_large_mpi'   => 'Iridis',
+            'work_type_small_gpu'   => 'Emerald',
+            'work_type_large_gpu'   => 'Emerald'
         );
         foreach ($work_service_mapping as $work_type => $service) {
             if ($this->project[$work_type] == TRUE) {

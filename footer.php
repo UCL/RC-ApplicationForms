@@ -114,8 +114,8 @@
 		</div>
 		<!--End Main body area-->
 		<!-- Start Footer --> 
-		<!--Start Footer-->
-<div id="footer"> 
+        <!--Start Footer-->
+<div id="footer" style="bottom:0px;width:966px;margin-left:auto;margin-right:auto;"> 
 	<div id="hr"> 
 		<hr class="no" /> 
 	</div> 
@@ -157,8 +157,8 @@ document.write(curr_year);
     src="http://www.ucl.ac.uk/isd/++resource++images/edit.gif"
     alt="" width="10" height="10" /></a>
 	</span>
-</div> 
 <!--End Footer-->
+</div> 
 
 </body>
 
