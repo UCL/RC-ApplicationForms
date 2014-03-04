@@ -35,11 +35,9 @@ REPLACE INTO Event_Types (id, event_type) VALUES
   (1, 'submitted'),
   (2, 'approved'),
   (3, 'declined'),
-  (4, 'mailed'),
-  (5, 'viewed'),
-  (6, 'broken'),
-  (7, 'expired'),
-  (8, 'deprecated')
+  (4, 'broken'),
+  (5, 'expired'),
+  (6, 'deprecated')
 ;
 
 REPLACE INTO User_Types (id, user_type) VALUES
