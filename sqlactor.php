@@ -74,22 +74,6 @@ class SQLActor {
         return $dbh->fetch();
     }
 
-    public function approve_request($account_id, $project_id, $user, $comments="") {
-        // Should mark a thing as approved.
-        // Mail should happen elsewhere.
-        $dbh = $this->dbc->prepare(
-            "INSERT INTO Request_Progress ".
-            " (account_id, project_id, event_type_id, acting_user, with_comment) ".
-            " VALUES (?, ?, ?, ?, ?)"
-        );
-        $dbh->bindValue(1, $account_id, PDO::PARAM_INT);
-        $dbh->bindValue(2, $project_id, PDO::PARAM_INT);
-        $dbh->bindValue(3, $this->get_event_id_by_name("approved"));
-        $dbh->bindValue(4, $user);
-        $dbh->bindValue(5, $comments);
-        return $dbh->execute();
-    }
-
     public function get_last_status_info($project_id) {
         // Should return the current status (textual) of a request.
         $dbh = $this->dbc->prepare(
