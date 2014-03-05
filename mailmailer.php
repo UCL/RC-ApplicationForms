@@ -20,11 +20,13 @@ class MailMailer {
             ),
             "rcps_notify_request_approval" => array (
                 'subject' => "AppForm Req Notify: {:user_username} approved in {:consortium}",
-                'body'    => file_get_contents("rcps_notify_request_approval.txt")
+                'body'    => file_get_contents("rcps_notify_request_approval.txt"),
+                'override_replyto' => "{:acting_user_address}"
             ),
             "rcps_notify_request_declined" => array (
                 'subject' => "AppForm Req Notify: {:user_username} declined by {:acting_user}",
-                'body'    => file_get_contents("rcps_notify_request_declined.txt")
+                'body'    => file_get_contents("rcps_notify_request_declined.txt"),
+                'override_replyto' => "{:acting_user_address}"
             )
         );
 
@@ -68,8 +70,12 @@ class MailMailer {
         $subject = $this->template_part_process($template['subject'],$info);
         $body    = $this->template_part_process($template['body'],$info);
         $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= "Reply-to: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
         $headers .= "From: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
+        if (array_key_exists($template, 'override_replyto')) {
+            $headers .= $this->template_part_process($template['override_replyto'], $info);
+        } else {
+            $headers .= "Reply-to: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
+        }
 
         return mail($to, $subject, $body, $headers);
     }

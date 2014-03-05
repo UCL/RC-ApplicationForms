@@ -297,6 +297,7 @@ try{
                                                 "rc-support@ucl.ac.uk",
                                                 array('acting_user' => $current_user->full_name(),
                                                       'acting_user_address' => $current_user->email_address(),
+                                                      'override_replyto'    => $current_user->email_address(),
                                                       'comments'    => $post_comments,
                                                       'account_request_id'=> $req_account_request_id,
                                                       'project_id'  => $req_project_id,
