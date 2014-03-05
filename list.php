@@ -300,6 +300,7 @@ try{
                                                       'comments'    => $post_comments,
                                                       'account_request_id'=> $req_account_request_id,
                                                       'project_id'  => $req_project_id,
+                                                      'request_user'=> $request_pair->owner(),
                                                       'consortium'  => $request_pair->consortium(),
                                                       'view_link'   => $request_pair->get_view_link(),
                                                       'action'      => $req_action,
