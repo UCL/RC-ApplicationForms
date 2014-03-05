@@ -17,6 +17,14 @@ class MailMailer {
             "new_account_request_approval" => array (
                 'subject' => "RCPS: Request Approved",
                 'body'    => file_get_contents("new_account_request_approval.txt")
+            ),
+            "rcps_notify_request_approval" => array (
+                'subject' => "AppForm Req Notify: {:user_username} approved in {:consortium}",
+                'body'    => file_get_contents("rcps_notify_request_approval.txt")
+            ),
+            "rcps_notify_request_declined" => array (
+                'subject' => "AppForm Req Notify: {:user_username} declined by {:acting_user}",
+                'body'    => file_get_contents("rcps_notify_request_declined.txt")
             )
         );
 

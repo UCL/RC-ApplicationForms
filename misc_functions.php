@@ -1,6 +1,6 @@
 <?php
 
-function array_as_text_list($array_in) {
+function array_as_text_list($array_in, $conjunction=" and ") {
     switch (count($array_in)) {
         case 0:
             return "";
@@ -9,11 +9,11 @@ function array_as_text_list($array_in) {
             return array_pop($array_in);
             break;
         case 2:
-            return array_shift($array_in) . " and " . array_shift($array_in);
+            return array_shift($array_in) . $conjunction . array_shift($array_in);
             break;
         default:
             //Oxford comma FTW
-            return implode(", ", array_slice($array_in, 0, -1)) . ", and " . array_pop($array_in);
+            return implode(", ", array_slice($array_in, 0, -1)) . "," . $conjunction . array_pop($array_in);
     }
 };
 
@@ -24,6 +24,8 @@ function test_array_as_text_list() {
     assert ("one and two" == array_as_text_list(array('one','two')));
     assert ("one, two, and three" == array_as_text_list(array('one','two','three')));
     assert ("one, two, three, and four" == array_as_text_list(array('one', 'two', 'three', 'four')));
+    assert ("one, two, or three" == array_as_text_list(array('one','two','three'), " or "));
+    assert ("one, two, three, or four" == array_as_text_list(array('one', 'two', 'three', 'four'), " or "));
     return TRUE;
 }
 

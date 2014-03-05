@@ -116,6 +116,13 @@ class RequestPair {
                "&action=approve".
                "\">Approve this Request</a>\n";
     }
+    
+    public function get_view_link() {
+        return "<a href=\"".
+               "list.php?ida=" . $this->account_request_id .
+               "&idp=" . $this->project_id .
+               "\">Approve this Request</a>\n";
+    }
 
     public function services_text_from_work() {
         $services_array = array();
@@ -225,6 +232,14 @@ class User {
     public function username() {
         return $this->username;
     }
+
+    public function full_name() {
+        return $this->full_name;
+    }
+
+    public function email_address() {
+        return $this->email_address;
+    }
 }
 
 $req_method = $_SERVER['REQUEST_METHOD'];
@@ -258,28 +273,48 @@ try{
         if ($request_pair->can_be_approved_by($current_user)) {
             if ($req_action == "approve") {
                 $result = $request_pair->approve_by($current_user, $post_comments);
-                $mail_template_name = "new_account_request_approval";
+                $user_mail_template_name = "new_account_request_approval";
+                $rcps_mail_template_name = "rcps_notify_request_approval";
                 $taking_action = TRUE;
             } elseif ($req_action == "decline") {
                 $result = $request_pair->decline_by($current_user, $post_comments);
-                $mail_template_name = "new_account_request_declined";
+                $user_mail_template_name = "new_account_request_declined";
+                $rcps_mail_template_name = "rcps_notify_request_declined";
                 $taking_action = TRUE;
             }
 
             if ($taking_action == TRUE) {
                 if ($result == TRUE) {
                     $mailer = new MailMailer();
-                    $mail_result = $mailer->send_mail(
-                                                $mail_template_name,
+                    $user_mail_result = $mailer->send_mail(
+                                                $user_mail_template_name,
                                                 $request_pair->user_email(), 
                                                 array('recommendations'=>
                                                   $request_pair->services_text_from_work())
                                               );
-                    if ($mail_result != TRUE) {
-                        $mail_not_sent = " but notification mails could not be sent. Please contact rc-support@ucl.ac.uk.";
-                    } else {
-                        $mail_not_sent = "";
-                    }
+                    $rcps_mail_result = $mailer->send_mail(
+                                                $rcps_mail_template_name,
+                                                "rc-support@ucl.ac.uk",
+                                                array('acting_user' => $current_user->full_name(),
+                                                      'acting_user_address' => $current_user->email_address(),
+                                                      'comments'    => $post_comments,
+                                                      'account_request_id'=> $req_account_request_id,
+                                                      'project_id'  => $req_project_id,
+                                                      'consortium'  => $request_pair->consortium(),
+                                                      'view_link'   => $request_pair->get_view_link(),
+                                                      'action'      => $req_action,
+                                                      'recommendations' => $request_pair->services_text_from_work()
+                                                  );
+                    $mail_not_sent = "";
+                    $mail_not_sent_array = array();
+                    $overall_mail_result = $user_mail_result && $rcps_mail_result;
+                    if ($user_mail_result != TRUE) { array_pop($mail_not_sent_array, "the user"); }
+                    if ($rcps_mail_result != TRUE) { array_pop($mail_not_sent_array, "RC Support"); }
+                    if ($overall_mail_result != TRUE) {
+                        $mail_not_sent = " but a notification mail could not be sent to ".
+                                         array_as_text_list($mail_not_sent_array, " or ") . 
+                                         "Please contact rc-support@ucl.ac.uk.";
+                    } 
                     $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
                                     "Request {$req_action}d{$mail_not_sent}".
                                     "</div>";

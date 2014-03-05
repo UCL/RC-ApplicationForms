@@ -1,0 +1,11 @@
+An account application has been approved.
+
+Consortium: {:consortium}
+User name : {:request_user}
+
+{:view_link}
+
+Comments from: {:acting_user} 
+-----------------------------
+{:comments}
+
