@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php if (! isset($page_title)) { $page_title = ""; };
 <html>
 <head>
 <meta charset="UTF-8">
