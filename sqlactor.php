@@ -10,7 +10,7 @@ class SQLActor {
     private $cache;
 
     public function __construct( ) {
-        $this->my_db_hostname = "127.0.0.1";
+        $this->my_db_hostname = "localhost";
         $this->my_db_name     = "test";
         $this->my_db_port     = "3306";
         $this->my_db_username = "root";
@@ -24,18 +24,23 @@ class SQLActor {
         // \PDO::ATTR_ERRMODE enables exceptions for errors.  This is optional but can be handy.
         // \PDO::ATTR_PERSISTENT disables persistent connections, which can cause concurrency issues in certain cases.  See "Gotchas".
         // \PDO::MYSQL_ATTR_INIT_COMMAND alerts the connection that we'll be passing UTF-8 data.  This may not be required depending on your configuration, but it'll save you headaches down the road if you're trying to store Unicode strings in your database.  See "Gotchas".
-        $this->dbc = new \PDO(
-            "mysql:host={$this->my_db_hostname};".
-            "por={$this->my_db_port};".
-            "dbname={$this->my_db_name}",
-            $this->my_db_username,
-            $this->my_db_password,
-            array(
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_PERSISTENT => false,
-                \PDO::MYSQL_ATTR_INIT_COMMAND => 'set names utf8mb4'
-            )
-        );
+        try {
+            $this->dbc = new \PDO(
+                "mysql:host={$this->my_db_hostname};".
+                "por={$this->my_db_port};".
+                "dbname={$this->my_db_name}",
+                $this->my_db_username,
+                $this->my_db_password,
+                array(
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::ATTR_PERSISTENT => false,
+                    \PDO::MYSQL_ATTR_INIT_COMMAND => 'set names utf8mb4'
+                )
+            );
+        } catch (\PDOException $e) {
+            echo "<h2>There was an error connecting to the database: " . htmlspecialchars($e->getMessage() . "</h2>";
+            throw new Exception($e->getMessage(), 0, $e);
+        }
     }
 
     public function disconnect() {
