@@ -5,12 +5,12 @@
 <meta charset="UTF-8">
 <title><?php echo $page_title;?></title>
 
-<link rel="shortcut icon" href="http://www.ucl.ac.uk/isd/++resource++images/favicon2.ico" />
-<link rel="stylesheet" href="http://www.ucl.ac.uk/isd/++resource++styles/default.css" type="text/css" media="screen" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/++resource++isd_styles/isd.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/++resource++isd_styles/isd-silva-doc-styles.css" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/++resource++isd_styles/isd-staff.css" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/local-styles.css" />
+<link rel="shortcut icon" href="https://www.ucl.ac.uk/isd/++resource++images/favicon2.ico" />
+<link rel="stylesheet" href="https://www.ucl.ac.uk/isd/++resource++styles/default.css" type="text/css" media="screen" />
+<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/++resource++isd_styles/isd.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/++resource++isd_styles/isd-silva-doc-styles.css" />
+<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/++resource++isd_styles/isd-staff.css" />
+<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/staff/research_services/research-computing/local-styles.css" />
 
 <style type="text/css">
 
@@ -41,7 +41,7 @@ div.subsection {
 		<p id="skip">
 			<a href="#leftcontent">
 				<img alt="Skip to site navigation"
-         src="http://www.ucl.ac.uk/isd/++resource++images/skip.gif" />
+         src="https://www.ucl.ac.uk/isd/++resource++images/skip.gif" />
 			</a>
 		</p>
 		<!-- Start banner and breadcrumbs --> 
@@ -60,7 +60,7 @@ div.subsection {
 		</div> 
 		<div id="logo_holder"> 
 			<div id="logo">
-				<a href="/"><img src="http://www.ucl.ac.uk/isd/++resource++images/ucl0112.gif"
+				<a href="/"><img src="https://www.ucl.ac.uk/isd/++resource++images/ucl0112.gif"
                      alt="UCL Home" /></a>
 			</div> 
 		</div> 
@@ -72,12 +72,12 @@ div.subsection {
 <div id="ucl0112"> 
 	<!--Start Search box-->
 	<div id="search"> 
-        <form action="http://search2.ucl.ac.uk/search/search.cgi" method="get" id="googlesearch">
+        <form action="https://search2.ucl.ac.uk/search/search.cgi" method="get" id="googlesearch">
             <input placeholder="Search UCL" name="query" id="query" type="text" value="" accesskey="q" value="Search UCL">
             <input type="hidden" name="collection" value="ucl-public-meta">
             <!--input type="submit" value="GO" class="submit" name="Submit"-->
         </form>
-		<!--form name="googlesearch" id="googlesearch" method="get" action="http://search.ucl.ac.uk/search">
+		<!--form name="googlesearch" id="googlesearch" method="get" action="https://search.ucl.ac.uk/search">
                 <label for="q"></label>
                 <input type="text" name="q" id="q" value="Search UCL" tabindex="1" accesskey="q" onclick="document.forms[0].q.value=''" />
                 <label for="sa"></label>
@@ -100,27 +100,27 @@ div.subsection {
 
 <ul>
   <li>
-    <a href="http://www.ucl.ac.uk">UCL Home</a>
+    <a href="https://www.ucl.ac.uk">UCL Home</a>
     <!--[if gte IE 5]>&raquo;<![endif]-->
   </li>
   <li>
-    <a href="http://www.ucl.ac.uk/isd">ISD</a>
+    <a href="https://www.ucl.ac.uk/isd">ISD</a>
     <!--[if gte IE 5]>&raquo;<![endif]-->
   </li>
   <li>
-    <a href="http://www.ucl.ac.uk/isd/staff">Staff</a>
+    <a href="https://www.ucl.ac.uk/isd/staff">Staff</a>
     <!--[if gte IE 5]>&raquo;<![endif]-->
   </li>
   <li>
-    <a href="http://www.ucl.ac.uk/isd/staff/research_services">RITS</a>
+    <a href="https://www.ucl.ac.uk/isd/staff/research_services">RITS</a>
     <!--[if gte IE 5]>&raquo;<![endif]-->
   </li>
   <li>
-    <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing">Research Computing</a>
+    <a href="https://www.ucl.ac.uk/isd/staff/research_services/research-computing">Research Computing</a>
     <!--[if gte IE 5]>&raquo;<![endif]-->
   </li>
   <li>
-  <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account"><?php echo $page_title;?></a>
+  <a href="https://www.ucl.ac.uk/isd/staff/research_services/research-computing/account"><?php echo $page_title;?></a>
     
   </li>
 </ul>
