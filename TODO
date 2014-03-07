@@ -1,3 +1,6 @@
 
 * Add exception handling to SQLActor, esp connect()
+* Handle relative to absolute paths correctly for, e.g. generating email links
+  --> See: https://github.com/monkeysuffrage/phpuri
+
 
