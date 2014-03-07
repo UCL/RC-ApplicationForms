@@ -109,6 +109,7 @@ class RequestPair {
         return $this->actor->get_last_status_user($this->project_id);
     }
 
+
     public function get_approval_link() {
         return "<a href=\"".
                "list.php?ida=" . $this->account_request_id .
@@ -149,7 +150,7 @@ class RequestPair {
         $html = table_keyval( 
                     $this->account_request['forenames'] . " " . 
                     $this->account_request['user_surname'],
-                    $this->get_approval_link() 
+                    $this->get_approval_link()
                 );
         return $html;
     }
@@ -267,7 +268,7 @@ try{
 
     $request_pair = new RequestPair($req_account_request_id, $req_project_id);
     if ($request_pair->is_valid() == FALSE) {
-        echo "<h4>Invalid Request [{$req_account_request_id},{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
+        echo "<h4>Invalid Request [Acct ID:{$req_account_request_id}, Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
 
         if ($request_pair->can_be_approved_by($current_user)) {
@@ -303,7 +304,6 @@ try{
                                                       'project_id'  => $req_project_id,
                                                       'request_user'=> $request_pair->owner(),
                                                       'consortium'  => $request_pair->consortium(),
-                                                      'view_link'   => $request_pair->get_view_link(),
                                                       'action'      => $req_action,
                                                       'recommendations' => $request_pair->services_text_from_work()
                                                   )

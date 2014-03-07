@@ -3,9 +3,10 @@ An account application has been approved.
 Consortium: {:consortium}
 User name : {:request_user}
 
-{:view_link}
+Link: http://avon.ucl.ac.uk/acct/list.php?ida={:account_request_id}&idp={:project_id}
 
 Comments from: {:acting_user} 
 -----------------------------
 {:comments}
 
+[This mail was automatically generated.]
