@@ -22,7 +22,7 @@ Other, non-visible files include:
 * `mailmailer.php` - handles all mail sending and templating
 * `header.php` and `footer.php` - are included to create the UCL page style
 * `misc_functions.php` - little bitty functions that didn't fit anywhere else
-* `auth_user_replacement.php` - a shim to handle the dev environment where I didn't have httpd auth set up
+* `auth_user_shim.php` - a shim to handle the dev environment where I didn't have httpd auth set up
 
 ### Initial Application - `apply.php`
 
