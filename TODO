@@ -2,5 +2,5 @@
 * Add exception handling to SQLActor, esp connect()
 * Handle relative to absolute paths correctly for, e.g. generating email links
   --> See: https://github.com/monkeysuffrage/phpuri
-
+* Make Javascript hide/set/disable certain fields depending on user-type in apply.php
 
