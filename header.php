@@ -5,12 +5,12 @@
 <meta charset="UTF-8">
 <title><?php echo $page_title;?></title>
 
-<link rel="shortcut icon" href="http://www.ucl.ac.uk/isd/++resource++images/favicon2.ico" />
-<link rel="stylesheet" href="http://www.ucl.ac.uk/isd/++resource++styles/default.css" type="text/css" media="screen" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/++resource++isd_styles/isd.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/++resource++isd_styles/isd-silva-doc-styles.css" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/++resource++isd_styles/isd-staff.css" />
-<link rel="stylesheet" type="text/css" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/local-styles.css" />
+<link rel="shortcut icon" href="resources/favicon2.ico" />
+<link rel="stylesheet" href="resources/default.css" type="text/css" media="screen" />
+<link rel="stylesheet" type="text/css" href="resources/isd.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="resources/isd-silva-doc-styles.css" />
+<link rel="stylesheet" type="text/css" href="resources/isd-staff.css" />
+<link rel="stylesheet" type="text/css" href="resources/local-styles.css" />
 
 <style type="text/css">
 
@@ -41,7 +41,7 @@ div.subsection {
 		<p id="skip">
 			<a href="#leftcontent">
 				<img alt="Skip to site navigation"
-         src="http://www.ucl.ac.uk/isd/++resource++images/skip.gif" />
+         src="resources/skip.gif" />
 			</a>
 		</p>
 		<!-- Start banner and breadcrumbs --> 
@@ -60,7 +60,7 @@ div.subsection {
 		</div> 
 		<div id="logo_holder"> 
 			<div id="logo">
-				<a href="/"><img src="http://www.ucl.ac.uk/isd/++resource++images/ucl0112.gif"
+				<a href="/"><img src="resources/ucl0112.gif"
                      alt="UCL Home" /></a>
 			</div> 
 		</div> 

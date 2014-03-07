@@ -1,0 +1,239 @@
+/*Start Silva Document Styles*/
+#rendered-doc-area h2.heading{
+	font-size:1.1em;
+}
+#rendered-doc-area p.lead{
+color: #333333;
+font-weight: bold;
+}
+#rendered-doc-area p.p{
+/*font-size:0.7em;*/
+color: #333333;
+}
+#rendered-doc-area ul li p.p {
+color:#333333;
+font-size:1em;
+}
+#rendered-doc-area p.annotation{
+font-size:0.6em;
+}
+#rendered-doc-area h3.heading{
+font-size:1em;
+font-weight: bold;
+color: #202020;
+}
+#rendered-doc-area h4.heading{
+font-size:0.9em;
+font-weight: bold;
+color: #202020;
+}
+#rendered-doc-area h5.heading{
+font-size:0.8em;
+font-weight: bold;
+color: #202020;
+}
+#rendered-doc-area h6.heading{
+font-size:0.7em;
+font-weight: bold;
+color: #202020;
+}
+#rendered-doc-area h6.minor{
+font-size:0.7em;
+font-weight: bold;
+font-style: italic;
+color: #202020;
+}
+#rendered-doc-area pre.pre{
+font-family:courier;
+font-size:0.7em;
+color: #333333;
+}
+#rendered-doc-area p.p strong{
+color: #333333;
+font-weight: bold;
+}
+#rendered-doc-area p.p em{
+font-style: italic;
+}
+/* unvisited link */
+#rendered-doc-area p.p a:link{
+color: #CB3D01;
+}
+/* mouse over link */
+#rendered-doc-area p.p a:hover{
+
+}
+/* selected link */
+#rendered-doc-area p.p a:active{
+
+}
+/* visited link */
+#rendered-doc-area p.p a:visited{
+color: #CB3D01;
+}
+/*ordered list*/
+#rendered-doc-area ol{
+/*border: 1px solid #8C8D85;*/
+color: #333333;
+}
+#rendered-doc-area ol li{
+
+}
+#rendered-doc-area ol li a:link{
+color: #CB3D01;
+}
+#rendered-doc-area ol li a:hover{
+
+}
+#rendered-doc-area ol li a:active{
+
+}
+#rendered-doc-area ol li a:visited{
+color: #CB3D01;
+}
+/*unordered list*/
+#rendered-doc-area ul{
+color: #333333;
+}
+#rendered-doc-area ul li{
+
+}
+#rendered-doc-area ul li a:link{
+color: #CB3D01;
+}
+#rendered-doc-area ul li a:hover{
+
+}
+#rendered-doc-area ul li a:active{
+
+}
+#rendered-doc-area ul li a:visited{
+color: #CB3D01;
+}
+/*unordered list nobullet*/
+#rendered-doc-area ul.nobullet{
+color: #333333;
+}
+#rendered-doc-area ul.nobullet li{
+	margin: 5px 0 5px 0px !important;
+	margin: 5px 0 5px 0px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	font-size:0.8em;
+}
+#centercontent ul.nobullet li:first-child{
+	padding-left: 0px;
+	background: #fff url(../++resource++images/rule.gif) repeat-x left bottom;
+	font-weight: bold;
+}
+#rendered-doc-area ul.nobullet li a:link{
+
+}
+#rendered-doc-area ul.nobullet li a:hover{
+
+}
+#rendered-doc-area ul.nobullet li a:active{
+
+}
+#rendered-doc-area ul.nobullet li a:visited{
+
+}
+/*plain table*/
+#rendered-doc-area table.silvatable.plain {
+	/*border-width: 1px;*/
+	border-spacing: 0px;
+	/*border-style: solid;
+	border-color: #CCCCCC;*/
+	border-collapse: collapse;
+	background-color: white;
+}
+#rendered-doc-area table.silvatable.plain tr.rowheading {
+	border-width: 0px;
+	padding: 3px ;
+	border-style: none;
+	background-color: white;
+	-moz-border-radius: 0px;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+}
+#rendered-doc-area table.silvatable.plain td {
+	border-width: 0px;
+	padding: 3px;
+	border-style: none;;
+	background-color: white;
+	-moz-border-radius: 0px;
+}
+/*plain grey table*/
+#rendered-doc-area table.silvatable.list {
+	margin-top: 25px;
+	border-width: 0px;
+	border-spacing: 1px;
+	border-style: none;
+	border-color: #000000;
+	border-collapse: collapse;
+	background-color: #E7E4E0;
+}
+#rendered-doc-area table.silvatable.list tr.rowheading {
+	border-bottom: 1px dotted #000000;
+	padding:5px;
+	-moz-border-radius: 0px;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+}
+#rendered-doc-area table.silvatable.list td {
+	padding:5px;
+	border: none;
+	-moz-border-radius: 0px;
+	border-left: 1px dotted #000000;
+}
+#rendered-doc-area table.silvatable.list td:first-child {
+	border-left: none;
+}
+/*grid table*/
+#rendered-doc-area table.silvatable.grid{
+		border-width: 0px;
+	border-spacing: 1px;
+	border-style: solid;
+	border-color: #8C8D85;
+	border-collapse: separate;
+}
+#rendered-doc-area table.silvatable.grid tr.odd{
+	background-color: #E7E4E0;
+	border-bottom:1px solid #CCCCCC;
+}
+#rendered-doc-area table.silvatable.grid tr.even{
+	border-bottom:1px solid #CCCCCC;
+}
+#rendered-doc-area table.silvatable.grid td {
+		border-width: 1px;
+	padding: 5px;
+	border-style: dotted;
+	border-color: #8C8D85;
+	-moz-border-radius: 2px 2px 2px 2px;
+}
+/*datagrid table*/
+#rendered-doc-area table.silvatable.datagrid{
+	border:1px solid #000000;
+	border-collapse:collapse;
+	background-color:transparent;
+}
+#rendered-doc-area table.silvatable.datagrid td {
+	border:1px solid #000000;
+}
+/*#rendered-doc-area table.silvatable.datagrid tr.odd{
+
+}
+#rendered-doc-area table.silvatable.datagrid tr.even{
+
+}*/
+
+/*all table headers*/
+#rendered-doc-area table.silvatable tr.rowheading{
+font-size: 1em;
+font-weight: bold;
+text-align: center;
+}
+
+/*End Silva Document Styles*/
