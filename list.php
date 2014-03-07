@@ -306,7 +306,8 @@ try{
                                                       'view_link'   => $request_pair->get_view_link(),
                                                       'action'      => $req_action,
                                                       'recommendations' => $request_pair->services_text_from_work()
-                                                  );
+                                                  )
+                                              );
                     $mail_not_sent = "";
                     $mail_not_sent_array = array();
                     $overall_mail_result = $user_mail_result && $rcps_mail_result;

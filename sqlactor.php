@@ -38,7 +38,7 @@ class SQLActor {
                 )
             );
         } catch (\PDOException $e) {
-            echo "<h2>There was an error connecting to the database: " . htmlspecialchars($e->getMessage() . "</h2>";
+            echo "<h2>There was an error connecting to the database: " . htmlspecialchars($e->getMessage()) . "</h2>";
             throw new Exception($e->getMessage(), 0, $e);
         }
     }

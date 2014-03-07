@@ -373,7 +373,7 @@
                     rows=8
                     cols=70
                     title="Please provide a list of any software you know you'll need, with approximate versions where known."
-                    placeholder="Gaussian 04.f, VASP 5.2.19, Braniac 5.0"
+                    placeholder="E.g. Gaussian 04.f, VASP 5.2.19, Braniac 5.0"
                 ></textarea>
 
             <h5>Collaboration</h5>
