@@ -1,0 +1,6 @@
+
+* Fix invalid request number reporting
+* Unhtml links in the mails
+* Fix URLs of same links
+* Add exception handling to SQLActor, esp connect()
+
