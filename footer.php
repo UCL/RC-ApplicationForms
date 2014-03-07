@@ -8,7 +8,7 @@
     <div class="isd-logo-holder">
     <a href="http://www.ucl.ac.uk/isd"><img
     alt="Information Services Division" id="isd_logo"
-    src="http://www.ucl.ac.uk/isd/staff/research_services/isd-logo" /></a>
+    src="https://www.ucl.ac.uk/isd/staff/research_services/isd-logo" /></a>
     </div>
 <!--Insert a page template menu if one is present-->
 
@@ -58,9 +58,9 @@
 <div id="rightcontent" class="container"> 
 <div class="isd-logo-holder"><a
     title="InfoBase - The A to Z of ISD"
-    href=" http://www.ucl.ac.uk/isd/staff/research_services/content-objects/a-z-link">
+    href=" https://www.ucl.ac.uk/isd/staff/research_services/content-objects/a-z-link">
 		<img alt="InfoBase - The A to Z of ISD" id="infobase_logo"
-       src="http://www.ucl.ac.uk/isd/staff/research_services/infobase-logo" /></a></div>
+       src="https://www.ucl.ac.uk/isd/staff/research_services/infobase-logo" /></a></div>
 <div class="textsize"> 
 		  <!--ul class="textsizelist"> 
 			<li class="smalltext"><a href="#" onclick="setActiveStyleSheet('small'); return false;" onkeypress="setActiveStyleSheet('small'); return false;" onfocus="setActiveStyleSheet('small'); return false;">A</a></li> 
@@ -80,18 +80,18 @@
 				<!--insert index_right-->
 				<div id="right-column"><h2 class="heading">Quick Links</h2>
 <ul class="nobullet">
-<li><a href="http://www.ucl.ac.uk/isd/common/servicedesk" target="_self">ISD Service Desk</a></li>
+<li><a href="https://www.ucl.ac.uk/isd/common/servicedesk" target="_self">ISD Service Desk</a></li>
 <li><a href="https://myaccount.ucl.ac.uk/pw/" target="_self">Change password<br /></a></li>
 <li><a href="https://myaccount.ucl.ac.uk/" target="_self">MyAccount<br /></a></li>
 <li><a href="http://www.ucl.ac.uk/isd/live_login" target="_self">live@ucl webmail login</a></li>
 <li><a href="https://www.squirrelmail.ucl.ac.uk/" target="_self">Squirrelmail login</a></li>
 <li><a href="https://moodle.ucl.ac.uk/" target="_self">Moodle login</a></li>
 <li><a href="https://www.ucl.ac.uk/isd-extra/common/windows/wts-web" target="_self">WTS login (staff)</a></li>
-<li><a href="http://www.ucl.ac.uk/isd/common/ucldesktop/anywhere-user-guide/web-access-guide" target="_self">Desktop@UCL login<br /></a></li>
+<li><a href="https://www.ucl.ac.uk/isd/common/ucldesktop/anywhere-user-guide/web-access-guide" target="_self">Desktop@UCL login<br /></a></li>
 <li><a href="https://www.ucl.ac.uk/isd-extra/common/filestore/quota/" target="_self">Check disk quota</a></li>
 <li><a href="https://www.ucl.ac.uk/isd-extra/staff/mail/out-of-office/" target="_self">Set out-of-office email</a></li>
-<li><a href="http://www.ucl.ac.uk/isd/common/print/print-charges" target="_self">Check print quota</a></li>
-<li><a href="http://www.ucl.ac.uk/isd/news" target="_self">Service news</a></li>
+<li><a href="https://www.ucl.ac.uk/isd/common/print/print-charges" target="_self">Check print quota</a></li>
+<li><a href="https://www.ucl.ac.uk/isd/news" target="_self">Service news</a></li>
 </ul>
 <noscript></noscript>
 
@@ -127,7 +127,7 @@
 	</div>
 	<!--End accessability toolbar-->
 	<p class="contact">University College London - Gower Street - London - WC1E 6BT - <img
-    src="http://www.ucl.ac.uk/isd/++resource++images/phone"
+    src="https://www.ucl.ac.uk/isd/++resource++images/phone"
     width="13" height="9" id="phone" alt="Telephone:" /> +44 (0)20 7679 2000 - Copyright &copy; 1999-<script type="text/javascript">
 <!--
 var d = new Date();
@@ -149,14 +149,8 @@ document.write(curr_year);
 	</div> 
 	<br /> 
 	<a href="http://www.google.com/"><img
-    src="http://www.ucl.ac.uk/isd/++resource++images/google_logo_small"
+    src="https://www.ucl.ac.uk/isd/++resource++images/google_logo_small"
     alt="Search by Google" id="google_image" /></a> 
-	<span id="edit">
-		<a href=" http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/edit"><img
-    id="edit_button"
-    src="http://www.ucl.ac.uk/isd/++resource++images/edit.gif"
-    alt="" width="10" height="10" /></a>
-	</span>
 <!--End Footer-->
 </div> 
 
