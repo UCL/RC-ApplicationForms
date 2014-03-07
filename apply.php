@@ -173,7 +173,7 @@
         <textarea 
             name="experience_text" 
             rows=8 
-            cols=75 
+            cols=70
             title="Please provide a summary of your previous HPC/UNIX/Linux experience here." 
             placeholder="E.g. Spent X years using Y system to do Z at Place. Am familiar with systems A and B, and programs C and D."
         ></textarea>
