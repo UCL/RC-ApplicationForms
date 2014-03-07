@@ -1,5 +1,5 @@
 <?php
-include "auth_user_replacement.php";
+include "auth_user_shim.php";
 
 $page_title = "View Account Request";
 include "header.php";
