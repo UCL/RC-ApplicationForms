@@ -95,7 +95,7 @@ try{
             if ($request_pair->last_status_text() == "submitted") { 
                 $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
                                 "   <form id=\"application_form\"" . 
-                                "          action=\"list.php\" " .
+                                "          action=\"view.php\" " .
                                 "          method=\"post\"       " .
                                 "          enctype=\"multipart/form-data\" ".
                                 "     > " .
