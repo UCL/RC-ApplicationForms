@@ -1,8 +1,8 @@
 <?php
-    include "auth_user_shim.php";
+    include_once "auth_user_shim.php";
 
     $page_title = "Request User Account";
-    include "header.php";
+    include_once "header.php";
 ?>
 <script type="text/javascript">
     document.write("\<script src='//ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' type='text/javascript'>\<\/script>");
@@ -463,12 +463,9 @@
         for (var i=0;i < institutes.length; i++) {
             checkboxes = document.getElementsByName(''.concat('project[checkboxes][is_collab_',institutes[i],']'));
             checkbox = checkboxes[0];
-            console.log('Czech box: ' + checkbox);
             if (checkbox.checked == true) {
-                console.log(''.concat('project[collab_',institutes[i],'_name]'));
                 name_fields = document.getElementsByName(''.concat('project[collab_',institutes[i],'_name]'));
                 name_field = name_fields[0];
-                console.log('Name_field ' + name_field);
                 if (institutes[i] != 'other') {
                     label = checkbox.attributes['collating_value'].value;
                 } else {

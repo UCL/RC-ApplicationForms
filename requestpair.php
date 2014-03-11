@@ -6,6 +6,8 @@
  * Time: 13:57
  */
 
+include_once "user.php";
+
 class RequestPair {
     private $account_request_id;
     private $project_id;
@@ -43,7 +45,7 @@ class RequestPair {
         return $this->valid;
     }
 
-    public function can_be_approved_by ($user) {
+    public function can_be_approved_by (User $user) {
         if ($user->is_superuser() ||
             $user->is_leader_for($this->project['consortium_id']) )
         {
@@ -53,7 +55,7 @@ class RequestPair {
         }
     }
 
-    public function approve_by ($user, $comments="") {
+    public function approve_by (User $user, $comments="") {
         if (! $this->can_be_approved_by($user)) {
             die("Permissions error.\n");
         } else {
@@ -67,7 +69,7 @@ class RequestPair {
         }
     }
 
-    public function decline_by ($user, $comments="") {
+    public function decline_by (User $user, $comments="") {
         if (! $this->can_be_approved_by($user)) {
             die("Permissions error.\n");
         } else {
@@ -106,6 +108,9 @@ class RequestPair {
         return $this->actor->get_last_status_user($this->project_id);
     }
 
+    public function last_status_comments() {
+        return $this->actor->get_last_status_comments($this->project_id);
+    }
 
     public function get_approval_link() {
         return "<a href=\"".

@@ -6,6 +6,8 @@
  * Time: 13:55
  */
 
+include_once "sqlactor.php";
+
 class User {
     private $id;
     private $username;

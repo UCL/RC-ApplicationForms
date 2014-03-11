@@ -82,7 +82,7 @@ class SQLActor {
     public function get_last_status_info($project_id) {
         // Should return the current status (textual) of a request.
         $dbh = $this->dbc->prepare(
-            "SELECT event_type,update_time,acting_user FROM Event_Types".
+            "SELECT event_type,update_time,acting_user,with_comment FROM Event_Types".
             " RIGHT JOIN Request_Progress".
             " ON (Request_Progress.event_type_id = Event_Types.id)".
             " WHERE Request_Progress.project_id=?".
@@ -108,6 +108,11 @@ class SQLActor {
     public function get_last_status_user($project_id) {
         $status_info = $this->get_last_status_info($project_id);
         return $status_info['acting_user'];
+    }
+
+    public function get_last_status_comments($project_id) {
+        $status_info = $this->get_last_status_info($project_id);
+        return $status_info['with_comment'];
     }
 
     public function get_account_request($account_request_id) {

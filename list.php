@@ -2,11 +2,11 @@
 include "auth_user_shim.php";
 
 $page_title = "View Account Request";
-include "header.php";
-include "misc_functions.php";
-include "mailmailer.php";
-include "user.php";
-include "requestpair.php";
+include_once "header.php";
+include_once "misc_functions.php";
+include_once "mailmailer.php";
+include_once "user.php";
+include_once "requestpair.php";
 
 
 $req_method = $_SERVER['REQUEST_METHOD'];
@@ -168,6 +168,14 @@ try{
                 echo "<h4>This request is in an unexpected state: ". 
                      htmlspecialchars( $request_pair->last_status_text() ) . 
                      " Please contact rc-support@ucl.ac.uk and let them know.</h4>";
+        }
+
+        if ($current_user->is_superuser()) {
+            echo "<p class='p'>This action was taken by " .
+                 $request_pair->last_status_user() .
+                 ", with comments: " .
+                 htmlspecialchars($this->last_status_comments()) .
+                 "</p>";
         }
 
         echo $approval_div;
