@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ian Kirker
- * Date: 11/03/14
- * Time: 13:57
- */
 
 include_once "user.php";
 
@@ -16,8 +10,8 @@ class RequestPair {
     private $actor;
     private $valid;
 
-    public function __construct($con_account_request_id, $con_project_id) {
-        if (is_null($con_account_request_id) || is_null($con_project_id)) {
+    public function __construct($con_project_id) {
+        if (is_null($con_project_id)) {
             // Shortcut
             $this->valid=FALSE;
             return;
@@ -25,10 +19,9 @@ class RequestPair {
 
         $this->actor=new SQLActor();
         $this->actor->connect();
-        $this->account_request_id = $con_account_request_id;
         $this->project_id = $con_project_id;
 
-        $request_pair = $this->actor->get_request_pair($this->account_request_id, $this->project_id);
+        $request_pair = $this->actor->get_request_pair_from_project_id($con_project_id);
 
         if ($request_pair == FALSE) {
             $this->valid=FALSE;
@@ -36,6 +29,7 @@ class RequestPair {
         } else {
             $this->account_request = $request_pair[0];
             $this->project = $request_pair[1];
+            $this->account_request_id = $this->account_request['id']; // Hack until further classified
             $this->valid=TRUE;
             return;
         }
@@ -114,7 +108,7 @@ class RequestPair {
 
     public function get_approval_link() {
         return "<a href=\"".
-        "list.php?ida=" . $this->account_request_id .
+        "view.php?ida=" . $this->account_request_id .
         "&idp=" . $this->project_id .
         "&action=approve".
         "\">Approve this Request</a>\n";
@@ -122,7 +116,7 @@ class RequestPair {
 
     public function get_view_link() {
         return "<a href=\"".
-        "list.php?ida=" . $this->account_request_id .
+        "view.php?ida=" . $this->account_request_id .
         "&idp=" . $this->project_id .
         "\">Approve this Request</a>\n";
     }

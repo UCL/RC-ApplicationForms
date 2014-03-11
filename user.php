@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ian Kirker
- * Date: 11/03/14
- * Time: 13:55
- */
 
 include_once "sqlactor.php";
 

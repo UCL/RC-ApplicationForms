@@ -131,13 +131,13 @@ class SQLActor {
         return $result;
     }
 
-    public function get_request_pair($account_request_id, $project_request_id) {
-        $project = $this->get_project_request($project_request_id);
+    public function get_request_pair_from_project_id($project_id) {
+        $project = $this->get_project_request($project_id);
         $account = $this->get_account_request($project['request_id']);
-        if ($project['request_id'] != $account_request_id) {
-            return FALSE;
-        } else {
+        if ( ($project != FALSE) && ($account != FALSE ) ) {
             return array($account,$project);
+        } else {
+            return FALSE;
         }
     }
 
