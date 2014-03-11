@@ -13,9 +13,9 @@ class User {
     private $actor;
 
     public function __construct($username) {
-        $actor = new SQLActor();
-        $actor->connect();
-        $user_info = $actor->get_user_info($username);
+        $this->actor = new SQLActor();
+        $this->actor->connect();
+        $user_info = $this->actor->get_user_info($username);
 
         if ($user_info == FALSE) {
             // ... then a user does not have any special permissions
