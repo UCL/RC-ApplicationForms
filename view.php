@@ -29,7 +29,7 @@ if ($req_method == "POST") {
 try{
     $current_user = new User($current_username);
 
-    $request_pair = new RequestPair($req_account_request_id, $req_project_id);
+    $request_pair = new RequestPair($req_project_id);
     if ($request_pair->is_valid() == FALSE) {
         echo "<h4>Invalid Request [Acct ID:{$req_account_request_id}, Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
