@@ -9,3 +9,7 @@
 * Make corresponding classes
 * Correct all function and variable and property names accordingly to make sense O_o
 * Rename current User class to Operator class to (hopefully) clarify usage
+
+* Make database operations within transactions to allow catch and rollback
+
+* Take a look at PHPUnit's DbUnit section to actually allow you to unit test: http://phpunit.de/manual/current/en/database.html
