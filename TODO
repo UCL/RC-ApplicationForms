@@ -1,6 +1,11 @@
-
 * Add exception handling to SQLActor, esp connect()
 * Handle relative to absolute paths correctly for, e.g. generating email links
   --> See: https://github.com/monkeysuffrage/phpuri
 * Make Javascript hide/set/disable certain fields depending on user-type in apply.php
 
+* Rename class files to be capitalised.
+* Rename Account_Requests to User_Info
+* Rename Projects to Project_Requests
+* Make corresponding classes
+* Correct all function and variable and property names accordingly to make sense O_o
+* Rename current User class to Operator class to (hopefully) clarify usage
