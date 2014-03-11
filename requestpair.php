@@ -106,19 +106,19 @@ class RequestPair {
         return $this->actor->get_last_status_comments($this->project_id);
     }
 
-    public function get_approval_link() {
+    public function get_approval_anchor() {
         return "<a href=\"".
-        "view.php?ida=" . $this->account_request_id .
+        "view.php?" .
         "&idp=" . $this->project_id .
         "&action=approve".
         "\">Approve this Request</a>\n";
     }
 
-    public function get_view_link() {
+    public function get_view_anchor() {
         return "<a href=\"".
-        "view.php?ida=" . $this->account_request_id .
+        "view.php?" .
         "&idp=" . $this->project_id .
-        "\">Approve this Request</a>\n";
+        "\">View this Request</a>\n";
     }
 
     public function services_text_from_work() {
@@ -146,7 +146,7 @@ class RequestPair {
         $html = table_keyval(
             $this->account_request['forenames'] . " " .
             $this->account_request['user_surname'],
-            $this->get_approval_link()
+            $this->get_approval_anchor()
         );
         return $html;
     }
