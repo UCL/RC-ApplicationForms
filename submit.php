@@ -20,6 +20,7 @@ try {
 
     $request = $_POST;
     if ($actor->does_user_have_existing_account_request('a'.$request['username'])) {
+        //TODO: Change this: users need to be able to submit another request if they are declined.
         echo "<p class='p'><em>You already have an account request ". 
              "in progress -- you cannot submit another. If you have".
              " realised that you made a significant mistake, or for".
