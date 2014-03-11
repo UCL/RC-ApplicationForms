@@ -3,7 +3,6 @@ include "auth_user_shim.php";
 
 $page_title = "View Account Request";
 include "header.php";
-include "sqlactor.php";
 include "misc_functions.php";
 include "mailmailer.php";
 include "user.php";
@@ -27,10 +26,7 @@ if ($req_method == "POST") {
 }
 
 
-
-
 try{
-    $actor = new SQLActor();
     $current_user = new User($current_username);
 
     $request_pair = new RequestPair($req_account_request_id, $req_project_id);
