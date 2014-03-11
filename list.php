@@ -21,7 +21,7 @@ class RequestPair {
         if (is_null($con_account_request_id) || is_null($con_project_id)) {
             // Shortcut if either is null
             $this->valid=FALSE;
-            return FALSE;
+            return;
         }
         
         $this->actor=new SQLActor();
@@ -33,12 +33,12 @@ class RequestPair {
 
         if ($request_pair == FALSE) {
             $this->valid=FALSE;
-            return FALSE;
+            return;
         } else {
             $this->account_request = $request_pair[0];
             $this->project = $request_pair[1];
             $this->valid=TRUE;
-            return TRUE;
+            return;
         }
     }
 
@@ -270,7 +270,7 @@ try{
     if ($request_pair->is_valid() == FALSE) {
         echo "<h4>Invalid Request [Acct ID:{$req_account_request_id}, Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
-
+        $taking_action = FALSE;
         if ($request_pair->can_be_approved_by($current_user)) {
             if ($req_action == "approve") {
                 $result = $request_pair->approve_by($current_user, $post_comments);
