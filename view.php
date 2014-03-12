@@ -174,7 +174,7 @@ try{
             echo "<p class='p'>This action was taken by " .
                  $request_pair->last_status_user() .
                  ", with comments: " .
-                 htmlspecialchars($this->last_status_comments()) .
+                 htmlspecialchars($request_pair->last_status_comments()) .
                  "</p>";
         }
 
