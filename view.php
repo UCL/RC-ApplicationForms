@@ -12,12 +12,10 @@ include_once "requestpair.php";
 $req_method = $_SERVER['REQUEST_METHOD'];
 
 if ($req_method == "POST") {
-    $req_account_request_id = $_POST['account_request_id'];
     $req_project_id         = $_POST['project_id'];
     $req_action             = $_POST['action_choice'];
     $post_comments          = $_POST['comments'];
 } elseif ($req_method == "GET") {
-    $req_account_request_id = $_GET['ida'];
     $req_project_id         = $_GET['idp'];
     $req_action             = $_GET["action"];
     $post_comments          = "(via a direct link)";
@@ -31,7 +29,7 @@ try{
 
     $request_pair = new RequestPair($req_project_id);
     if ($request_pair->is_valid() == FALSE) {
-        echo "<h4>Invalid Request [Acct ID:{$req_account_request_id}, Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
+        echo "<h4>Invalid Request [Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
         $taking_action = FALSE;
         if ($request_pair->can_be_approved_by($current_user)) {
@@ -63,7 +61,6 @@ try{
                                                       'acting_user_address' => $current_user->email_address(),
                                                       'override_replyto'    => $current_user->email_address(),
                                                       'comments'    => $post_comments,
-                                                      'account_request_id'=> $req_account_request_id,
                                                       'project_id'  => $req_project_id,
                                                       'request_user'=> $request_pair->owner(),
                                                       'consortium'  => $request_pair->consortium(),
@@ -99,10 +96,6 @@ try{
                                 "          method=\"post\"       " .
                                 "          enctype=\"multipart/form-data\" ".
                                 "     > " .
-                                "   <input type=\"hidden\" " .
-                                "          name=\"account_request_id\" " .
-                                "          value=\"" . $req_account_request_id . "\" " .
-                                "    />" .
                                 "   <input type=\"hidden\" " .
                                 "          name=\"project_id\" " .
                                 "          value=\"" . $req_project_id . "\" " .
