@@ -6,6 +6,7 @@ if ( (FALSE == array_key_exists("PHP_AUTH_USER", $_SERVER)) ||
         $current_username = "ccaaxxx";
     } else {
         $current_username = $_REQUEST['user'];
+    }
 } else {
     $current_username = $_SERVER['PHP_AUTH_USER'];
 }
