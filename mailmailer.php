@@ -71,7 +71,7 @@ class MailMailer {
         $body    = $this->template_part_process($template['body'],$info);
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "From: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
-        if (array_key_exists($template, 'override_replyto')) {
+        if (array_key_exists('override_replyto', $template)) {
             $headers .= $this->template_part_process($template['override_replyto'], $info);
         } else {
             $headers .= "Reply-to: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
