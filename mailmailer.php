@@ -77,7 +77,9 @@ class MailMailer {
             $headers .= "Reply-to: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
         }
 
-        return mail($to, $subject, $body, $headers);
+        $core = new MailCore();
+
+        return $core->send($to, $subject, $body, $headers);
     }
 
 }
