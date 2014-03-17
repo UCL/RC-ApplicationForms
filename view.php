@@ -35,13 +35,13 @@ try{
         if ($request_pair->can_be_approved_by($current_user)) {
             if ($req_action == "approve") {
                 $result = $request_pair->approve_by($current_user, $post_comments);
-                $user_mail_template_name = "new_account_request_approval";
-                $rcps_mail_template_name = "rcps_notify_request_approval";
+                $user_mail_template_name = "new_account_request_approved";
+                $rcps_mail_template_name = "rcps_notify_request_approved";
                 $taking_action = TRUE;
-            } elseif ($req_action == "decline") {
-                $result = $request_pair->decline_by($current_user, $post_comments);
-                $user_mail_template_name = "new_account_request_declined";
-                $rcps_mail_template_name = "rcps_notify_request_declined";
+            } elseif ($req_action == "reject") {
+                $result = $request_pair->reject_by($current_user, $post_comments);
+                $user_mail_template_name = "new_account_request_rejected";
+                $rcps_mail_template_name = "rcps_notify_request_rejected";
                 $taking_action = TRUE;
             }
 
@@ -110,12 +110,12 @@ try{
                                 "         Approve" .
                                 "   </label>" .
                                 "   </td><td>" .
-                                "   <label for=\"decline_radio\"> " .
+                                "   <label for=\"reject_radio\"> " .
                                 "      <input type=\"radio\" " .
-                                "             id=\"decline_radio\" " .
+                                "             id=\"reject_radio\" " .
                                 "             name=\"action_choice\" " . 
-                                "             value=\"decline\"> " .
-                                "         Decline" .
+                                "             value=\"reject\"> " .
+                                "         Reject" .
                                 "   </label>" .
                                 "   </td></tr>" .
                                 "   <tr><td colspan=2>" .
@@ -129,7 +129,7 @@ try{
                                 "   <input type=\"submit\" " .
                                 "          id=\"form_submit_button\" " .
                                 "          value=\"Submit\" " .
-                                "          title=\"Submit approve/decline.\" " .
+                                "          title=\"Submit approve/reject.\" " .
                                 "    />" .
                                 "   </td></tr></table>" .
                                 "   </form>" .
@@ -148,8 +148,8 @@ try{
             case "approved":
                 echo "<p class='p'>This request was approved on: ".$request_pair->last_status_time()."</p>";
                 break;
-            case "declined":
-                echo "<p class='p'>This request was declined on: ".$request_pair->last_status_time()."</p>";
+            case "rejected":
+                echo "<p class='p'>This request was rejected on: ".$request_pair->last_status_time()."</p>";
                 break;
             case "expired":
                 echo "<p class='p'>This project expired on: ".$request_pair->last_status_time()."</p>";

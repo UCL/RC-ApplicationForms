@@ -34,7 +34,7 @@ REPLACE INTO Services (id, name) VALUES
 REPLACE INTO Event_Types (id, event_type) VALUES
   (1, 'submitted'),
   (2, 'approved'),
-  (3, 'declined'),
+  (3, 'rejected'),
   (4, 'broken'),
   (5, 'expired'),
   (6, 'deprecated')

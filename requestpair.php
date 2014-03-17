@@ -63,7 +63,7 @@ class RequestPair {
         }
     }
 
-    public function decline_by (User $user, $comments="") {
+    public function reject_by (User $user, $comments="") {
         if (! $this->can_be_approved_by($user)) {
             die("Permissions error.\n");
         } else {
@@ -71,7 +71,7 @@ class RequestPair {
                 $this->account_request_id,
                 $this->project_id,
                 $user->username(),
-                "declined",
+                "rejected",
                 $comments
             );
         }

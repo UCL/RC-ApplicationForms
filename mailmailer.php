@@ -9,23 +9,24 @@ class MailMailer {
         // Template replacement markers should be delimited with {:name}
 
         // This is a bit dumb at the moment - might put templates in the db or else (*crazy*) in the mediawiki with a ?skin=raw setting to just return the content of a page, so they can be edited like wiki documents. That would be fun.
+        $template_dir = "templates";
         $templates = array(
             "new_account_for_approval" => array (
                 'subject' => "RCPS: New Account Request - {:user_forenames} {:user_surname}",
-                'body'    => file_get_contents("new_account_for_approval.txt")
+                'body'    => file_get_contents("$template_dir/new_account_for_approval.txt")
             ),
-            "new_account_request_approval" => array (
+            "new_account_request_approved" => array (
                 'subject' => "RCPS: Request Approved",
-                'body'    => file_get_contents("new_account_request_approval.txt")
+                'body'    => file_get_contents("$template_dir/new_account_request_approved.txt")
             ),
-            "rcps_notify_request_approval" => array (
+            "rcps_notify_request_approved" => array (
                 'subject' => "AppForm Req Notify: {:user_username} approved in {:consortium}",
-                'body'    => file_get_contents("rcps_notify_request_approval.txt"),
+                'body'    => file_get_contents("$template_dir/rcps_notify_request_approved.txt"),
                 'override_replyto' => "{:acting_user_address}"
             ),
-            "rcps_notify_request_declined" => array (
-                'subject' => "AppForm Req Notify: {:user_username} declined by {:acting_user}",
-                'body'    => file_get_contents("rcps_notify_request_declined.txt"),
+            "rcps_notify_request_rejected" => array (
+                'subject' => "AppForm Req Notify: {:user_username} rejected by {:acting_user}",
+                'body'    => file_get_contents("$template_dir/rcps_notify_request_rejected.txt"),
                 'override_replyto' => "{:acting_user_address}"
             )
         );
