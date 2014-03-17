@@ -1,0 +1,87 @@
+### Misc Form Notes
+
+Warn users that they will need to provide funding information when they renew.
+
+Remind users that they should add the acknowledgement string to papers.
+
+
+### User Types
+
+If you're a PI, a lecturer, or an undergrad, you can be either funded or unfunded.
+
+If you're a postgrad or a postdoc, you must be funded.
+
+(If a person is a PI of one project and a researcher in another project, they could be both unfunded and funded.)
+
+
+### Projects
+
+Once you have a valid project, you'll get access -- but you need the ability to collect information about a new project at renewal and then submit that project for approval. Presumably renewals of old, already approved projects don't need to be approved.
+
+Information collected should be just:
+
+ * project research aims
+ * expected technical resources and methods required (inc software, job information if known)
+
+Projects must be able to expire, and should expire when a new one is applied for.
+
+
+### Renewal
+
+Funding information taken retrospectively, not when applying initially.
+
+Publication information collected.
+
+Collaboration information collected.
+
+### Services
+
+Everyone is approved for access to everything.
+
+Pending technical assessment? Not clear.
+
+
+## Original Notes
+
+user types {
+if not PI or undergrad, project must be funded?
+
+lecturers can be either funded or unfunded
+
+visitors can be either
+
+everyone else must be funded
+
+enable/disable PI and funding boxes depending who you are
+}
+
+warn that when you renew you will require funding information
+
+once you have one valid project, you get access -- don't need more than one project aims set per user
+
+research outcomes taken per year
+
+later service requests only require technical assessment
+
+{
+nature of the project
+
+types of work just requested rather than service wanted -- with explanation?
+also technical explanation of what they're doing, software, computational resources, etc
+
+separate boxes
+}
+
+everyone to have access to everything D:
+
+registration is separate but everyone is *pre-approved* for everything
+
+
+Capture collaboration information at renewal (since often people don't know in advance)
+
+If someone has a new project, they need to apply with project information again
+
+
+Remember to ask people to acknowledge Legion/CFI in papers in initial application
+
+

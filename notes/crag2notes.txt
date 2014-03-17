@@ -1,0 +1,31 @@
+Renewals to happen a year from application no matter when the application was made, rather than all renewals happening on the same date.
+
+People seem fine with the idea that only a supervisor has to approve, or else some other permanent staff sponsor.
+
+Must approve both at application and renewal.
+
+Research theme given at both application and renewal.
+
+Also all supervisors have to be members of permanent academic staff by UCL rules.
+
+
+Research themes based initially on EPSRC and other funding bodies.
+
+ * Arts and Humanities Research Council
+ * Engineering and Physical Sciences Research Council
+ * Economic and Social Research Council
+ * Medical Research Council
+ * Natural Environment Research Council
+ * Science and Technology Facilities Council
+
+Consortium Leaders become CRAG advisors
+
+Research theme mailing lists?
+
+Within UCL, successful applications would be public
+
+Users need ability to change PI/supervisor at renewal (in case the supervisor leaves)
+
+Should add link to exemplar application to avoid one-line application text.
+
+
