@@ -4,9 +4,9 @@ include "auth_user_shim.php";
 $page_title = "View Account Request";
 include_once "header.php";
 include_once "misc_functions.php";
-include_once "mailmailer.php";
-include_once "user.php";
-include_once "requestpair.php";
+include_once "MailMailer.php";
+include_once "User.php";
+include_once "RequestPair.php";
 
 
 $req_method = $_SERVER['REQUEST_METHOD'];

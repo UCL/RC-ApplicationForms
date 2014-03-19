@@ -1,6 +1,6 @@
 <?php
 
-include_once "sqlactor.php";
+include_once "SQLActor.php";
 
 class User {
     private $id;

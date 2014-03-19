@@ -1,8 +1,8 @@
 <?php
 
 include "header.php";
-include "mailmailer.php";
-include "sqlactor.php";
+include "MailMailer.php";
+include "SQLActor.php";
 
 $referrer_file_name = array_pop(explode("/", $_SERVER["HTTP_REFERER"])); 
 

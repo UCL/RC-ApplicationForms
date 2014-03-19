@@ -9,7 +9,7 @@
 </script>
 <!-- Begin form -->
 <?php
-    include "sqlactor.php";
+    include "SQLActor.php";
     $actor = new SQLActor();
     $actor->connect();
     $user_type_options        = $actor->options_from_table("User_Types", "user_type");
