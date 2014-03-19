@@ -1,15 +1,17 @@
 <?php
-    include_once "auth_user_shim.php";
+    include_once "includes/auth_user_shim.php";
 
     $page_title = "Request User Account";
-    include_once "header.php";
+    include_once "includes/header.php";
+    include_once "includes/SQLActor.php";
 ?>
 <script type="text/javascript">
     document.write("\<script src='//ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' type='text/javascript'>\<\/script>");
 </script>
+
+
 <!-- Begin form -->
 <?php
-    include "SQLActor.php";
     $actor = new SQLActor();
     $actor->connect();
     $user_type_options        = $actor->options_from_table("User_Types", "user_type");

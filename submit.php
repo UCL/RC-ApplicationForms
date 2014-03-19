@@ -1,8 +1,9 @@
 <?php
 
-include "header.php";
-include "MailMailer.php";
-include "SQLActor.php";
+$page_title = "Submitting Application";
+include "includes/header.php";
+include_once "includes/MailMailer.php";
+include_once "includes/SQLActor.php";
 
 $referrer_file_name = array_pop(explode("/", $_SERVER["HTTP_REFERER"])); 
 

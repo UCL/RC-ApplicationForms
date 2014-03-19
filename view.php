@@ -1,12 +1,12 @@
 <?php
-include "auth_user_shim.php";
+include "includes/auth_user_shim.php";
 
 $page_title = "View Account Request";
-include_once "header.php";
-include_once "misc_functions.php";
-include_once "MailMailer.php";
-include_once "User.php";
-include_once "RequestPair.php";
+include_once "includes/header.php";
+include_once "includes/misc_functions.php";
+include_once "includes/MailMailer.php";
+include_once "includes/User.php";
+include_once "includes/RequestPair.php";
 
 
 $req_method = $_SERVER['REQUEST_METHOD'];
