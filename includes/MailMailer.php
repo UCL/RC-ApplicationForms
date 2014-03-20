@@ -2,7 +2,7 @@
 
 class MailMailer {
 
-    static private $override_mail = TRUE;
+    static private $override_mail = FALSE;
     static private $override_mail_address = "i.kirker@ucl.ac.uk";
 
     public function get_template($template_name) {
@@ -28,6 +28,11 @@ class MailMailer {
                 'subject' => "AppForm Req Notify: {:user_username} rejected by {:acting_user}",
                 'body'    => file_get_contents("$template_dir/rcps_notify_request_rejected.txt"),
                 'override_replyto' => "{:acting_user_address}"
+            ),
+            "test_template" => array (
+                'subject' => "Test Message",
+                'body'    => file_get_contents("$template_dir/test_template.txt"),
+                'override_replyto' => "test-template@localhost"
             )
         );
 
@@ -37,11 +42,11 @@ class MailMailer {
 
     public function template_part_process($template_string, $info) {
         // This regex should match up to 2 levels of . indexing into an array
-        $output = preg_replace_callback("/\{:([^\s.]+)(?:\.([^\s]+)|)(?:\.([^\s]+)|)\}/",
+        $output = preg_replace_callback("/\{:([^\s.]+)(?:\.([^\s.]+)|)(?:\.([^\s]+)|)\}/",
             function($m) use ($info) {
                 if (array_key_exists (2, $m)) {
                     if (array_key_exists (3, $m)) {
-                        return       $info[$m[1]][$m[2]][$m[3]];
+                        return $info[$m[1]][$m[2]][$m[3]];
                     } else {
                         return $info[$m[1]][$m[2]];
                     }
@@ -55,7 +60,7 @@ class MailMailer {
         return $output;
     }
 
-    public function send_mail($template_name, $addresses_to_mail, $info) {
+    public function send_mail($template_name, $addresses_to_mail, $info, $message_object=NULL) {
         if (is_string($addresses_to_mail)) {
             $addresses_to_mail = array($addresses_to_mail);
         }
@@ -73,14 +78,19 @@ class MailMailer {
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "From: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
         if (array_key_exists('override_replyto', $template)) {
-            $headers .= $this->template_part_process($template['override_replyto'], $info);
+            $headers .= "Reply-to: " . $this->template_part_process($template['override_replyto'], $info) . " \r\n";
         } else {
             $headers .= "Reply-to: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
         }
 
-        $core = new MailCore();
+        // Provide your own MailMessage object for, e.g., unit testing.
+        if ($message_object == NULL) {
+            $message_object = new MailMessage();
+        }
+        $message_object->set_all($to, $subject, $body, $headers);
+        $result = $message_object->send();
 
-        return $core->send($to, $subject, $body, $headers);
+        return $result;
     }
 
 }

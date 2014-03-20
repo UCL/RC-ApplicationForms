@@ -1,5 +1,7 @@
 <?php
 
+include "../includes/misc_functions.php";
+
 class MiscFunctionsTest extends PHPUnit_Framework_TestCase {
 
     public function test_array_as_text_list() {
