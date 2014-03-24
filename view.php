@@ -5,7 +5,7 @@ $page_title = "View Account Request";
 include_once "includes/header.php";
 include_once "includes/misc_functions.php";
 include_once "includes/MailMailer.php";
-include_once "includes/User.php";
+include_once "includes/Operator.php";
 include_once "includes/RequestPair.php";
 
 
@@ -25,7 +25,7 @@ if ($req_method == "POST") {
 
 
 try{
-    $current_user = new User($current_username);
+    $current_user = new Operator($current_username);
 
     $request_pair = new RequestPair($req_project_id);
     if ($request_pair->is_valid() == FALSE) {

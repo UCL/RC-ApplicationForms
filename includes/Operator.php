@@ -2,7 +2,7 @@
 
 include_once "SQLActor.php";
 
-class User {
+class Operator {
     private $id;
     private $username;
     private $full_name;

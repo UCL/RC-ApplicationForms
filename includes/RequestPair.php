@@ -1,6 +1,6 @@
 <?php
 
-include_once "User.php";
+include_once "Operator.php";
 
 class RequestPair {
     private $account_request_id;
@@ -39,9 +39,9 @@ class RequestPair {
         return $this->valid;
     }
 
-    public function can_be_approved_by (User $user) {
-        if ($user->is_superuser() ||
-            $user->is_leader_for($this->project['consortium_id']) )
+    public function can_be_approved_by (Operator $operator) {
+        if ($operator->is_superuser() ||
+            $operator->is_leader_for($this->project['consortium_id']) )
         {
             return TRUE;
         } else {
@@ -49,8 +49,8 @@ class RequestPair {
         }
     }
 
-    public function approve_by (User $user, $comments="") {
-        if (! $this->can_be_approved_by($user)) {
+    public function approve_by (Operator $operator, $comments="") {
+        if (! $this->can_be_approved_by($operator)) {
             die("Permissions error.\n");
         } else {
             return $this->actor->mark_request_status(
@@ -63,14 +63,14 @@ class RequestPair {
         }
     }
 
-    public function reject_by (User $user, $comments="") {
-        if (! $this->can_be_approved_by($user)) {
+    public function reject_by (Operator $operator, $comments="") {
+        if (! $this->can_be_approved_by($operator)) {
             die("Permissions error.\n");
         } else {
             return $this->actor->mark_request_status(
                 $this->account_request_id,
                 $this->project_id,
-                $user->username(),
+                $operator->username(),
                 "rejected",
                 $comments
             );
