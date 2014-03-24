@@ -1,6 +1,6 @@
 <?php
 
-include "../includes/misc_functions.php";
+include "includes/misc_functions.php";
 
 class MiscFunctionsTest extends PHPUnit_Framework_TestCase {
 
