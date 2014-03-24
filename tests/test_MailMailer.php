@@ -30,6 +30,7 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
         $this->assertEquals('Test Message', $mail_message->get_subject());
         $this->assertEquals($mail_message->get_message(),
                             "Line with no replacement.\n" .
+                            "Global Replacement: Success\n" .
                             "Basic Replacement: Success 1\n" .
                             "One-deep Replacement: Success 2\n" .
                             "Two-deep Replacement: Success 3\n" .

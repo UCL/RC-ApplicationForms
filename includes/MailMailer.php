@@ -4,6 +4,12 @@ class MailMailer {
 
     static private $override_mail = FALSE;
     static private $override_mail_address = "i.kirker@ucl.ac.uk";
+    
+    private $globals = array(
+        'BASE_URL'   => "http://avon.rc.ucl.ac.uk/acct",
+        'TEST_VALUE' => "Success"
+    );
+
 
     public function get_template($template_name) {
         // Template replacement markers should be delimited with {:name}
@@ -42,16 +48,17 @@ class MailMailer {
 
     public function template_part_process($template_string, $info) {
         // This regex should match up to 2 levels of . indexing into an array
-        $output = preg_replace_callback("/\{:([^\s.]+)(?:\.([^\s.]+)|)(?:\.([^\s]+)|)\}/",
-            function($m) use ($info) {
-                if (array_key_exists (2, $m)) {
-                    if (array_key_exists (3, $m)) {
-                        return $info[$m[1]][$m[2]][$m[3]];
+        $replacements = array(':' => $info, '%' => $this->globals);
+        $output = preg_replace_callback("/\{(:|%)([^\s.]+)(?:\.([^\s.]+)|)(?:\.([^\s]+)|)\}/",
+            function($m) use ($replacements) {
+                if (array_key_exists (3, $m)) {
+                    if (array_key_exists (4, $m)) {
+                        return $replacements[$m[1]][$m[2]][$m[3]][$m[4]];
                     } else {
-                        return $info[$m[1]][$m[2]];
+                        return $replacements[$m[1]][$m[2]][$m[3]];
                     }
                 } else {
-                    return $info[$m[1]];
+                    return $replacements[$m[1]][$m[2]];
                 }
             },
             $template_string
