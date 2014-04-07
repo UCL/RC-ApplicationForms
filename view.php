@@ -181,6 +181,6 @@ try{
 }
 
 
-include "footer.php";
+include "includes/footer.php";
 
 ?>

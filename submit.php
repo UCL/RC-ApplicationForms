@@ -70,6 +70,6 @@ try {
 
 //print_r(array_keys(get_defined_vars()));
 
-include "footer.php";
+include "includes/footer.php";
 
 ?>

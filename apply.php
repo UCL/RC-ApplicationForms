@@ -27,7 +27,7 @@
         <input type="text" value="Apply" name="submit_type" style="display:none" readonly/>
         <table> <!-- Shouldn't really use tables for layout, but I'm just copy/pasting at the moment. -->
             <tr>
-                <td> <label for="username">UCL userid:</label></td> <!-- label mostly to make PHPStorm not whine at me -->
+                <td> <label for="username">UCL userid:</label></td> 
                 <td>
                     <input 
                         type="text"
@@ -116,7 +116,7 @@
                     <input
                         type="tel"
                         name="user_contact_number"
-                        title="A telephone number (or UCL internal extension) we can contact you at."
+                        title="A telephone number (or UCL internal extension) we can contact you with."
                         placeholder="00000"
                     />
                 </td>
@@ -497,5 +497,5 @@
     </script>
 
 <?php
-    include "footer.php";
+    include "includes/footer.php";
 ?>
