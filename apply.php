@@ -134,29 +134,27 @@
                     />
                 </td>
             </tr>
+        </table>
+    </div>
+    <div class="formSection">
+        <h3 class="sectionTitle">
+            Sponsor
+        </h3>
+        <p class="p">
+            To obtain an account, you must either be, or be approved by, a permanent member of staff. If you are a student or a postdoctoral researcher, this will normally be your supervisor. Due to technical limitations at this time, names here are only validated against the Electronic Record of Supervisors (EROS) system at UCL, so if you or your sponsor are not registered as a supervisor, you may need to find someone who is.
+        </p>
+        <table>
             <tr>
                 <td>
-                    Supervisor (if applicable): <!-- in a future version this label should change with person type -->
+                    Username of Account Sponsor: <!-- in a future version this label should change with person type -->
                 </td>
                 <td>
                     <input
                         type="text"
-                        name="supervisor_name"
-                        title="Your supervisor."
+                        name="sponsor_username"
+                        title="The username of a permanent member of staff who is prepared to approve your account request."
                         placeholder="Dr Per Sonn"
                     /> 
-                </td>
-                <td>
-                    Supervisor's email address:
-                </td>
-                <td>
-                    <input
-                        type="email"
-                        name="supervisor_email"
-                        title="Your supervisor's UCL e-mail address." 
-                        placeholder="person@ucl.ac.uk"
-                        pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+"
-                    />
                 </td>
             </tr>
     

@@ -11,7 +11,7 @@ class SQLActor {
 
     public function __construct( ) {
         $this->my_db_hostname = "localhost";
-        $this->my_db_name     = "test";
+        $this->my_db_name     = "rcps_accounts";
         $this->my_db_port     = "3306";
         $this->my_db_username = "root";
         $this->my_db_password = ""; 
@@ -282,8 +282,7 @@ class SQLActor {
             'user_forenames',
             'user_forename_preferred',
             'user_dept',
-            'supervisor_name',
-            'supervisor_email',
+            'sponsor_username',
             'experience_level_id',
             'experience_text'
         );
