@@ -49,7 +49,7 @@ try {
                 echo "<h4>There was a problem mailing out approval requests. ".
                      "Please contact rc-support@ucl.ac.uk mentioning this ".
                      "problem, and pasting the following into your e-mail:".
-                     "</h4>\n".$result."\n";
+                     "</h4>\n".$mail_result."\n";
                 print_r($request);
             } else {
                 echo "<p class='p'>Successfully mailed requests for approval. If you do not receive any further information within 3 days, please contact rc-support@ucl.ac.uk.</p>\n";

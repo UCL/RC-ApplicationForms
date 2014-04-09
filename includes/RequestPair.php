@@ -56,7 +56,7 @@ class RequestPair {
             return $this->actor->mark_request_status(
                 $this->account_request_id,
                 $this->project_id,
-                $user->username(),
+                $operator->username(),
                 "approved",
                 $comments
             );

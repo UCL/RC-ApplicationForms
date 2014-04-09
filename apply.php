@@ -153,7 +153,8 @@
                         type="text"
                         name="sponsor_username"
                         title="The username of a permanent member of staff who is prepared to approve your account request."
-                        placeholder="Dr Per Sonn"
+                        placeholder="ccaprof"
+                        pattern="[A-Za-z0-9]{7}"
                     /> 
                 </td>
             </tr>

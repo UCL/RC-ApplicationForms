@@ -6,6 +6,8 @@ class SQLActor {
     private $my_db_port    ;
     private $my_db_username;
     private $my_db_password;
+
+    /** @var $dbh PDO  */ /* Fixes method syntax checking in PHPStorm */
     private $dbc;
     private $cache;
 
@@ -205,20 +207,6 @@ class SQLActor {
         }
         return -1;
     }
-
-    //public function get_mail_template($template_name) {
-        // I'm not sure whether to store the email templates in the
-        //  database or in PHP, but if they're in the database this will retrieve them
-    //}
-
-    //public function add_new_project_request ($account, $project) {
-        // check whether user has existing acct info
-        // add if not
-        // add project entry
-        // add submitted time
-        // add associated service requests
-        // mail should be handled elsewhere
-    //}
 
     public function does_user_have_existing_account_request($username) {
         $dbh = $this->dbc->prepare("SELECT COUNT(id) from User_Profiles WHERE username = ?");
