@@ -4,11 +4,9 @@
 * Make Javascript hide/set/disable certain fields depending on user-type in apply.php
 
 * Rename class files to be capitalised.
-* Rename Account_Requests to User_Info
 * Rename Projects to Project_Requests
 * Make corresponding classes
 * Correct all function and variable and property names accordingly to make sense O_o
-* Rename current User class to Operator class to (hopefully) clarify usage
 
 * Make database operations within transactions to allow catch and rollback
 

@@ -6,7 +6,7 @@
  TABLE Request_Progress
  TABLE User_Types
  TABLE User_Experience_Levels
- TABLE Account_Requests
+ TABLE Users
  TABLE Projects
  TABLE Services
  TABLE Service_Requests
@@ -20,7 +20,7 @@ DROP TABLE Consortium_Permissions;
 DROP TABLE Publication_Services;
 DROP TABLE Publications;
 DROP TABLE Projects;
-DROP TABLE Account_Requests;
+DROP TABLE User_Profiles;
 DROP TABLE Privileged_Users;
 DROP TABLE Consortia;
 DROP TABLE Request_Progress;
@@ -93,7 +93,7 @@ CREATE TABLE Experience_Levels
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Account_Requests
+CREATE TABLE User_Profiles
 (
   id INTEGER AUTO_INCREMENT,
   username VARCHAR(7),
@@ -145,7 +145,7 @@ CREATE TABLE Projects
   collab_other_name TEXT,
   collaboration_collated TEXT,
   PRIMARY KEY (id),
-  FOREIGN KEY (request_id) REFERENCES Account_Requests(id),
+  FOREIGN KEY (request_id) REFERENCES User_Profiles(id),
   FOREIGN KEY (consortium_id) REFERENCES Consortia(id)
 );
 
@@ -163,7 +163,7 @@ CREATE TABLE Publications
   url TEXT,
   notable BOOLEAN,
   PRIMARY KEY (id),
-  FOREIGN KEY (account_id) REFERENCES Account_Requests(id)
+  FOREIGN KEY (account_id) REFERENCES User_Profiles(id)
 );
 
 CREATE TABLE Publication_Services

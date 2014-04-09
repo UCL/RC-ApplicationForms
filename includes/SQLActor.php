@@ -116,7 +116,7 @@ class SQLActor {
     }
 
     public function get_account_request($account_request_id) {
-        $dbh = $this->dbc->prepare("SELECT * FROM Account_Requests WHERE id=?");
+        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE id=?");
         $dbh->bindValue(1, $account_request_id, PDO::PARAM_INT);
         $dbh->execute();
         $result = $dbh->fetch();
@@ -221,7 +221,7 @@ class SQLActor {
     //}
 
     public function does_user_have_existing_account_request($username) {
-        $dbh = $this->dbc->prepare("SELECT COUNT(id) from Account_Requests WHERE username = ?");
+        $dbh = $this->dbc->prepare("SELECT COUNT(id) from User_Profiles WHERE username = ?");
         $dbh->bindValue(1,$username);
         $dbh->execute();
         $results = $dbh->fetchColumn(0);
@@ -290,7 +290,7 @@ class SQLActor {
         $named_params = ":" . implode(",:", $values_array);
 
         $dbh = $this->dbc->prepare(
-            "INSERT INTO Account_Requests ".
+            "INSERT INTO User_Profiles ".
             "({$values})" .
             " VALUES " .
             "({$named_params})"
