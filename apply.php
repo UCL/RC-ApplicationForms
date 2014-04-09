@@ -19,7 +19,7 @@
     $consortium_options       = $actor->options_from_table("Consortia", "full_name");
 ?>
 
-<form id="application_form" action="submit.php" method="post" enctype="multipart/form-data" id="application_form">
+<form id="application_form" action="submit.php" method="post" enctype="multipart/form-data"">
     <div class="section">
         <h3 class="sectionTitle">
             User Information
@@ -427,7 +427,7 @@
                 </tr>
             </table>
             <input type="hidden" name="project[collaboration_collated]" value="(No collaborators specified.)" />
-
+        </div>
     </div>
     <p class="p">
         <!-- Has an id to let us use $("#tandc").checked -->
