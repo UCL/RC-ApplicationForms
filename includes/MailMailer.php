@@ -1,8 +1,10 @@
 <?php
 
+require_once("includes/MailMessage.php");
+
 class MailMailer {
 
-    static private $override_mail = FALSE;
+    static private $override_mail = TRUE;
     static private $override_mail_address = "i.kirker@ucl.ac.uk";
     
     private $globals = array(
@@ -49,7 +51,7 @@ class MailMailer {
     public function template_part_process($template_string, $info) {
         // This regex should match up to 2 levels of . indexing into an array
         $replacements = array(':' => $info, '%' => $this->globals);
-        $output = preg_replace_callback("/\{(:|%)([^\s.]+)(?:\.([^\s.]+)|)(?:\.([^\s]+)|)\}/",
+        $output = preg_replace_callback("/\{(:|%)([^\s.]+?)(?:\.([^\s.]+?)|)(?:\.([^\s]+?)|)\}/",
             function($m) use ($replacements) {
                 if (array_key_exists (3, $m)) {
                     if (array_key_exists (4, $m)) {
