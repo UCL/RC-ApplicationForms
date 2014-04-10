@@ -20,28 +20,32 @@ class SQLActor {
         $this->cache          = array();
     }
 
-    public function connect() {
+    public function connect($PDOobject=NULL) {
         // Create a new connection.
         // The PDO options we pass do the following:
         // \PDO::ATTR_ERRMODE enables exceptions for errors.  This is optional but can be handy.
         // \PDO::ATTR_PERSISTENT disables persistent connections, which can cause concurrency issues in certain cases.  See "Gotchas".
         // \PDO::MYSQL_ATTR_INIT_COMMAND alerts the connection that we'll be passing UTF-8 data.  This may not be required depending on your configuration, but it'll save you headaches down the road if you're trying to store Unicode strings in your database.  See "Gotchas".
-        try {
-            $this->dbc = new \PDO(
-                "mysql:host={$this->my_db_hostname};".
-                "por={$this->my_db_port};".
-                "dbname={$this->my_db_name}",
-                $this->my_db_username,
-                $this->my_db_password,
-                array(
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_PERSISTENT => false,
-                    \PDO::MYSQL_ATTR_INIT_COMMAND => 'set names utf8'
-                )
-            );
-        } catch (\PDOException $e) {
-            echo "<h2>There was an error connecting to the database: " . htmlspecialchars($e->getMessage()) . "</h2>";
-            throw new Exception($e->getMessage(), 0, $e);
+        if ($PDOobject == NULL) {
+            try {
+                $this->dbc = new \PDO(
+                    "mysql:host={$this->my_db_hostname};".
+                    "por={$this->my_db_port};".
+                    "dbname={$this->my_db_name}",
+                    $this->my_db_username,
+                    $this->my_db_password,
+                    array(
+                        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                        \PDO::ATTR_PERSISTENT => false,
+                        \PDO::MYSQL_ATTR_INIT_COMMAND => 'set names utf8'
+                    )
+                );
+            } catch (\PDOException $e) {
+                echo "<h2>There was an error connecting to the database: " . htmlspecialchars($e->getMessage()) . "</h2>";
+                throw new Exception($e->getMessage(), 0, $e);
+            }
+        } else {
+            $this->dbc = $PDOobject;
         }
     }
 
@@ -135,7 +139,7 @@ class SQLActor {
 
     public function get_request_pair_from_project_id($project_id) {
         $project = $this->get_project_request($project_id);
-        $account = $this->get_account_request($project['request_id']);
+        $account = $this->get_account_request($project['user_profile_id']);
         if ( ($project != FALSE) && ($account != FALSE ) ) {
             return array($account,$project);
         } else {
@@ -357,14 +361,14 @@ class SQLActor {
 
         $dbh = $this->dbc->prepare(
             "INSERT INTO Projects ".
-            "(username, request_id, $values)" .
+            "(username, user_profile_id, $values)" .
             " VALUES " .
-            "(:username, :request_id, $named_params)"
+            "(:username, :user_profile_id, $named_params)"
         );
 
         $account_request_id = $this->dbc->lastInsertId();
         $dbh->bindParam(":username", $request['username']);
-        $dbh->bindParam(":request_id", $account_request_id);
+        $dbh->bindParam(":user_profile_id", $account_request_id);
         foreach ($values_array as $value) {
             $dbh->bindParam(":$value", $project[$value]);
         };
