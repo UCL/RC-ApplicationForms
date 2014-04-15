@@ -3,7 +3,7 @@
 include_once "Operator.php";
 
 class RequestPair {
-    private $account_request_id;
+    private $user_profile_id;
     private $project_id;
     private $account_request;
     private $project;
@@ -29,7 +29,7 @@ class RequestPair {
         } else {
             $this->account_request = $request_pair[0];
             $this->project = $request_pair[1];
-            $this->account_request_id = $this->account_request['id']; // Hack until further classified
+            $this->user_profile_id = $this->account_request['id']; // Hack until further classified
             $this->valid=TRUE;
             return;
         }
@@ -49,33 +49,9 @@ class RequestPair {
         }
     }
 
-    public function approve_by (Operator $operator, $comments="") {
-        if (! $this->can_be_approved_by($operator)) {
-            die("Permissions error.\n");
-        } else {
-            return $this->actor->mark_request_status(
-                $this->account_request_id,
-                $this->project_id,
-                $operator->username(),
-                "approved",
-                $comments
-            );
-        }
-    }
 
-    public function reject_by (Operator $operator, $comments="") {
-        if (! $this->can_be_approved_by($operator)) {
-            die("Permissions error.\n");
-        } else {
-            return $this->actor->mark_request_status(
-                $this->account_request_id,
-                $this->project_id,
-                $operator->username(),
-                "rejected",
-                $comments
-            );
-        }
-    }
+
+
 
     public function owner() {
         return $this->project['username'];
@@ -83,11 +59,6 @@ class RequestPair {
 
     public function user_email() {
         return $this->account_request['user_email'];
-    }
-
-    public function consortium() {
-        // Should shunt this out to Project class ifwhen further classified
-        return $this->actor->get_consortium_name($this->project['consortium_id']);
     }
 
     public function last_status_text() {
@@ -154,7 +125,7 @@ class RequestPair {
     public function as_table() {
         $html =
             "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User</strong></td></tr>"
-            // If you ever get around to class-ifying Project and Account_Request, this should call those instead. :/
+            // TODO: If you ever get around to class-ifying Project and Account_Request, this should call those instead. :/
             . table_keyval("User id", $this->account_request['username'])
             . table_keyval("User Name", $this->account_request['user_forenames']." ".
                 $this->account_request['user_surname'])

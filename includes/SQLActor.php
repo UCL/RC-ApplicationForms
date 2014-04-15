@@ -71,13 +71,6 @@ class SQLActor {
         }
     }
 
-    public function get_user_id_consortium_permissions($user_id) {
-        $dbh = $this->dbc->prepare("SELECT * FROM Consortium_Permissions WHERE privileged_user_id = ?");
-        $dbh->bindValue(1, $user_id);
-        $dbh->execute();
-        return $dbh->fetchAll();
-    }
-
     public function get_user_info($username) {
         $dbh = $this->dbc->prepare("SELECT * FROM Privileged_Users WHERE username = ?");
         $dbh->bindValue(1, $username);
@@ -130,7 +123,7 @@ class SQLActor {
     }
 
     public function get_project_request($project_request_id) {
-        $dbh = $this->dbc->prepare("SELECT * FROM Projects WHERE id=?");
+        $dbh = $this->dbc->prepare("SELECT * FROM Project_Requests WHERE id=?");
         $dbh->bindValue(1, $project_request_id, PDO::PARAM_INT);
         $dbh->execute();
         $result = $dbh->fetch();
@@ -145,11 +138,6 @@ class SQLActor {
         } else {
             return FALSE;
         }
-    }
-
-    public function get_consortia() {
-        // Get an array of assoc arrays of consortia + their ids
-        return $this->get_table("Consortia");
     }
 
     public function get_table($table) {
@@ -224,41 +212,11 @@ class SQLActor {
         }
     }
 
-    public function get_consortium_id($consortium) {
-        $dbh = $this->dbc->prepare("SELECT id from Consortia WHERE full_name = ?");
-        $dbh->bindValue(1,$consortium);
-        $dbh->execute();
-        $results = $dbh->fetchColumn(0);
-        return $results;
-    }
-
-    public function get_consortium_name($consortium_id) {
-        $dbh = $this->dbc->prepare("SELECT full_name from Consortia WHERE id = ?");
-        $dbh->bindValue(1,$consortium_id);
-        $dbh->execute();
-        $results = $dbh->fetchColumn(0);
-        return $results;
-    }
-
     public function get_status_id($status_name) {
         $dbh = $this->dbc->prepare("SELECT id from Event_Types WHERE event_type = ?");
         $dbh->bindValue(1,$status_name);
         $dbh->execute();
         $results = $dbh->fetchColumn(0);
-        return $results;
-    }
-
-    public function get_consortium_leaders_to_mail($consortium_id) {   
-        $dbh = $this->dbc->prepare(
-            "SELECT pu.email_address FROM ".
-            "Privileged_Users pu, Consortium_Permissions cp WHERE ".
-            "cp.privileged_user_id = pu.id AND ".
-            "cp.approves_for_consortium = ? AND ".
-            "pu.receives_emails = TRUE"
-        );
-        $dbh->bindValue(1,$consortium_id, PDO::PARAM_INT);
-        $dbh->execute();
-        $results = $dbh->fetchAll(PDO::FETCH_COLUMN, 0);
         return $results;
     }
 
@@ -292,7 +250,8 @@ class SQLActor {
             $dbh->bindParam(":{$value}", $request[$value]);
         };
         
-        $account_request_creation_result = $dbh->execute();
+        $user_profile_creation_result = $dbh->execute();
+        $user_profile_id = $this->dbc->lastInsertId();
 
         // Next, project section
         // This one's a little more complicated because there are t/f fields that don't get submitted if not checked
@@ -330,7 +289,7 @@ class SQLActor {
         //  username and request id prevents straight code re-use.
         $values_array = array(
             'is_funded',
-            'consortium_id',
+            'research_theme_id',
             'weird_tech_description',
             'work_description',
             'applications_description',
@@ -360,15 +319,14 @@ class SQLActor {
         $named_params = ":" . implode(",:", $values_array);
 
         $dbh = $this->dbc->prepare(
-            "INSERT INTO Projects ".
+            "INSERT INTO Project_Requests ".
             "(username, user_profile_id, $values)" .
             " VALUES " .
             "(:username, :user_profile_id, $named_params)"
         );
 
-        $account_request_id = $this->dbc->lastInsertId();
         $dbh->bindParam(":username", $request['username']);
-        $dbh->bindParam(":user_profile_id", $account_request_id);
+        $dbh->bindParam(":user_profile_id", $user_profile_id);
         foreach ($values_array as $value) {
             $dbh->bindParam(":$value", $project[$value]);
         };
@@ -379,9 +337,9 @@ class SQLActor {
         // Finally, mark as submitted in the events table
 
         // And return the request id if everything worked
-        if ($account_request_creation_result &&
+        if ($user_profile_creation_result &&
             $project_request_creation_result ) {
-                return array('account_request_id' => $account_request_id, 
+                return array('user_profile_id' => $user_profile_id,
                              'project_request_id' => $project_request_id
                          );
         } else {
@@ -390,18 +348,17 @@ class SQLActor {
     }
 
 
-    function mark_request_status($account_request_id, $project_id, $acting_user, $status_string, $comment) {
+    function mark_request_status($project_request_id, $acting_user, $status_string, $comment) {
         $status_id = $this->get_status_id($status_string);
 
         $dbh = $this->dbc->prepare(
             "INSERT INTO Request_Progress ".
-            "(account_id, project_id, event_type_id, acting_user, with_comment)" .
+            "(project_request_id, event_type_id, acting_user, with_comment)" .
             " VALUES " .
-            "(:account_id, :project_id, :event_type_id, :acting_user, :with_comment)"
+            "(:project_request_id, :event_type_id, :acting_user, :with_comment)"
         );
 
-        $dbh->bindParam(":account_id", $account_request_id);
-        $dbh->bindParam(":project_id", $project_id);
+        $dbh->bindParam(":project_request_id", $project_request_id);
         $dbh->bindParam(":event_type_id", $status_id);
         $dbh->bindParam(":acting_user", $acting_user);
         $dbh->bindParam(":with_comment", $comment);

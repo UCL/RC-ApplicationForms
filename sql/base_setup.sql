@@ -1,28 +1,41 @@
-REPLACE INTO Consortia (short_name, full_name) VALUES
-  ( 'Astro'             , 'Astrophysics and Remote Sensing'                                           ) ,
-  ( 'BioinfCompBio'     , 'Bioinformatics and Computational Biology'                                  ) ,
-  ( 'BuiltEnv'          , 'The Bartlett - Built Environment'                                          ) ,
-  ( 'Climate'           , 'Climate Change and Earth Observation'                                      ) ,
-  ( 'digitalhumanities' , 'Digital Humanities'                                                        ) ,
-  ( 'ENGFEAandCFD'      , 'Engineering - Finite Element Analysis & Computational Fluid Dynamics'      ) ,
-  ( 'EngDAandMD'        , 'Engineering Sciences – Optimisation, Data Analysis and Molecular Dynamics' ) ,
-  ( 'Economics'         , 'Economics'                                                                 ) ,
-  ( 'Epidemiology'      , 'Epidemiology'                                                              ) ,
-  ( 'gatsbyneuro'       , 'The Gatsby Computational Neuroscience Unit'                                ) ,
-  ( 'HEP'               , 'High Energy Physics'                                                       ) ,
-  ( 'ISD'               , 'Information Services Division'                                             ) ,
-  ( 'NGS'               , 'Next Generation Sequencing'                                                ) ,
-  ( 'TYCOrgPharmMat'    , 'Thomas Young Centre - Organic and Pharmaceutical Materials'                ) ,
-  ( 'TYCEarthMat'       , 'Thomas Young Centre - Earth Materials'                                     ) ,
-  ( 'TYCNano'           , 'Thomas Young Centre - Nanoscience and Defects'                             ) ,
-  ( 'TYCCatSurf'        , 'Thomas Young Centre - Surface Science and Catalysis'                       ) ,
-  ( 'Maths'             , 'Mathematical Sciences'                                                     ) ,
-  ( 'MedImaging'        , 'Medical Imaging'                                                           ) ,
-  ( 'MolQuantDynam'     , 'Molecular Quantum Dynamics and Electronic Structure'                       ) ,
-  ( 'NeuroSci'          , 'Neuroscience'                                                              ) ,
-  ( 'sochistsci'        , 'Social and Historical Sciences'                                            ) ,
-  ( 'SysBioMed'         , 'Systems Biomedicine'                                                       ) ,
-  ( 'PENDING'           , '[None of these fit my research area]'                                      )
+
+REPLACE INTO Research_Themes (id, full_name) VALUES
+  ( 1, 'Clinical Medicine'),
+  ( 2, 'Public Health, Health Services and Primary Care'),
+  ( 3, 'Allied Health Professions, Dentistry, Nursing and Pharmacy'),
+  ( 4, 'Psychology, Psychiatry and Neuroscience'),
+  ( 5, 'Biological Sciences'),
+  ( 6, 'Agriculture, Veterinary and Food Science'),
+  ( 7, 'Earth Systems and Environmental Sciences'),
+  ( 8, 'Chemistry'),
+  ( 9, 'Physics'),
+  (10, 'Mathematical Sciences'),
+  (11, 'Computer Science and Informatics'),
+  (12, 'Aeronautical, Mechanical, Chemical and Manufacturing Engineering'),
+  (13, 'Electrical and Electronic Engineering, Metallurgy and Materials'),
+  (14, 'Civil and Construction Engineering'),
+  (15, 'General Engineering'),
+  (16, 'Architecture, Built Environment and Planning'),
+  (17, 'Geography, Environmental Studies and Archaeology'),
+  (18, 'Economics and Econometrics'),
+  (19, 'Business and Management Studies'),
+  (20, 'Law'),
+  (21, 'Politics and International Studies'),
+  (22, 'Social Work and Social Policy'),
+  (23, 'Sociology'),
+  (24, 'Anthropology and Development Studies'),
+  (25, 'Education'),
+  (26, 'Sport and Exercise Sciences, Leisure and Tourism'),
+  (27, 'Area Studies'),
+  (28, 'Modern Languages and Linguistics'),
+  (29, 'English Language and Literature'),
+  (30, 'History'),
+  (31, 'Classics'),
+  (32, 'Philosophy'),
+  (33, 'Theology and Religious Studies'),
+  (34, 'Art and Design: History, Practice and Theory'),
+  (35, 'Music, Drama, Dance and Performing Arts'),
+  (36, 'Communication, Cultural and Media Studies, Library and Information Management')
 ;
 
 REPLACE INTO Services (id, name) VALUES
@@ -71,10 +84,6 @@ VALUES
   (6, 'ccaacla', 'Clare Gryce', FALSE, TRUE, 'c.gryce@ucl.ac.uk')
 ;
 
-SELECT id FROM Consortia WHERE short_name = 'PENDING' INTO @temp_consortium;
-SELECT id FROM Privileged_Users WHERE username = 'ccaacla' INTO @temp_name;
-INSERT INTO Consortium_Permissions (privileged_user_id, approves_for_consortium) VALUES
-  (@temp_name, @temp_consortium)
-;
+
 
 

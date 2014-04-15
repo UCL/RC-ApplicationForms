@@ -16,7 +16,7 @@
     $actor->connect();
     $user_type_options        = $actor->options_from_table("User_Types", "user_type");
     $experience_level_options = $actor->options_from_table("Experience_Levels", "level_text");
-    $consortium_options       = $actor->options_from_table("Consortia", "full_name");
+    $consortium_options       = $actor->options_from_table("Research_Themes", "full_name");
 ?>
 
 <form id="application_form" action="submit.php" method="post" enctype="multipart/form-data"">

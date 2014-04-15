@@ -1,40 +1,24 @@
-/*
- TABLE Consortia
- TABLE Privileged_Users
- TABLE Consortium_Permissions
- TABLE Event_Types
- TABLE Request_Progress
- TABLE User_Types
- TABLE User_Experience_Levels
- TABLE Users
- TABLE Projects
- TABLE Services
- TABLE Service_Requests
- TABLE Publications
- TABLE Publication_Services
- */
+
+# Reset the world.
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS Research_Themes;
+DROP TABLE IF EXISTS Privileged_Users;
+DROP TABLE IF EXISTS Event_Types;
+DROP TABLE IF EXISTS Request_Progress;
+DROP TABLE IF EXISTS User_Types;
+DROP TABLE IF EXISTS Experience_Levels;
+DROP TABLE IF EXISTS User_Profiles;
+DROP TABLE IF EXISTS Project_Requests;
+DROP TABLE IF EXISTS Services;
+DROP TABLE IF EXISTS Publications;
+DROP TABLE IF EXISTS Publication_Services;
+SET FOREIGN_KEY_CHECKS = 1;
 
 
-# Reset the world. These have to be in a certain order to reverse-satisfy fkey constraints.
-DROP TABLE Consortium_Permissions;
-DROP TABLE Publication_Services;
-DROP TABLE Publications;
-DROP TABLE Projects;
-DROP TABLE User_Profiles;
-DROP TABLE Privileged_Users;
-DROP TABLE Consortia;
-DROP TABLE Request_Progress;
-DROP TABLE Event_Types;
-DROP TABLE User_Types;
-DROP TABLE Experience_Levels;
-DROP TABLE Services;
-
-CREATE TABLE Consortia
-( -- should be the name of the consortium on Legion 
-  -- e.g. TYCNano for the equivalent full-name "Thomas Young Centre - Nanoscience"
+CREATE TABLE Research_Themes
+(
   id INTEGER AUTO_INCREMENT,
   full_name TEXT NOT NULL,
-  short_name VARCHAR(23) NOT NULL, -- Consortium name in the Legion filesystem
   PRIMARY KEY (id)
 );
 
@@ -49,16 +33,6 @@ CREATE TABLE Privileged_Users
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Consortium_Permissions
-(
-  id INTEGER AUTO_INCREMENT,
-  privileged_user_id INTEGER,
-  approves_for_consortium INTEGER,
-  PRIMARY KEY (id),
-  FOREIGN KEY (privileged_user_id) REFERENCES Privileged_Users(id),
-  FOREIGN KEY (approves_for_consortium) REFERENCES Consortia(id)
-);
-
 CREATE TABLE Event_Types
 (
   id INTEGER AUTO_INCREMENT,
@@ -69,8 +43,7 @@ CREATE TABLE Event_Types
 CREATE TABLE Request_Progress
 (
   id INTEGER AUTO_INCREMENT,
-  account_id INTEGER,
-  project_id INTEGER,
+  project_request_id INTEGER,
   event_type_id INTEGER,
   acting_user VARCHAR(7),
   with_comment TEXT,
@@ -104,6 +77,7 @@ CREATE TABLE User_Profiles
   user_surname TEXT,
   user_forenames TEXT,
   user_forename_preferred TEXT,
+  # TODO: Stop oppressing people and just request a full name and a preferred term of address
   user_dept TEXT,
   sponsor_username TEXT,
   experience_level_id INTEGER,
@@ -113,12 +87,12 @@ CREATE TABLE User_Profiles
   FOREIGN KEY (experience_level_id) REFERENCES Experience_Levels(id)
 );
 
-CREATE TABLE Projects
+CREATE TABLE Project_Requests
 (
   id INTEGER AUTO_INCREMENT,
   username VARCHAR(7),
-  request_id INTEGER,
-  consortium_id INTEGER,
+  user_profile_id INTEGER,
+  research_theme_id INTEGER,
   is_funded BOOLEAN,
   work_type_basic BOOLEAN,
   work_type_array BOOLEAN,
@@ -145,8 +119,8 @@ CREATE TABLE Projects
   collab_other_name TEXT,
   collaboration_collated TEXT,
   PRIMARY KEY (id),
-  FOREIGN KEY (request_id) REFERENCES User_Profiles(id),
-  FOREIGN KEY (consortium_id) REFERENCES Consortia(id)
+  FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id),
+  FOREIGN KEY (research_theme_id) REFERENCES Research_Themes(id)
 );
 
 CREATE TABLE Services

@@ -4,6 +4,7 @@ $page_title = "Submitting Application";
 include "includes/header.php";
 include_once "includes/MailMailer.php";
 include_once "includes/SQLActor.php";
+include_once "includes/strings.php";
 
 $referrer_file_name = array_pop(explode("/", $_SERVER["HTTP_REFERER"])); 
 
@@ -20,39 +21,34 @@ try {
     $actor->connect();
 
     $request = $_POST;
-    if ($actor->does_user_have_existing_account_request('a'.$request['username'])) {
-        //TODO: Change this: users need to be able to submit another request if they are declined.
-        echo "<p class='p'><em>You already have an account request ". 
-             "in progress -- you cannot submit another. If you have".
-             " realised that you made a significant mistake, or for".
-             " any other problem with the process, please contact ".
-             "rc-support@ucl.ac.uk.</em></p>\n";
-    } else {
-        $creation_result = $actor->create_new_account_request($request);
-        if ($creation_result !== FALSE) {
-            // Add some result information we want to let us id the request
-            $request['created_id'] = $creation_result['account_request_id']; 
-            $request['project']['created_id'] = $creation_result['project_request_id']; 
-            $request['consortium_name'] = $actor->get_consortium_name($request['project']['consortium_id']);
 
+    $applying_user = new UserProfile($request['username']);
+
+    if ($applying_user->has_open_project_request()) {
+        echo $strings["submit"]["err_open_proj_req"];
+    } else {
+
+        $new_project_request = ProjectRequest::from_request($request);
+        $creation_result = $new_project_request->save_to_db();
+
+        if ($creation_result !== FALSE) {
+            //TODO: Move mailer calls to within Project Requests
             $actor->mark_request_status($request['created_id'], 
                                         $request['project']['created_id'],
                                         $request['username'], 
                                         'submitted', 
                                         "automatically");
 
-            $addresses_to_mail = $actor->get_consortium_leaders_to_mail($request['project']['consortium_id']);
+            $addresses_to_mail = $new_project_request->get_user_profile()->get_sponsor_email_address();
 
             $mailer = new MailMailer();
             $mail_result = $mailer->send_mail("new_account_for_approval", $addresses_to_mail, $request);
+
             if ($mail_result !== TRUE) {
-                echo "<h4>There was a problem mailing out approval requests. ".
-                     "Please contact rc-support@ucl.ac.uk mentioning this ".
-                     "problem, and pasting the following into your e-mail:".
-                     "</h4>\n".$mail_result."\n";
+                echo $strings["submit"]["err_could_not_send_mail"] . $mail_result."\n";
                 print_r($request);
             } else {
-                echo "<p class='p'>Successfully mailed requests for approval. If you do not receive any further information within 3 days, please contact rc-support@ucl.ac.uk.</p>\n";
+                echo $strings["submit"]["success"];
             }
         } 
     }

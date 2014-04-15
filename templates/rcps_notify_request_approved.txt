@@ -1,9 +1,9 @@
 An account application has been approved.
 
-Consortium: {:consortium}
+Research : {:research_theme}
 User name : {:request_user}
 
-Link: http://avon.ucl.ac.uk/acct/list.php?ida={:account_request_id}&idp={:project_id}
+Link: http://avon.ucl.ac.uk/acct/list.php?idp={:project_request_id}
 
 Comments from: {:acting_user} 
 -----------------------------

@@ -5,5 +5,5 @@ Our Research Computing account system has detected that it has been 11 months si
 
 Please complete the form at the link below to submit the renewal request.
 
-  Link: {%BASE_PATH}/renew.php?id={:project_id}
+  Link: {%BASE_PATH}/renew.php?idp={:project_id}
 

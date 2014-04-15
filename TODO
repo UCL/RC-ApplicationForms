@@ -1,12 +1,20 @@
 * Add exception handling to SQLActor, esp connect()
-* Handle relative to absolute paths correctly for, e.g. generating email links
+* Handle relative to absolute paths correctly for, e.g. generating email links?
   --> See: https://github.com/monkeysuffrage/phpuri
 * Make Javascript hide/set/disable certain fields depending on user-type in apply.php
 
-* Rename class files to be capitalised.
-* Rename Projects to Project_Requests
-* Make corresponding classes
-* Correct all function and variable and property names accordingly to make sense O_o
+
+* Alter User Profile data to just request a full name and a preferred term of address
+* Make UserProfile and ProjectRequest classes able to complete the submission process - RequestPair should probably be obsolete
+
+
+* HMMMM. You could split up the user profile application and the project request bit now, like you always kind of thought would happen.
+* Into separate pages, I mean.
+* Then if someone loads up the project request page without having filled in a profile, all the elements are disabled.
+* Yesssssssss.
+
+
+* Correct all function and variable and property names according to new names to make sense O_o
 
 * Make database operations within transactions to allow catch and rollback
 

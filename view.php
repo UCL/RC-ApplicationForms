@@ -27,7 +27,7 @@ if ($req_method == "POST") {
 try{
     $current_user = new Operator($current_username);
 
-    $request_pair = new RequestPair($req_project_id);
+    $request_pair = new ProjectRequest($req_project_id);
     if ($request_pair->is_valid() == FALSE) {
         echo "<h4>Invalid Request [Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
@@ -43,6 +43,8 @@ try{
                 $user_mail_template_name = "new_account_request_rejected";
                 $rcps_mail_template_name = "rcps_notify_request_rejected";
                 $taking_action = TRUE;
+            } else {
+                $result = FALSE;
             }
 
             if ($taking_action == TRUE) {
@@ -183,4 +185,4 @@ try{
 
 include "includes/footer.php";
 
-?>
+

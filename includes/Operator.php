@@ -3,12 +3,15 @@
 include_once "SQLActor.php";
 
 class Operator {
+
+    // To match db schema
     private $id;
     private $username;
     private $full_name;
     private $super_special_rainbow_pegasus_powers;
     private $receives_emails;
     private $email_address;
+    // End of db fields
 
     private $actor;
 

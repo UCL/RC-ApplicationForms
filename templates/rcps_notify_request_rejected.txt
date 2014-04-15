@@ -1,11 +1,11 @@
 An account application has been declined.
 
-Consortium: {:consortium}
+Theme : {:research_theme}
 User name : {:request_user}
 
-Link: http://avon.ucl.ac.uk/acct/list.php?ida={:account_request_id}&idp={:project_id}
+Link: http://avon.ucl.ac.uk/acct/list.php?idp={:project_id}
 
-Comments from: {:acting_user} 
+Comments from: {:acting_user}
 -----------------------------
 {:comments}
 
