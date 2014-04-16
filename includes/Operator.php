@@ -46,15 +46,6 @@ class Operator {
         }
     }
 
-    public function is_leader_for($consortium_id) {
-        $leaderships = $this->actor->get_user_id_consortium_permissions($this->id);
-        if (in_array($consortium_id, $leaderships)) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
-
     public function username() {
         return $this->username;
     }
