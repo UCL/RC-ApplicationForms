@@ -90,7 +90,6 @@ CREATE TABLE User_Profiles
 CREATE TABLE Project_Requests
 (
   id INTEGER AUTO_INCREMENT,
-  username VARCHAR(7),
   user_profile_id INTEGER,
   research_theme_id INTEGER,
   is_funded BOOLEAN,
