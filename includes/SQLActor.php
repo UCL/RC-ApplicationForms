@@ -54,23 +54,6 @@ class SQLActor {
         // PHP will clean up the connection with the PDO class destructor.
     }
 
-    public function is_privileged_user($user) {
-        // Should return T/F whether a user has any special permissions.
-        // (i.e. if they're a consortium leader or rainbow dash)
-        // It's a bit approximate at the moment, since Privileged_Users do not
-        //  necessarily have any special permissions.
-        $dbh = $this->dbc->prepare("SELECT COUNT(id) FROM Privileged_Users WHERE username = ?");
-        $dbh->bindValue(1,$user);
-        $dbh->execute();
-        $result = $dbh->fetchColumn(0);
-
-        if ($result > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
-
     public function get_user_info($username) {
         $dbh = $this->dbc->prepare("SELECT * FROM Privileged_Users WHERE username = ?");
         $dbh->bindValue(1, $username);
