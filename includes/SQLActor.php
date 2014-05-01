@@ -97,9 +97,17 @@ class SQLActor {
         return $status_info['with_comment'];
     }
 
-    public function get_account_request($account_request_id) {
-        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE id=?");
-        $dbh->bindValue(1, $account_request_id, PDO::PARAM_INT);
+    public function get_user_profile($user_profile_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE id=? ORDER BY id DESC LIMIT 1");
+        $dbh->bindValue(1, $user_profile_id, PDO::PARAM_INT);
+        $dbh->execute();
+        $result = $dbh->fetch();
+        return $result;
+    }
+
+    public function get_user_profile_by_name($username) {
+        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE username=?");
+        $dbh->bindValue(1, $username);
         $dbh->execute();
         $result = $dbh->fetch();
         return $result;
@@ -183,8 +191,9 @@ class SQLActor {
         return -1;
     }
 
-    public function does_user_have_existing_account_request($username) {
-        $dbh = $this->dbc->prepare("SELECT COUNT(id) from User_Profiles WHERE username = ?");
+    public function does_user_have_existing_project_request($username) {
+        $dbh = $this->dbc->prepare("SELECT COUNT(id) from User_Profiles as u,Project_Requests as p" .
+                                   " WHERE u.id = p.user_profile_id AND u.username = ?");
         $dbh->bindValue(1,$username);
         $dbh->execute();
         $results = $dbh->fetchColumn(0);
@@ -203,133 +212,39 @@ class SQLActor {
         return $results;
     }
 
-    public function create_new_account_request($request) {
-        // Create user account section
-        $values_array = array(
-            'username', 
-            'user_upi',
-            'user_type_id',
-            'user_email',
-            'user_contact_number',
-            'user_surname',
-            'user_forenames',
-            'user_forename_preferred',
-            'user_dept',
-            'sponsor_username',
-            'experience_level_id',
-            'experience_text'
-        );
-        $values       = implode(",", $values_array);
-        $named_params = ":" . implode(",:", $values_array);
+    public function save_object_data($table, $object_data) {
+        $data_keys = array_keys($object_data);
+        $values       = implode(",", $data_keys);
+        $named_params = ":" . implode(",:", $data_keys);
 
         $dbh = $this->dbc->prepare(
-            "INSERT INTO User_Profiles ".
+            "INSERT INTO $table " .
             "({$values})" .
             " VALUES " .
-            "({$named_params})"
+            "({$named_params}) "
         );
 
-        foreach ($values_array as $value) {
-            $dbh->bindParam(":{$value}", $request[$value]);
+        foreach ($data_keys as $key) {
+            $dbh->bindParam(":{$key}", $object_data[$key]);
         };
-        
-        $user_profile_creation_result = $dbh->execute();
-        $user_profile_id = $this->dbc->lastInsertId();
 
-        // Next, project section
-        // This one's a little more complicated because there are t/f fields that don't get submitted if not checked
-        // So, we keep them separately to the main data fields, and check and set them in the main array
+        $save_result = $dbh->execute();
+        $created_row_id = $this->dbc->lastInsertId();
 
-        $project = $request['project'];
-
-        $list_of_checkboxes = array(
-            'work_type_basic',
-            'work_type_array',
-            'work_type_multithread',
-            'work_type_all_the_ram',
-            'work_type_small_mpi',
-            'work_type_mid_mpi',
-            'work_type_large_mpi',
-            'work_type_small_gpu',
-            'work_type_large_gpu',
-            'is_collab_bristol',
-            'is_collab_oxford',
-            'is_collab_soton',
-            'is_collab_other'
-        );
-        foreach ($list_of_checkboxes as $key) {
-            if (isset($project['checkboxes'][$key])) {
-                $project[$key] = 1;
-            } else {
-                $project[$key] = 0;
-            }
-        }
-
-        $project['checkboxes']="";
-        unset($project['checkboxes']);
-
-        // Then use the same procedure as above. Slight tweak to add 
-        //  username and request id prevents straight code re-use.
-        $values_array = array(
-            'is_funded',
-            'research_theme_id',
-            'weird_tech_description',
-            'work_description',
-            'applications_description',
-            'collab_bristol_name',
-            'collab_oxford_name',
-            'collab_soton_name',
-            'collab_other_institute',
-            'collab_other_name',
-            'pi_email',
-            'work_required_collated',
-            'collaboration_collated',
-            'work_type_basic',
-            'work_type_array',
-            'work_type_multithread',
-            'work_type_all_the_ram',
-            'work_type_small_mpi',
-            'work_type_mid_mpi',
-            'work_type_large_mpi',
-            'work_type_small_gpu',
-            'work_type_large_gpu',
-            'is_collab_bristol',
-            'is_collab_oxford',
-            'is_collab_soton',
-            'is_collab_other'
-        );
-        $values       = implode(",", $values_array);
-        $named_params = ":" . implode(",:", $values_array);
-
-        $dbh = $this->dbc->prepare(
-            "INSERT INTO Project_Requests ".
-            "(username, user_profile_id, $values)" .
-            " VALUES " .
-            "(:username, :user_profile_id, $named_params)"
-        );
-
-        $dbh->bindParam(":username", $request['username']);
-        $dbh->bindParam(":user_profile_id", $user_profile_id);
-        foreach ($values_array as $value) {
-            $dbh->bindParam(":$value", $project[$value]);
-        };
-        
-        $project_request_creation_result = $dbh->execute();
-        $project_request_id = $this->dbc->lastInsertId();
-        
-        // Finally, mark as submitted in the events table
-
-        // And return the request id if everything worked
-        if ($user_profile_creation_result &&
-            $project_request_creation_result ) {
-                return array('user_profile_id' => $user_profile_id,
-                             'project_request_id' => $project_request_id
-                         );
+        if ($save_result) {
+            return $created_row_id;
         } else {
             return FALSE;
         }
     }
 
+    public function save_user_profile($profile_data) {
+        return $this->save_object_data("User_Profiles", $profile_data);
+    }
+
+    public function save_project_request($request_data) {
+        return $this->save_object_data("Project_Requests", $request_data);
+    }
 
     function mark_request_status($project_request_id, $acting_user, $status_string, $comment) {
         $status_id = $this->get_status_id($status_string);

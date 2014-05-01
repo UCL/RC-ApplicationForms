@@ -145,4 +145,3 @@ div.subsection {
 <div class="heading">
 <h2 class="heading"><?php echo $page_title;?></h2>
 </div>
-

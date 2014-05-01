@@ -1,5 +1,5 @@
 <?php
-echo "<h2>Warning: UserProfile Auth Shim in place. Remove from production.</h2>";
+echo "<h2>Warning: Operator Auth Shim in place. Remove from production.</h2>";
 
 if ( (FALSE == array_key_exists("PHP_AUTH_USER", $_SERVER)) ||
      (is_null($_SERVER["PHP_AUTH_USER"])) )

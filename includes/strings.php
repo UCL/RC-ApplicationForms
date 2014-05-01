@@ -8,6 +8,8 @@
 
 $strings = array(
     "submit" => array (
+        "err_could_not_create_user" => "<p class='p'><em>The user details you supplied " .
+             " could not be parsed correctly. Please check them and try again.</em>\n",
         "err_open_proj_req" => "<p class='p'><em>You already have an account request ".
              "in progress -- you cannot submit another. If you have".
              " realised that you made a significant mistake, or for".

@@ -1,10 +1,11 @@
 <?php
     include_once "includes/auth_user_shim.php";
+    include_once "includes/autoload_definition.php";
 
     $page_title = "Request User Account";
     include_once "includes/header.php";
-    include_once "includes/SQLActor.php";
 ?>
+
 <script type="text/javascript">
     document.write("\<script src='//ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' type='text/javascript'>\<\/script>");
 </script>
@@ -16,10 +17,13 @@
     $actor->connect();
     $user_type_options        = $actor->options_from_table("User_Types", "user_type");
     $experience_level_options = $actor->options_from_table("Experience_Levels", "level_text");
-    $consortium_options       = $actor->options_from_table("Research_Themes", "full_name");
+    $research_themes          = $actor->options_from_table("Research_Themes", "full_name");
 ?>
 
-<form id="application_form" action="submit.php" method="post" enctype="multipart/form-data"">
+<?php // TODO: Move this into a separate file, then include it only if the user doesn't have an existing application
+ ?>
+
+<form id="application_form" action="submit.php" method="post" enctype="multipart/form-data">
     <div class="section">
         <h3 class="sectionTitle">
             User Information
@@ -32,7 +36,7 @@
                     <input 
                         type="text"
                         id="username"
-                        name="username" 
+                        name="user_profile[username]"
                         title="Your existing UCL userid." 
                         readonly 
                         value="<?php echo "$current_username" ?>"
@@ -45,7 +49,7 @@
                 <td> <!-- See if you can gen this. -->
                     <input 
                         type="text"
-                        name="user_upi"
+                        name="user_profile[user_upi]"
                         title="Your UCL UPI. (It's on your swipecard.)"
                         placeholder="UPI"
                     />
@@ -56,7 +60,7 @@
                     <label for="user_type_id">User Type:</label>
                 </td>
                 <td>
-                    <select id="user_type_id" name="user_type_id">
+                    <select id="user_type_id" name="user_profile[user_type_id]" name="user_profile[user_type_id]">
                         <?php echo $user_type_options; ?>
                     </select>
                 </td>
@@ -66,7 +70,7 @@
                 <td>
                     <input
                         type="text"
-                        name="user_surname"
+                        name="user_profile[user_surname]"
                         title="Your surname (or family name)."
                         placeholder="Surname"
                     />
@@ -79,7 +83,7 @@
                 <td>
                     <input
                         type="text"
-                        name="user_forenames"
+                        name="user_profile[user_forenames]"
                         title="Your forenames (or given names)."
                         placeholder="Forenames"
                     />
@@ -90,7 +94,7 @@
                 <td>
                     <input
                         type="text"
-                        name="user_forename_preferred"
+                        name="user_profile[user_forename_preferred]"
                         title="Your preferred name."
                         placeholder="Preferred name"
                     />
@@ -103,7 +107,7 @@
                 <td>
                     <input
                         type="email"
-                        name="user_email"
+                        name="user_profile[user_email]"
                         title="Your UCL e-mail address. You are unable to use non-UCL e-mail address for Legion accounts."
                         placeholder="person@ucl.ac.uk"
                         pattern="[-0-9a-zA-Z.+_]+@(?:[a-z0-9.-]+.|)ucl\.ac\.uk"
@@ -115,7 +119,7 @@
                 <td>
                     <input
                         type="tel"
-                        name="user_contact_number"
+                        name="user_profile[user_contact_number]"
                         title="A telephone number (or UCL internal extension) we can contact you with."
                         placeholder="00000"
                     />
@@ -128,7 +132,7 @@
                 <td>
                     <input
                         type="text"
-                        name="user_dept"
+                        name="user_profile[user_dept]"
                         title="The department to which you belong."
                         placeholder="Dept"
                     />
@@ -141,7 +145,8 @@
             Sponsor
         </h3>
         <p class="p">
-            To obtain an account, you must either be, or be approved by, a permanent member of staff. If you are a student or a postdoctoral researcher, this will normally be your supervisor. Due to technical limitations at this time, names here are only validated against the Electronic Record of Supervisors (EROS) system at UCL, so if you or your sponsor are not registered as a supervisor, you may need to find someone who is.
+            To obtain an account, you must either be, or be approved by, a permanent member of staff.
+            If you are a student or a postdoctoral researcher, this will normally be your supervisor.
         </p>
         <table>
             <tr>
@@ -151,7 +156,7 @@
                 <td>
                     <input
                         type="text"
-                        name="sponsor_username"
+                        name="user_profile[sponsor_username]"
                         title="The username of a permanent member of staff who is prepared to approve your account request."
                         placeholder="ccaprof"
                         pattern="[A-Za-z0-9]{7}"
@@ -172,8 +177,8 @@
             Please provide below a summary of your previous HPC/UNIX/Linux experience.
         </p>
         <textarea 
-            name="experience_text" 
-            rows=8 
+            name="user_profile[experience_text]"
+            rows=5
             cols=70
             title="Please provide a summary of your previous HPC/UNIX/Linux experience here." 
             placeholder="E.g. Spent X years using Y system to do Z at Place. Am familiar with systems A and B, and programs C and D."
@@ -184,7 +189,7 @@
         <p class="p">
             <label for="experience_level_id">Which of these options best describes your experience and support level for this service?</label>
         </p>
-        <select id="experience_level_id" name="experience_level_id" title="Which of these options best describes your experience and support level for this service?">
+        <select id="experience_level_id" name="user_profile[experience_level_id]" title="Which of these options best describes your experience and support level for this service?">
             <?php echo $experience_level_options;?>
         </select>
     </div>
@@ -193,7 +198,7 @@
         <h3 class="sectionTitle">
             Research Project Details
         </h3>
-        <p class="note">
+        <p class="p">
             In this section we require information about the work you are requesting resources for. When you renew your account, you will be required to provide funding information (including award numbers and/or grant codes) associated with this work, not to charge you, but to allow us to justify the continued existence and maintenance of the services.
         </p>
 
@@ -228,9 +233,9 @@
             </table>
             <p class="p">
                 <label>
-                    Consortium:
-                    <select name="project[consortium_id]">
-                        <?php echo $consortium_options;?>
+                    Research Theme <em>(these are based on REF categories)</em>:
+                    <select name="project[research_theme_id]">
+                        <?php echo $research_themes;?>
                     </select>
                 </label>
             </p>
@@ -247,8 +252,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_basic" 
-                               name="project[checkboxes][work_type_basic]"
-                               collating_value="Individual single core jobs"
+                               name="project[work_type_basic]"
                          />
                         Individual single core jobs
                     </label>
@@ -258,8 +262,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_array" 
-                               name="project[checkboxes][work_type_array]" 
-                               collating_value="Large numbers of single core jobs"
+                               name="project[work_type_array]"
                          />
                         Large numbers (&gt;1000) of single core jobs
                     </label>
@@ -269,8 +272,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_multithread" 
-                               name="project[checkboxes][work_type_multithread]" 
-                               collating_value="Multithreaded jobs"
+                               name="project[work_type_multithread]"
                          />
                         Multithreaded jobs
                     </label>
@@ -280,8 +282,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_all_the_ram" 
-                               name="project[checkboxes][work_type_all_the_ram]" 
-                               collating_value="Extremely large quantities of RAM"
+                               name="project[work_type_all_the_ram]"
                          />
                         Extremely large quantities of RAM (&gt;64GB)
                     </label>
@@ -291,8 +292,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_small_mpi" 
-                               name="project[checkboxes][work_type_small_mpi]" 
-                               collating_value="Small MPI jobs (<36 cores)"
+                               name="project[work_type_small_mpi]"
                          />
                         Small MPI jobs (&lt;36 cores)
                     </label>
@@ -302,8 +302,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_mid_mpi" 
-                               name="project[checkboxes][work_type_mid_mpi]" 
-                               collating_value="Medium MPI jobs (36-256 cores)"
+                               name="project[work_type_mid_mpi]"
                          />
                         Medium-sized MPI jobs (36-256 cores)
                     </label>
@@ -313,8 +312,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_large_mpi" 
-                               name="project[checkboxes][work_type_large_mpi]" 
-                               collating_value="Large MPI jobs (<256 cores)"
+                               name="project[work_type_large_mpi]"
                          />
                         Large-sized MPI jobs (&gt;256 cores)
                     </label>
@@ -324,8 +322,7 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_small_gpu" 
-                               name="project[checkboxes][work_type_small_gpu]" 
-                               collating_value=">0 GPUs"
+                               name="project[work_type_small_gpu]"
                          />
                         At least one GPGPU
                     </label>
@@ -335,14 +332,12 @@
                         <input type="checkbox" 
                                class="work_type_checkbox"
                                id="work_type_large_gpu" 
-                               name="project[checkboxes][work_type_large_gpu]" 
-                               collating_value=">10 GPUs"
+                               name="project[work_type_large_gpu]"
                          />
                         At least ten GPGPUs
                     </label>
                 </li>
             </ul>
-            <input type="hidden" id="work_required_collated" name="project[work_required_collated]" />
             
             <p class="p">
                 If you have technical requirements that do not fit any of these categories, please describe them here:
@@ -360,7 +355,7 @@
             </p>
             <textarea
                     name="project[work_description]"
-                    rows=8
+                    rows=5
                     cols=70
                     title="Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area."
                     placeholder="E.g. I will be using technique X to predict Y about Z, in the field of A. This involves doing B and C, with a potential of D."
@@ -371,7 +366,7 @@
             </p>
             <textarea
                     name="project[applications_description]"
-                    rows=8
+                    rows=3
                     cols=70
                     title="Please provide a list of any software you know you'll need, with approximate versions where known."
                     placeholder="E.g. Gaussian 04.f, VASP 5.2.19, Braniac 5.0"
@@ -384,7 +379,7 @@
             <table>
                 <tr>
                     <td>
-                        <label><input class="collab_checkbox" collating_value="Bristol: " type="checkbox" name="project[checkboxes][is_collab_bristol]">
+                        <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_bristol]">
                             Bristol
                         </label>
                     </td>
@@ -395,7 +390,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><input class="collab_checkbox" collating_value="Oxford: " type="checkbox" name="project[checkboxes][is_collab_oxford]" />
+                        <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_oxford]" />
                             Oxford
                         </label>
                     </td>
@@ -406,7 +401,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><input class="collab_checkbox" collating_value="Southampton: " type="checkbox" name="project[checkboxes][is_collab_soton]" />
+                        <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_soton]" />
                             Southampton
                         </label>
                     </td>
@@ -417,7 +412,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label><input class="collab_checkbox" collating_value="Other" type="checkbox" name="project[checkboxes][is_collab_other]" />
+                        <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_other]" />
                             Other:</label> <input type="text" name="project[collab_other_institute]" placeholder="University" />
                     </td>
                     <td>
@@ -426,7 +421,6 @@
                     </td>
                 </tr>
             </table>
-            <input type="hidden" name="project[collaboration_collated]" value="(No collaborators specified.)" />
         </div>
     </div>
     <p class="p">
@@ -434,63 +428,21 @@
         <label><input type="checkbox" id="tandc" name="tandc" value="tandc" />Please tick this to acknowledge that you have read and accepted the <a target="_new" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>. <em>(This link should open in a new tab/window.)</em></label>
     </p>
 
-    <div id="error" style="color: #cc0000;"></div>
+    <div id="error" style="color: #cc0000;">
+
+    </div>
 
     <input type="submit" id="form_submit_button" value="Submit" title="Submit application request." />
 </form>
 
     <script>
 
-    function update_collated_fields() {
-        update_work_collated();
-        update_collab_collated();
-    }
-
-    function update_work_collated() {
-        value_string = "";
-        work_types = document.getElementsByClassName('work_type_checkbox');
-
-        for (var i=0; i < work_types.length ; i++) {
-            if (work_types[i].checked == true) {
-                value_string = value_string.concat(" * ", work_types[i].attributes['collating_value'].value, "\n");
-            }
-        }
-        document.getElementById( 'work_required_collated' ).value = value_string;
-    }
-
-    function update_collab_collated() {
-        value_string = "";
-        institutes = ['bristol','oxford','soton','other'];
-        for (var i=0;i < institutes.length; i++) {
-            checkboxes = document.getElementsByName(''.concat('project[checkboxes][is_collab_',institutes[i],']'));
-            checkbox = checkboxes[0];
-            if (checkbox.checked == true) {
-                name_fields = document.getElementsByName(''.concat('project[collab_',institutes[i],'_name]'));
-                name_field = name_fields[0];
-                if (institutes[i] != 'other') {
-                    label = checkbox.attributes['collating_value'].value;
-                } else {
-                    institute_fields = document.getElementsByName('project[collab_other_institute]');
-                    institute_field  = institute_fields[0];
-                    label = ''.concat( institute_field.value, ": ");
-                }
-                value_string = value_string.concat(label, name_field.value, "\n");
-                
-            }
-        }
-        target_elements = document.getElementsByName('project[collaboration_collated]');
-        target_elements[0].value = value_string;
-    }
-
     $( '#application_form' ).submit( function( event ) {
-        if ( $('#tandc').is( ":checked" ) != true  ) {
-            $( '#error' ).text("You must accept the Terms and Conditions to apply.").show();
-            event.preventDefault();
+        if ($('#tandc').is(":checked") == true) {
+            $('#notice').text("").show();
         } else {
-            update_collated_fields();
-            
-            $( '#notice' ).text("").show();
-            return;
+            $('#error').text("You must accept the Terms and Conditions to apply.").show();
+            event.preventDefault();
         }
     });
     </script>

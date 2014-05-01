@@ -69,6 +69,7 @@ CREATE TABLE Experience_Levels
 CREATE TABLE User_Profiles
 (
   id INTEGER AUTO_INCREMENT,
+  creation_time TIMESTAMP,
   username VARCHAR(7),
   user_upi VARCHAR(15),
   user_type_id INTEGER,
@@ -102,7 +103,6 @@ CREATE TABLE Project_Requests
   work_type_large_mpi BOOLEAN,
   work_type_small_gpu BOOLEAN,
   work_type_large_gpu BOOLEAN,
-  work_required_collated TEXT,
   is_collab_bristol BOOLEAN,
   is_collab_oxford BOOLEAN,
   is_collab_soton BOOLEAN,
@@ -116,7 +116,6 @@ CREATE TABLE Project_Requests
   collab_soton_name TEXT,
   collab_other_institute TEXT,
   collab_other_name TEXT,
-  collaboration_collated TEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id),
   FOREIGN KEY (research_theme_id) REFERENCES Research_Themes(id)

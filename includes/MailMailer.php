@@ -1,7 +1,5 @@
 <?php
 
-require_once("includes/MailMessage.php");
-
 class MailMailer {
 
     static private $override_mail = TRUE;

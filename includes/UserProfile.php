@@ -1,9 +1,9 @@
-<?
+<?php
 
 class UserProfile {
 
     // To match db schema
-    private $id = FALSE;
+    private $id;
     private $username;
     private $user_upi;
     private $user_type_id;
@@ -18,44 +18,58 @@ class UserProfile {
     private $experience_text;
     // End of db fields
 
+    /** @var SQLActor actor */
     protected $actor;
-    private $valid = FALSE;
+
+    /** @var bool is_clean */
+    private $is_clean; /* i.e. is this consistent with the database contents */
 
     public function __construct($actor=NULL) {
-        if ($actor != NULL) {
+        $this->id = FALSE;
+
+        if ($actor == NULL) {
             $this->actor = new SQLActor();
             $this->actor->connect();
         } else {
             $this->actor = $actor;
         }
+        $this->dirty();
     }
 
     public static function from_request($request_array) {
         $instance = new self();
         $instance->fill_from_request_array($request_array);
+        $instance->dirty(); // Because it hasn't been saved to the db yet
         return $instance;
+    }
+
+    public static function from_db($user_profile_id) {
+        $instance = new self();
+        $request_array = $instance->actor->get_user_profile($user_profile_id);
+        $instance->fill_from_request_array($request_array);
+        return $instance;
+    }
+
+    public static function from_db_by_name($username) {
+        // NB: This gets their *last* profile in the db sorted by id
+        $instance = new self();
+        $request_array = $instance->actor->get_user_profile_by_name($username);
+
+        if ($request_array === FALSE) {
+            return FALSE;
+        } else {
+            $instance->fill_from_request_array($request_array);
+            return $instance;
+        }
     }
 
     public function fill_from_request_array($request_array) {
+        // Populates *any class field* that the passed array contains
         foreach ($this as $key => $value) {
             if (array_key_exists($key, $request_array)) {
-                $this[$key] = $request_array[$key];
+                $this->$key = $request_array[$key];
             }
         }
-
-        foreach ($this as $key => $value) {
-            if (! isset($this[$key])) {
-                return FALSE;
-            }
-        }
-        return TRUE;
-    }
-
-    public static function from_db($id) {
-        $instance = new self();
-        $request_array = $instance->actor->get_user_profile($id);
-        $instance->fill_from_request_array($request_array);
-        return $instance;
     }
 
     public function set_id($id) {
@@ -68,6 +82,7 @@ class UserProfile {
 
     public function set_username($name) {
         $this->username = $name;
+        $this->dirty();
     }
 
     public function get_username() { 
@@ -76,6 +91,7 @@ class UserProfile {
 
     public function set_user_upi($upi) {
         $this->user_upi = $upi;
+        $this->dirty();
     }
 
     public function get_user_upi() { 
@@ -84,6 +100,7 @@ class UserProfile {
 
     public function set_user_type_id($type_id) {
         $this->user_type_id = $type_id;
+        $this->dirty();
     }
 
     public function get_user_type_id() { 
@@ -92,6 +109,7 @@ class UserProfile {
 
     public function set_user_email($email) {
         $this->user_email = $email;
+        $this->dirty();
     }
 
     public function get_user_email() { 
@@ -100,6 +118,7 @@ class UserProfile {
 
     public function set_user_contact_number($number) {
         $this->user_contact_number = $number;
+        $this->dirty();
     }
 
     public function get_user_contact_number() { 
@@ -108,6 +127,7 @@ class UserProfile {
 
     public function set_user_surname($surname) {
         $this->user_surname = $surname;
+        $this->dirty();
     }
 
     public function get_user_surname() { 
@@ -116,6 +136,7 @@ class UserProfile {
 
     public function set_user_forenames($forenames) {
         $this->user_forenames = $forenames;
+        $this->dirty();
     }
 
     public function get_user_forenames() { 
@@ -124,6 +145,7 @@ class UserProfile {
 
     public function set_user_forename_preferred($forename) {
         $this->user_forename_preferred = $forename;
+        $this->dirty();
     }
 
     public function get_user_forename_preferred() {
@@ -132,6 +154,7 @@ class UserProfile {
 
     public function set_user_dept($user_dept) {
         $this->user_dept = $user_dept;
+        $this->dirty();
     }
 
     public function get_user_dept() {
@@ -140,6 +163,7 @@ class UserProfile {
 
     public function set_sponsor_username($name) {
         $this->sponsor_username = $name;
+        $this->dirty();
     }
 
     public function get_sponsor_username() {
@@ -148,6 +172,7 @@ class UserProfile {
 
     public function set_experience_level_id($id) {
         $this->experience_level_id = $id;
+        $this->dirty();
     }
 
     public function get_experience_level_id() {
@@ -156,22 +181,31 @@ class UserProfile {
 
     public function set_experience_text($text) {
         $this->experience_text = $text;
+        $this->dirty();
     }
 
     public function get_experience_text() {
         return $this->experience_text;
     }
 
-    public function is_valid() {
-        return $this->valid;
+    public function is_clean() {
+        return $this->is_clean;
+    }
+
+    public function dirty() {
+        $this->is_clean = FALSE;
+    }
+
+    public function clean() {
+        $this->is_clean = TRUE;
     }
 
     public function can_self_approve() {
-        
+        //TODO when we have a way of determining this (from ResourceLink)
     }
 
-    public function is_already_stored() {
-
+    public function get_sponsor_email_address() {
+        return $this->get_sponsor_username() . "@ucl.ac.uk";
     }
 
     public function can_be_altered_by(Operator $an_operator) {
@@ -186,11 +220,37 @@ class UserProfile {
 
     public function save_to_db(Operator $altering_operator) {
         if ($this->can_be_altered_by($altering_operator)) {
-            //TODO
-
+            $created_id = $this->actor->save_user_profile($this->get_packed_data());
+            $this->set_id($created_id);
+            $this->clean();
+            return TRUE;
         } else {
             return FALSE;
         }
+    }
+
+    public function get_packed_data() {
+        $data_array = array();
+        if ($this->id !== FALSE) {
+            $data_array['id'] = $this->id;
+        }
+        $data_array['username'] = $this->username;
+        $data_array['user_upi'] = $this->user_upi;
+        $data_array['user_type_id'] = $this->user_type_id;
+        $data_array['user_email'] = $this->user_email;
+        $data_array['user_contact_number'] = $this->user_contact_number;
+        $data_array['user_surname'] = $this->user_surname;
+        $data_array['user_forenames'] = $this->user_forenames;
+        $data_array['user_forename_preferred'] = $this->user_forename_preferred;
+        $data_array['user_dept'] = $this->user_dept;
+        $data_array['sponsor_username'] = $this->sponsor_username;
+        $data_array['experience_level_id'] = $this->experience_level_id;
+        $data_array['experience_text'] = $this->experience_text;
+        return $data_array;
+    }
+
+    public function has_open_project_request() {
+        return $this->actor->does_user_have_existing_project_request($this->get_username());
     }
 
 };    
