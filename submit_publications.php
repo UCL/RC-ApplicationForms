@@ -32,15 +32,20 @@ try {
     $request = $_POST;
 
     echo "<ul>";
+
+
     foreach ($request['publications'] as $one_publication_array) {
-        $one_publication = Publication::from_array($one_publication_array);
-        $result = $one_publication->save_to_db($operator);
-        echo "<li><a href=\"" .
-            $one_publication->get_url() .
-            "\">" . $one_publication->get_url() .
-            "</a> " .
-            ($result ? " saved." : " could not be saved.") .
-            "</li>";
+        if ($one_publication_array['url'] != "") {
+            $one_publication = Publication::from_array($one_publication_array);
+            $result = $one_publication->save_to_db($operator);
+            echo "<li><a href=\"" .
+                $one_publication->get_url() .
+                "\">" . $one_publication->get_url() .
+                "</a> " .
+                ($one_publication->is_notable() ? "*" : "") .
+                ($result ? " saved." : " could not be saved.") .
+                "</li>";
+        }
     }
     echo "</ul>";
 

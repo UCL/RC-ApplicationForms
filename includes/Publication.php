@@ -49,10 +49,25 @@ class Publication {
     }
 
     public function fill_from_array($an_array) {
-        foreach ($this as $key => $value) {
-            if (array_key_exists($key, $an_array)) {
-                $this->$key = $an_array[$key];
+        if (array_key_exists('id',$an_array)) {
+            $this->user_profile_id = $an_array['id'];
+        }
+        if (array_key_exists('user_profile_id',$an_array)) {
+            $this->user_profile_id = $an_array['user_profile_id'];
+        }
+        if (array_key_exists('notable',$an_array)) {
+            if ($an_array['notable'] == "on") {
+                $this->notable = 1;
+            } else {
+                $this->notable = $an_array['notable'];
             }
+        } else {
+            $this->notable = 0;
+        }
+        if (array_key_exists('url',$an_array)) {
+            $this->url = $an_array['url'];
+        } else {
+            die("Error: no url provided to publication.");
         }
     }
 
@@ -69,7 +84,8 @@ class Publication {
     }
 
     public function set_user_profile_id_from_username($username) {
-        $this->set_user_profile_id(UserProfile::from_db_by_name($username)->get_id());
+        $user_profile = UserProfile::from_db_by_name($username);
+        $this->set_user_profile_id($user_profile->get_id());
     }
 
     public function set_owner($username) {
