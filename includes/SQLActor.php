@@ -121,14 +121,12 @@ class SQLActor {
         return $result;
     }
 
-    public function get_request_pair_from_project_id($project_id) {
-        $project = $this->get_project_request($project_id);
-        $account = $this->get_account_request($project['user_profile_id']);
-        if ( ($project != FALSE) && ($account != FALSE ) ) {
-            return array($account,$project);
-        } else {
-            return FALSE;
-        }
+    public function get_publication($publication_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Publications WHERE id=?");
+        $dbh->bindValue(1, $publication_id, PDO::PARAM_INT);
+        $dbh->execute();
+        $result = $dbh->fetch();
+        return $result;
     }
 
     public function get_table($table) {
@@ -244,6 +242,10 @@ class SQLActor {
 
     public function save_project_request($request_data) {
         return $this->save_object_data("Project_Requests", $request_data);
+    }
+
+    public function save_publication($publication_data) {
+        return $this->save_object_data("Publications", $publication_data);
     }
 
     function mark_request_status($project_request_id, $acting_user, $status_string, $comment) {

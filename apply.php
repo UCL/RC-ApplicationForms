@@ -23,7 +23,7 @@
 <?php // TODO: Move this into a separate file, then include it only if the user doesn't have an existing application
  ?>
 
-<form id="application_form" action="submit.php" method="post" enctype="multipart/form-data">
+<form id="application_form" action="submit_application.php" method="post" enctype="multipart/form-data">
     <div class="section">
         <h3 class="sectionTitle">
             User Information

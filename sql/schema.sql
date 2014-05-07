@@ -131,11 +131,11 @@ CREATE TABLE Services
 CREATE TABLE Publications
 (
   id INTEGER AUTO_INCREMENT,
-  account_id INTEGER,
+  user_profile_id INTEGER,
   url TEXT,
   notable BOOLEAN,
   PRIMARY KEY (id),
-  FOREIGN KEY (account_id) REFERENCES User_Profiles(id)
+  FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id)
 );
 
 CREATE TABLE Publication_Services

@@ -8,7 +8,6 @@
 
 // not sure whether defining default (i.e. on construction) values like I have here is good practice/a good idea
 
-
 class ProjectRequest {
 
     // To match db schema
@@ -20,13 +19,11 @@ class ProjectRequest {
     private $weird_tech_description;
     private $work_description;
     private $applications_description;
-    private $work_required_collated;
     private $collab_bristol_name;
     private $collab_oxford_name;
     private $collab_soton_name;
     private $collab_other_institute;
     private $collab_other_name;
-    private $collaboration_collated;
 
     // Form checkbox matching section
     private $work_type_basic = FALSE;
@@ -263,3 +260,4 @@ class ProjectRequest {
     }
 
 }
+

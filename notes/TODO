@@ -1,0 +1,15 @@
+* Add exception handling to SQLActor, esp connect()
+* Handle relative to absolute paths correctly for, e.g. generating email links?
+  --> See: https://github.com/monkeysuffrage/phpuri
+* Make Javascript hide/set/disable certain fields depending on user-type in apply.php
+
+
+* Alter User Profile data to just request a full name and a preferred term of address
+
+* Take a look at PHPUnit's DbUnit section to actually allow you to unit test: http://phpunit.de/manual/current/en/database.html
+
+
+//TODO: Text generator in ProjectRequest for work reqs and collab details
+
+I'm a little worried about SQLActor. It's a bit of an all-encompassing all-functionality object.
+I could remove all the bits and put them into the classes that use them, but I don't know.
