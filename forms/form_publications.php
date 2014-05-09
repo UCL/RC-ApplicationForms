@@ -32,7 +32,7 @@ Also, if you're familiar with the <span title="Digital Object Identifier">DOI</s
 
 <form action="submit_publications.php" method="post" enctype="multipart/form-data">
     <table id="form_table">
-        <tr>
+        <tr id="header_tr">
             <th>
 Highlight
             </th>
@@ -53,7 +53,7 @@ Link
                 <a id="add_row_link" title="Click to add another row" href="#" onclick="add_row();return false;">Add Another Row</a>
             </td>
         </tr>
-        <tr>
+        <tr id="submit_tr" name="submit_tr">
             <td colspan="2">
                 <input type="submit" name="Submit" />
             </td>
@@ -65,16 +65,17 @@ Link
 
 
 <script language="JavaScript">
+global_old_row="";
     function add_row() {
         var table = document.getElementById("form_table");
         var old_row = table.rows[table.rows.length - 3];
         var new_row = table.insertRow(table.rows.length - 2);
 
-        var old_row_num = Number(old_row.name.slice(4,-1));
+        var old_row_num = Number(old_row.id.slice(4,-1));
         var new_row_num = old_row_num + 1;
 
         var n = String(new_row_num);
-        new_row.name = ''.concat("row[",n,"]");
+        new_row.id = ''.concat("row[",n,"]");
         new_row.innerHTML = ''.concat(
                 "\t\t\t<td>\n",
                 "\t\t\t\t<input type=\"checkbox\" name=\"publications[", n, "][notable]\" />",
