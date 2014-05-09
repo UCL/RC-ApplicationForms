@@ -1,0 +1,18 @@
+# http://docs.travis-ci.com/user/getting-started/#PHP
+# http://docs.travis-ci.com/user/languages/php/
+language: php
+php:
+  - 5.5
+  - 5.4
+  - hhvm
+# http://docs.travis-ci.com/user/database-setup/#MySQL
+before_script:
+  - mysql -e 'create database rcps-accounts;'
+# ^- creates the database you use for testing in
+
+# MySQL on Travis CI is started on boot, binds to 127.0.0.1 and requires
+#  authentication. You can connect using the username "travis" or "root"
+#  and a blank password. Note that the "travis" user does not have full
+#  MySQL privileges that the "root" user does.
+
+# Also, validate this after changing using http://yaml.travis-ci.org/
