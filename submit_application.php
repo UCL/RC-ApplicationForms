@@ -6,7 +6,7 @@ $page_title = "Submitting Application";
 include "includes/header.php";
 
 
-$referrer_file_name = array_pop(explode("/", $_SERVER["HTTP_REFERER"])); 
+$referrer_file_name = array_pop(explode("/", $_SERVER["HTTP_REFERER"]));
 
 $valid_referrers = array("apply.php", "renew.php");
 
@@ -32,7 +32,7 @@ try {
         $new_project_request->update_status($operator, 'submitted', 'automatically');
 
         $addresses_to_mail = $new_project_request->get_user_profile()->get_sponsor_email_address();
-        /*
+
         $mailer = new MailMailer();
         $mail_result = $mailer->send_mail("new_account_for_approval", $addresses_to_mail, $request);
 
@@ -41,7 +41,7 @@ try {
         } else {
             echo $strings["submit"]["success"];
         }
-        */
+        
     }
 
 } catch(\PDOException $ex) {

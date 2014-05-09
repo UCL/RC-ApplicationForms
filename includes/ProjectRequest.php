@@ -6,7 +6,7 @@
  * Time: 16:14
  */
 
-// not sure whether defining default (i.e. on construction) values like I have here is good practice/a good idea
+// not sure whether defining default (intended to work on construction) values like I have here is good practice/a good idea
 
 class ProjectRequest {
 
@@ -251,7 +251,8 @@ class ProjectRequest {
 
     public function update_status (Operator $operator, $status_text, $comments="") {
         if ($this->id === FALSE) {
-            die("Cannot update status for an unsaved ProjectRequest. (If you see this message and are not the programmer, something is broken.)");
+            die("Cannot update status for an unsaved ProjectRequest." .
+                " (If you see this message and are not the programmer, something is broken.)");
         }
         return $this->actor->mark_request_status($this->id,
                                                  $operator->username(),
@@ -259,5 +260,12 @@ class ProjectRequest {
                                                  $comments);
     }
 
-}
+    public function get_status() {
+        if ($this->id === FALSE) {
+            die("Cannot get status for an unsaved ProjectRequest.".
+                " (If you see this message and are not the programmer, something is broken.)");
+        }
+        return $this->actor->get_last_project_request_status($this->get_id())->get_status();
+    }
 
+}
