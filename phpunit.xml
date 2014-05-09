@@ -2,7 +2,8 @@
     <testsuites>
         <testsuite name="TestSuite">
             <testsuite name="tests">
-                <directory suffix=".php">Tests</directory>
+                <file>tests/test_MailMailer.php</file>
+                <file>tests/test_misc_functions.php</file>
             </testsuite>
         </testsuite>
     </testsuites>
