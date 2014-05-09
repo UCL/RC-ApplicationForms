@@ -1,6 +1,8 @@
 RC-ApplicationForms
 ===================
 
+[![Build Status](https://travis-ci.org/UCL/RC-ApplicationForms.svg?branch=master)](https://travis-ci.org/UCL/RC-ApplicationForms)
+
 Web stuff to handle UCL RC application process.
 
 This page assumes you know the difference between a POST and a GET HTTP request.
