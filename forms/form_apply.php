@@ -413,7 +413,7 @@ UPI:
 </p>
 
 <div id="error" style="color: #cc0000;">
-
+    <!-- Starts empty -->
 </div>
 
 <input type="submit" id="form_submit_button" value="Submit" title="Submit application request." />
