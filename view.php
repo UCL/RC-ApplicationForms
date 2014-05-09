@@ -26,19 +26,19 @@ if ($req_method == "POST") {
 try{
     $current_user = new Operator($current_username);
 
-    $request_pair = new ProjectRequest($req_project_id);
-    if ($request_pair->is_valid() == FALSE) {
+    $project_request = ProjectRequest::from_db($req_project_id);
+    if ($project_request->is_valid() == FALSE) {
         echo "<h4>Invalid Request [Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
     } else {
         $taking_action = FALSE;
-        if ($request_pair->can_be_approved_by($current_user)) {
+        if ($project_request->can_be_approved_by($current_user)) {
             if ($req_action == "approve") {
-                $result = $request_pair->approve_by($current_user, $post_comments);
+                $result = $project_request->approve_by($current_user, $post_comments);
                 $user_mail_template_name = "new_account_request_approved";
                 $rcps_mail_template_name = "rcps_notify_request_approved";
                 $taking_action = TRUE;
             } elseif ($req_action == "reject") {
-                $result = $request_pair->reject_by($current_user, $post_comments);
+                $result = $project_request->reject_by($current_user, $post_comments);
                 $user_mail_template_name = "new_account_request_rejected";
                 $rcps_mail_template_name = "rcps_notify_request_rejected";
                 $taking_action = TRUE;
@@ -51,9 +51,9 @@ try{
                     $mailer = new MailMailer();
                     $user_mail_result = $mailer->send_mail(
                                                 $user_mail_template_name,
-                                                $request_pair->user_email(), 
+                                                $project_request->get_user_profile()->get_user_email(),
                                                 array('recommendations'=>
-                                                  $request_pair->services_text_from_work())
+                                                  $project_request->services_text_from_work())
                                               );
                     $rcps_mail_result = $mailer->send_mail(
                                                 $rcps_mail_template_name,
@@ -63,12 +63,12 @@ try{
                                                       'override_replyto'    => $current_user->email_address(),
                                                       'comments'    => $post_comments,
                                                       'project_id'  => $req_project_id,
-                                                      'request_user'=> $request_pair->owner(),
-                                                      'consortium'  => $request_pair->consortium(),
+                                                      'request_user'=> $project_request->get_user_profile()->get_username(),
+                                                      'consortium'  => $project_request->get_consortium(),
                                                       'action'      => $req_action,
-                                                      'recommendations' => $request_pair->services_text_from_work()
-                                                  )
-                                              );
+                                                      'recommendations' => $project_request->services_text_from_work()
+                                                )
+                                            );
                     $mail_not_sent = "";
                     $mail_not_sent_array = array();
                     $overall_mail_result = $user_mail_result && $rcps_mail_result;
@@ -76,9 +76,9 @@ try{
                     if ($rcps_mail_result != TRUE) { array_pop($mail_not_sent_array, "RC Support"); }
                     if ($overall_mail_result != TRUE) {
                         $mail_not_sent = " but a notification mail could not be sent to ".
-                                         array_as_text_list($mail_not_sent_array, " or ") . 
+                                         array_as_text_list($mail_not_sent_array, " or ") .
                                          "Please contact rc-support@ucl.ac.uk.";
-                    } 
+                    }
                     $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
                                     "Request {$req_action}d{$mail_not_sent}".
                                     "</div>";
@@ -89,10 +89,10 @@ try{
                                     "</div>";
                 }
             }
-            
-            if ($request_pair->last_status_text() == "submitted") { 
+
+            if ($project_request->last_status_text() == "submitted") {
                 $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
-                                "   <form id=\"application_form\"" . 
+                                "   <form id=\"application_form\"" .
                                 "          action=\"view.php\" " .
                                 "          method=\"post\"       " .
                                 "          enctype=\"multipart/form-data\" ".
@@ -106,7 +106,7 @@ try{
                                 "   <label for=\"approve_radio\"> " .
                                 "      <input type=\"radio\" " .
                                 "             id=\"approve_radio\" " .
-                                "             name=\"action_choice\" " . 
+                                "             name=\"action_choice\" " .
                                 "             value=\"approve\"> " .
                                 "         Approve" .
                                 "   </label>" .
@@ -114,7 +114,7 @@ try{
                                 "   <label for=\"reject_radio\"> " .
                                 "      <input type=\"radio\" " .
                                 "             id=\"reject_radio\" " .
-                                "             name=\"action_choice\" " . 
+                                "             name=\"action_choice\" " .
                                 "             value=\"reject\"> " .
                                 "         Reject" .
                                 "   </label>" .
@@ -122,7 +122,7 @@ try{
                                 "   <tr><td colspan=2>" .
                                 "   <textarea name=\"comments\" " .
                                 "             rows=2 " .
-                                "             cols=60 " . 
+                                "             cols=60 " .
                                 "             placeholder=\"Please enter any additional comments here." .
                                 " These will not be seen by the applicant.\" " .
                                 "    ></textarea>" .
@@ -142,39 +142,39 @@ try{
 
 
 
-        switch ($request_pair->last_status_text()) {
+        switch ($project_request->last_status_text()) {
             case "submitted":
-                echo "<p class='p'>This request was submitted on: ".$request_pair->last_status_time()."</p>";
+                echo "<p class='p'>This request was submitted on: ".$project_request->last_status_time()."</p>";
                 break;
             case "approved":
-                echo "<p class='p'>This request was approved on: ".$request_pair->last_status_time()."</p>";
+                echo "<p class='p'>This request was approved on: ".$project_request->last_status_time()."</p>";
                 break;
             case "rejected":
-                echo "<p class='p'>This request was rejected on: ".$request_pair->last_status_time()."</p>";
+                echo "<p class='p'>This request was rejected on: ".$project_request->last_status_time()."</p>";
                 break;
             case "expired":
-                echo "<p class='p'>This project expired on: ".$request_pair->last_status_time()."</p>";
+                echo "<p class='p'>This project expired on: ".$project_request->last_status_time()."</p>";
                 break;
             case "broken":
-                echo "<p class='p'>This request was marked as broken on: ".$request_pair->last_status_time()."</p>";
+                echo "<p class='p'>This request was marked as broken on: ".$project_request->last_status_time()."</p>";
                 break;
             default:
-                echo "<h4>This request is in an unexpected state: ". 
-                     htmlspecialchars( $request_pair->last_status_text() ) . 
+                echo "<h4>This request is in an unexpected state: ".
+                     htmlspecialchars( $project_request->last_status_text() ) .
                      " Please contact rc-support@ucl.ac.uk and let them know.</h4>";
         }
 
         if ($current_user->is_superuser()) {
             echo "<p class='p'>This action was taken by " .
-                 $request_pair->last_status_user() .
+                 $project_request->last_status_user() .
                  ", with comments: " .
-                 htmlspecialchars($request_pair->last_status_comments()) .
+                 htmlspecialchars($project_request->last_status_comments()) .
                  "</p>";
         }
 
         echo $approval_div;
 
-        echo $request_pair->as_table();
+        echo $project_request->as_table();
     }
 
 } catch(\PDOException $ex){
@@ -183,5 +183,3 @@ try{
 
 
 include "includes/footer.php";
-
-
