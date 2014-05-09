@@ -1,10 +1,9 @@
-
 # Reset the world.
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Research_Themes;
 DROP TABLE IF EXISTS Privileged_Users;
-DROP TABLE IF EXISTS Event_Types;
-DROP TABLE IF EXISTS Request_Progress;
+DROP TABLE IF EXISTS Status_Types;
+DROP TABLE IF EXISTS Project_Request_Statuses;
 DROP TABLE IF EXISTS User_Types;
 DROP TABLE IF EXISTS Experience_Levels;
 DROP TABLE IF EXISTS User_Profiles;
@@ -33,23 +32,23 @@ CREATE TABLE Privileged_Users
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Event_Types
+CREATE TABLE Status_Types
 (
   id INTEGER AUTO_INCREMENT,
-  event_type TEXT,
+  status_type TEXT,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Request_Progress
+CREATE TABLE Project_Request_Statuses
 (
   id INTEGER AUTO_INCREMENT,
   project_request_id INTEGER,
-  event_type_id INTEGER,
+  status_type_id INTEGER,
   acting_user VARCHAR(7),
-  with_comment TEXT,
+  comment TEXT,
   update_time TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (event_type_id) REFERENCES Event_Types(id)
+  FOREIGN KEY (status_type_id) REFERENCES Status_Types(id)
 );
 
 CREATE TABLE User_Types
@@ -146,4 +145,22 @@ CREATE TABLE Publication_Services
   PRIMARY KEY (id),
   FOREIGN KEY (publication_id) REFERENCES Publications(id),
   FOREIGN KEY (service_used) REFERENCES Services(id)
+);
+
+CREATE TABLE Award_Numbers
+(
+  id INTEGER AUTO_INCREMENT,
+  project_request_id INTEGER,
+  award_number VARCHAR(255),
+  PRIMARY KEY (id),
+  FOREIGN KEY (project_request_id) REFERENCES Project_Requests(id)
+);
+
+CREATE TABLE Grant_Codes
+(
+  id INTEGER AUTO_INCREMENT,
+  project_request_id INTEGER,
+  grant_code VARCHAR(255),
+  PRIMARY KEY (id),
+  FOREIGN KEY (project_request_id) REFERENCES Project_Requests(id)
 );
