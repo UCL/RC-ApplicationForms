@@ -100,6 +100,18 @@ class MailMailer {
         return $result;
     }
 
+    public function set_override($override_tf) {
+        $this->override_mail = $override_tf;
+    }
+
+    public function get_override() {
+        return $this->override_mail;
+    }
+
+    public function get_override_address() {
+        return $this->override_mail_address;
+    }
+
 }
 
 ?>
