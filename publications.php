@@ -12,9 +12,9 @@ include_once "includes/autoload_definition.php";
 $page_title = "Publications";
 include "includes/header.php";
 
-$operator = UserProfile::from_db_by_name($current_username);
+$operator_user_profile = UserProfile::from_db_by_name($current_username);
 
-if ($operator === FALSE) {
+if ($operator_user_profile === FALSE) {
     echo "<p class='p'>".
         "Your user profile could not be retrieved from the database," .
         " to associate with your publications. Please submit an application" .
@@ -26,5 +26,3 @@ if ($operator === FALSE) {
 
 
 include "includes/footer.php";
-
-
