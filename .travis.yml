@@ -7,7 +7,7 @@ php:
   - hhvm
 # http://docs.travis-ci.com/user/database-setup/#MySQL
 before_script:
-  - mysql --user=root -e 'create database rcps-accounts;'
+  - mysql --user=root -e 'create database rcps_accounts;'
 # ^- creates the database you use for testing in
 
 # MySQL on Travis CI is started on boot, binds to 127.0.0.1 and requires
