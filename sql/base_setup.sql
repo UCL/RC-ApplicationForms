@@ -44,7 +44,7 @@ REPLACE INTO Services (id, name) VALUES
   (3, 'Emerald')
 ;
 
-REPLACE INTO Event_Types (id, event_type) VALUES
+REPLACE INTO Status_Types (id, status_type) VALUES
   (1, 'submitted'),
   (2, 'approved'),
   (3, 'rejected'),
