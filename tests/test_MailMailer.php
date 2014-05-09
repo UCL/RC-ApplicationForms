@@ -18,6 +18,8 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
         $mail_message = new MailMessage();
         $mailer = new MailMailer();
 
+        $mailer->set_override(FALSE);
+
         $mailer->send_mail("test_template", 
             array("recipient1@localhost","recipient2@localhost"), 
             array("basic_replacement" => "Success 1",
@@ -25,8 +27,22 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
                   "two" => array( "deep" => array( "replacement" => "Success 3" ) ) ),
             $mail_message
         );
-
         $this->assertEquals('recipient1@localhost, recipient2@localhost', $mail_message->get_recipient());
+
+        $mail_message = new MailMessage();
+        $mailer = new MailMailer();
+
+        $mailer->set_override(TRUE);
+
+        $mailer->send_mail("test_template", 
+            array("recipient1@localhost","recipient2@localhost"), 
+            array("basic_replacement" => "Success 1",
+                  "one_deep" => array( "replacement" => "Success 2" ),
+                  "two" => array( "deep" => array( "replacement" => "Success 3" ) ) ),
+            $mail_message
+        );
+        $this->assertEquals($mailer->get_override_address(), $mail_message->get_recipient());
+
         $this->assertEquals('Test Message', $mail_message->get_subject());
         $this->assertEquals($mail_message->get_message(),
                             "Line with no replacement.\n" .

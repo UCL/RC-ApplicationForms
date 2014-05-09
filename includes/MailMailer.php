@@ -2,8 +2,8 @@
 
 class MailMailer {
 
-    static private $override_mail = TRUE;
-    static private $override_mail_address = "i.kirker@ucl.ac.uk";
+    private $override_mail = TRUE;
+    private $override_mail_address = "i.kirker@ucl.ac.uk";
     
     private $globals = array(
         'BASE_URL'   => "http://avon.rc.ucl.ac.uk/acct",
@@ -71,10 +71,10 @@ class MailMailer {
         if (is_string($addresses_to_mail)) {
             $addresses_to_mail = array($addresses_to_mail);
         }
-        if (MailMailer::$override_mail) {
+        if ($this->override_mail) {
             $stored_addresses = $addresses_to_mail;
             $info['stored_addresses_imploded'] = implode("&x10;",$stored_addresses);
-            $addresses_to_mail = array(MailMailer::$override_mail_address);
+            $addresses_to_mail = array($this->override_mail_address);
         }
         
         $template = $this->get_template($template_name);
