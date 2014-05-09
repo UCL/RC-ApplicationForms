@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class SQLActor {
     private $my_db_hostname;
@@ -16,7 +16,7 @@ class SQLActor {
         $this->my_db_name     = "rcps_accounts";
         $this->my_db_port     = "3306";
         $this->my_db_username = "root";
-        $this->my_db_password = ""; 
+        $this->my_db_password = "";
         $this->cache          = array();
     }
 
@@ -61,14 +61,40 @@ class SQLActor {
         return $dbh->fetch();
     }
 
+    public function get_all_project_requests() {
+        $dbh = $this->dbc->prepare("SELECT id FROM Project_Requests");
+        $dbh->execute();
+        $requests = array();
+        while ($row = $dbh->fetch()) {
+            array_append($requests, ProjectRequests::from_db($row['id']));
+        }
+        return $requests;
+    }
+
+    public function get_status_type_id($status_name) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Status_Types WHERE status_type=?");
+        $dbh->bindValue(1, $status_name);
+        $dbh->execute();
+        $result = $dbh->fetch();
+        return $result; // Returns FALSE if there are no rows
+    }
+
+    public function get_status_type($status_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Status_Types WHERE id=?");
+        $dbh->bindValue(1, $status_id);
+        $dbh->execute();
+        $result = $dbh->fetch();
+        return $result; // Returns FALSE if there are no rows
+    }
+
     public function get_last_status_info($project_id) {
         // Should return the current status (textual) of a request.
         $dbh = $this->dbc->prepare(
-            "SELECT event_type,update_time,acting_user,with_comment FROM Event_Types".
-            " RIGHT JOIN Request_Progress".
-            " ON (Request_Progress.event_type_id = Event_Types.id)".
-            " WHERE Request_Progress.project_id=?".
-            " ORDER BY Request_Progress.update_time".
+            "SELECT status_type,update_time,acting_user,comment FROM Status_Types".
+            " RIGHT JOIN Project_Request_Statuses".
+            " ON (Project_Request_Statuses.status_type_id = Status_Types.id)".
+            " WHERE Project_Request_Statuses.project_id=?".
+            " ORDER BY Project_Request_Statuses.update_time".
             " DESC LIMIT 1"
         );
         $dbh->bindValue(1, $project_id);
@@ -79,14 +105,14 @@ class SQLActor {
 
     public function get_last_status_text($project_id) {
         $status_info = $this->get_last_status_info($project_id);
-        return $status_info['event_type'];
+        return $status_info['status_type'];
     }
-    
+
     public function get_last_status_time($project_id) {
         $status_info = $this->get_last_status_info($project_id);
         return $status_info['update_time'];
     }
-    
+
     public function get_last_status_user($project_id) {
         $status_info = $this->get_last_status_info($project_id);
         return $status_info['acting_user'];
@@ -94,7 +120,7 @@ class SQLActor {
 
     public function get_last_status_comments($project_id) {
         $status_info = $this->get_last_status_info($project_id);
-        return $status_info['with_comment'];
+        return $status_info['comment'];
     }
 
     public function get_user_profile($user_profile_id) {
@@ -162,37 +188,13 @@ class SQLActor {
 
     public function get_event_types() {
         // Get an array of hashes of services with their ids
-        return $this->get_table("Event_Types");
-    }
-
-    public function get_event_id_by_name($event_name) {
-        // TODO: Replace with an SQL query
-        // Returns the id for a given event name
-        $event_types = $this->get_event_types();
-        foreach ($event_types as $event_type) {
-            if ($event_type['event_type'] == $event_name) {
-                return $event_type['id'];
-            }
-        }
-        return -1;
-    }
-
-    public function get_event_name_by_id($event_id) {
-        //TODO: Replace with an SQL query
-        // Returns the id for a given event name
-        $event_types = $this->get_event_types();
-        foreach ($event_types as $event_type) {
-            if ($event_type['id'] == $event_id) {
-                return $event_type['event_type'];
-            }
-        }
-        return -1;
+        return $this->get_table("Status_Types");
     }
 
     public function does_user_have_existing_project_request($username) {
         $dbh = $this->dbc->prepare("SELECT COUNT(id) from User_Profiles as u,Project_Requests as p" .
                                    " WHERE u.id = p.user_profile_id AND u.username = ?");
-        $dbh->bindValue(1,$username);
+        $dbh->bindValue(1, $username);
         $dbh->execute();
         $results = $dbh->fetchColumn(0);
         if ($results != 0) {
@@ -203,7 +205,7 @@ class SQLActor {
     }
 
     public function get_status_id($status_name) {
-        $dbh = $this->dbc->prepare("SELECT id from Event_Types WHERE event_type = ?");
+        $dbh = $this->dbc->prepare("SELECT id from Status_Types WHERE status_type = ?");
         $dbh->bindValue(1,$status_name);
         $dbh->execute();
         $results = $dbh->fetchColumn(0);
@@ -252,19 +254,18 @@ class SQLActor {
         $status_id = $this->get_status_id($status_string);
 
         $dbh = $this->dbc->prepare(
-            "INSERT INTO Request_Progress ".
-            "(project_request_id, event_type_id, acting_user, with_comment)" .
+            "INSERT INTO Project_Request_Statuses ".
+            "(project_request_id, status_type_id, acting_user, comment)" .
             " VALUES " .
-            "(:project_request_id, :event_type_id, :acting_user, :with_comment)"
+            "(:project_request_id, :status_type_id, :acting_user, :comment)"
         );
 
         $dbh->bindParam(":project_request_id", $project_request_id);
-        $dbh->bindParam(":event_type_id", $status_id);
+        $dbh->bindParam(":status_type_id", $status_id);
         $dbh->bindParam(":acting_user", $acting_user);
-        $dbh->bindParam(":with_comment", $comment);
+        $dbh->bindParam(":comment", $comment);
 
         return $dbh->execute();
     }
 
 } // End of class
-
