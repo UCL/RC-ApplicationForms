@@ -93,7 +93,7 @@ try{
             if ($project_request->last_status_text() == "submitted") {
                 $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
                                 "   <form id=\"application_form\"" .
-                                "          action=\"view.php\" " .
+                                "          action=\"view_application.php\" " .
                                 "          method=\"post\"       " .
                                 "          enctype=\"multipart/form-data\" ".
                                 "     > " .
