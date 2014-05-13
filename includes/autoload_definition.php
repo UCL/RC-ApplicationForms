@@ -8,7 +8,7 @@
 
 
 // Your custom class dir
-define('CLASS_DIR', 'includes/');
+define('CLASS_DIR', 'classes/');
 
 // Add your class dir to include path
 set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
