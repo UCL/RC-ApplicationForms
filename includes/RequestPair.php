@@ -122,29 +122,6 @@ class RequestPair {
         return $html;
     }
 
-    public function as_table() {
-        $html =
-            "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User</strong></td></tr>"
-            // TODO: If you ever get around to class-ifying Project and Account_Request, this should call those instead. :/
-            . table_keyval("User id", $this->account_request['username'])
-            . table_keyval("User Name", $this->account_request['user_forenames']." ".
-                $this->account_request['user_surname'])
-            . table_keyval("User e-mail", $this->account_request['user_email'])
-            . table_keyval("Supervisor Name", $this->account_request['supervisor_name'])
-            . table_keyval("Supervisor e-mail", $this->account_request['supervisor_email'])
-
-            . "</table><table class='silvatable grid'><tr class='odd'><td colspan=2><strong>Project</strong></td></tr>"
-            . table_keyval("PI", $this->project['pi_email'])
-            . table_keyval("Consortium Requested", $this->consortium())
-            . table_keyval("Project Description", $this->project['work_description'], 1, TRUE)
-            . table_keyval("Applications Required", $this->project['applications_description'], 1, TRUE)
-            . table_keyval("Work Required", $this->project['work_required_collated'], 1, TRUE)
-            . table_keyval("Unusual Technical Requirements", $this->project['weird_tech_description'], 1, TRUE)
-            . table_keyval("Collaboration (if any)", $this->project['collaboration_collated'], 1, TRUE)
-            . "</table>"
-        ;
-        return $html;
-    }
 }
 
 ?>
