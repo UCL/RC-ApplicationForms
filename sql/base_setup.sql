@@ -54,7 +54,7 @@ REPLACE INTO Status_Types (id, status_type) VALUES
 ;
 
 REPLACE INTO User_Types (id, user_type) VALUES
-  (1, 'Principle Investigator'),
+  (1, 'Principal Investigator'),
   (2, 'Non-PI Researcher'),
   (3, 'PhD/EngD Student'),
   (4, 'Masters Student (Postgraduate)'),
@@ -83,7 +83,3 @@ VALUES
   (5, 'uccaoke', 'Owain Kenway', TRUE, TRUE, 'o.kenway@ucl.ac.uk'),
   (6, 'ccaacla', 'Clare Gryce', FALSE, TRUE, 'c.gryce@ucl.ac.uk')
 ;
-
-
-
-
