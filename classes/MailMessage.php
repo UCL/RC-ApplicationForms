@@ -1,7 +1,7 @@
 <?php
 
 class MailMessage {
-    protected $never_send_mail = TRUE;
+    protected $never_send_mail = FALSE;
     protected $to = "nobody@localhost";
     protected $subject = "(No Subject Provided)";
     protected $additional_headers = NULL;
@@ -12,10 +12,10 @@ class MailMessage {
     // Type checking done by hinting in prototypes
     // The long set_all prototype is designed to replicate the mail function call prototype.
 
-    public function set_all     ($to, 
-                                 $subject, 
-                                 $message, 
-                                 $additional_headers = NULL, 
+    public function set_all     ($to,
+                                 $subject,
+                                 $message,
+                                 $additional_headers = NULL,
                                  $additional_parameters = NULL)
     {
         $this->set_recipient($to);
@@ -33,7 +33,7 @@ class MailMessage {
 
     public function set_recipient($recipient) {
         $this->check_string($recipient);
-        $this->to = $recipient; 
+        $this->to = $recipient;
     }
 
     public function set_subject($subject) {
@@ -76,7 +76,7 @@ class MailMessage {
         return $this->message;
     }
 
-    public function send() 
+    public function send()
     {
         if ($this->never_send_mail == TRUE ) {
             return FALSE;
