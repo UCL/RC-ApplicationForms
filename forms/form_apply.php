@@ -335,7 +335,7 @@ UPI:
     ></textarea>
 
 <p class="p">
-    Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area. (This will be sent to the leader of the Consortium you have chosen for approval.)
+    Please provide a brief description of your project, as you would describe it to someone else in your department or general subject area. (This will be sent to your sponsor, for approval, and the operations team.)
 </p>
 <textarea
     name="project[work_description]"

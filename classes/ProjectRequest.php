@@ -81,7 +81,12 @@ class ProjectRequest {
     public static function from_db($request_id) {
         $instance = new self();
         $project_array = $instance->actor->get_project_request($request_id);
-        $instance->fill_from_array($project_array['project']);
+        if ($project_array === FALSE) {
+            $this->set_valid(FALSE);
+        } else {
+            $instance->fill_from_array($project_array);
+            $instance->set_valid(TRUE);
+        }
         $instance->clean();
         return $instance;
     }
@@ -94,6 +99,10 @@ class ProjectRequest {
 
     public function is_valid() {
         return $this->valid;
+    }
+
+    public function set_valid($validity) {
+        $this->valid = $validity;
     }
 
     public function set_user_profile_id($id) {
@@ -127,7 +136,7 @@ class ProjectRequest {
             return TRUE;
         }
 
-        if ($this->get_user_profile()->get_sponsor_username() == $an_operator->username()) {
+        if ($this->get_user_profile()->get_sponsor_username() == $an_operator->get_username()) {
             return TRUE;
         } else {
             return FALSE;
@@ -139,7 +148,7 @@ class ProjectRequest {
             return TRUE;
         }
 
-        if ($this->get_user_profile()->get_username() == $an_operator->username()) {
+        if ($this->get_user_profile()->get_username() == $an_operator->get_username()) {
             return TRUE;
         } else {
             return FALSE;
@@ -156,7 +165,7 @@ class ProjectRequest {
         } else {
             return $this->actor->mark_request_status(
                 $this->id,
-                $an_operator->username(),
+                $an_operator->get_username(),
                 "approved",
                 $comments
             );
@@ -169,11 +178,54 @@ class ProjectRequest {
         } else {
             return $this->actor->mark_request_status(
                 $this->id,
-                $operator->username(),
+                $operator->get_username(),
                 "rejected",
                 $comments
             );
         }
+    }
+
+    public function get_pi_email() {
+        return $this->pi_email;
+    }
+
+    public function get_research_theme() {
+        return $this->actor->get_research_theme($this->research_theme_id);
+    }
+
+    public function get_work_description() {
+        return $this->work_description;
+    }
+
+    public function get_applications_description() {
+        return $this->applications_description;
+    }
+
+    public function get_formatted_work_required() {
+        $concat_string = "";
+        if ($this->work_type_basic) $concat_string .= "   Individual single core jobs\n";
+        if ($this->work_type_array) $concat_string .= "   Large numbers (>1000) of single core jobs\n";
+        if ($this->work_type_multithread) $concat_string .= "   Multithreaded jobs\n";
+        if ($this->work_type_all_the_ram) $concat_string .= "   Extremely large quantities of RAM (>64GB)\n";
+        if ($this->work_type_small_mpi) $concat_string .= "   Small MPI jobs (<36 cores)\n";
+        if ($this->work_type_mid_mpi) $concat_string .= "   Medium-sized MPI jobs (36-256 cores)\n";
+        if ($this->work_type_large_mpi) $concat_string .= "   Large-sized MPI jobs (>256 cores)\n";
+        if ($this->work_type_small_gpu) $concat_string .= "   At least one GPGPU\n";
+        if ($this->work_type_large_gpu) $concat_string .= "   At least ten GPGPUs\n";
+        return $concat_string;
+    }
+
+    public function get_formatted_collaboration() {
+        $concat_string = "";
+        if ($this->is_collab_bristol) $concat_string .= "Bristol: " . $this->collab_bristol_name . "\n";
+        if ($this->is_collab_oxford) $concat_string .= "Oxford: " . $this->collab_oxford_name . "\n";
+        if ($this->is_collab_soton) $concat_string .= "Southampton: " . $this->collab_soton_name . "\n";
+        if ($this->is_collab_other) $concat_string .= htmlspecialchars($this->collab_other_institute) . ": " . $this->collab_other_name . "\n";
+        return $concat_string;
+    }
+
+    public function get_weird_tech_description() {
+        return $this->weird_tech_description;
     }
 
     public function set_id($id) {
@@ -255,17 +307,36 @@ class ProjectRequest {
                 " (If you see this message and are not the programmer, something is broken.)");
         }
         return $this->actor->mark_request_status($this->id,
-                                                 $operator->username(),
+                                                 $operator->get_username(),
                                                  $status_text,
                                                  $comments);
     }
 
-    public function get_status() {
+    public function get_last_status() {
         if ($this->id === FALSE) {
             die("Cannot get status for an unsaved ProjectRequest.".
                 " (If you see this message and are not the programmer, something is broken.)");
         }
-        return $this->actor->get_last_project_request_status($this->get_id())->get_status();
+        $status = ProjectRequestStatus::from_db($this->get_id());
+        if ($status === FALSE) {
+            die("Cannot get status for this project request.");
+        }
+        return $status;
+    }
+
+    public function get_recommended_services() {
+        $service_array = array();
+
+        if ($this->work_type_basic) $service_array['Legion'] = TRUE;
+        if ($this->work_type_array) $service_array['Legion'] = TRUE;
+        if ($this->work_type_multithread) $service_array['Legion'] = TRUE;
+        if ($this->work_type_all_the_ram) $service_array['Legion'] = TRUE;
+        if ($this->work_type_small_mpi) $service_array['Legion'] = TRUE;
+        if ($this->work_type_mid_mpi) $service_array['Iridis'] = TRUE;
+        if ($this->work_type_large_mpi) $service_array['Iridis'] = TRUE;
+        if ($this->work_type_small_gpu) $service_array['Emerald'] = TRUE;
+        if ($this->work_type_large_gpu) $service_array['Emerald'] = TRUE;
+        return array_as_text_list(array_keys($service_array));
     }
 
 }

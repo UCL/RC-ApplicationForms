@@ -16,7 +16,7 @@ if ($req_method == "POST") {
     $post_comments          = $_POST['comments'];
 } elseif ($req_method == "GET") {
     $req_project_id         = $_GET['idp'];
-    $req_action             = $_GET["action"];
+    $req_action             = array_key_exists('action', $_GET)?$_GET["action"]:NULL;
     $post_comments          = "(via a direct link)";
 } else {
     die("Please stop trying to break our form.\n");
@@ -52,32 +52,27 @@ try{
                     $user_mail_result = $mailer->send_mail(
                                                 $user_mail_template_name,
                                                 $project_request->get_user_profile()->get_user_email(),
-                                                array('recommendations'=>
-                                                  $project_request->services_text_from_work())
+                                                $project_request,
+                                                $project_request->get_user_profile(),
+                                                $current_user
                                               );
                     $rcps_mail_result = $mailer->send_mail(
                                                 $rcps_mail_template_name,
                                                 "rc-support@ucl.ac.uk",
-                                                array('acting_user' => $current_user->full_name(),
-                                                      'acting_user_address' => $current_user->email_address(),
-                                                      'override_replyto'    => $current_user->email_address(),
-                                                      'comments'    => $post_comments,
-                                                      'project_id'  => $req_project_id,
-                                                      'request_user'=> $project_request->get_user_profile()->get_username(),
-                                                      'consortium'  => $project_request->get_consortium(),
-                                                      'action'      => $req_action,
-                                                      'recommendations' => $project_request->services_text_from_work()
-                                                )
+                                                $project_request,
+                                                $project_request->get_user_profile(),
+                                                $current_user
                                             );
                     $mail_not_sent = "";
                     $mail_not_sent_array = array();
                     $overall_mail_result = $user_mail_result && $rcps_mail_result;
-                    if ($user_mail_result != TRUE) { array_pop($mail_not_sent_array, "the user"); }
-                    if ($rcps_mail_result != TRUE) { array_pop($mail_not_sent_array, "RC Support"); }
+                    if ($user_mail_result != TRUE) { array_push($mail_not_sent_array, "the user"); }
+                    if ($rcps_mail_result != TRUE) { array_push($mail_not_sent_array, "RC Support"); }
                     if ($overall_mail_result != TRUE) {
+                        echo "<pre>";echo "\$user_mail_result: ".($user_mail_result?"true":"false")."\n\$rcps_mail_result: ".($rcps_mail_result?"true":"false")."\n"; echo "\$mail_not_sent_array:\n";var_dump($mail_not_sent_array);echo "</pre>";
                         $mail_not_sent = " but a notification mail could not be sent to ".
                                          array_as_text_list($mail_not_sent_array, " or ") .
-                                         "Please contact rc-support@ucl.ac.uk.";
+                                         ". Please contact rc-support@ucl.ac.uk.";
                     }
                     $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
                                     "Request {$req_action}d{$mail_not_sent}".
@@ -90,7 +85,7 @@ try{
                 }
             }
 
-            if ($project_request->last_status_text() == "submitted") {
+            if ($project_request->get_last_status()->get_text() == "submitted") {
                 $approval_div = "<div width=\"100%\" style='text-align:center; background-color: #FCE7A1;'>" .
                                 "   <form id=\"application_form\"" .
                                 "          action=\"view_application.php\" " .
@@ -137,44 +132,41 @@ try{
                                 "</div>";
             }
         } else {
+            if ( ($req_action == "approve") || ($req_action == "reject") ) {
+                echo "<h4>You have not been permitted to perform this action. " .
+                     "Please report to your local reconditioning centre.</h4>\n";
+            }
             $approval_div = "";
         }
 
+        if (in_array($project_request->get_last_status()->get_text(),
+            array("submitted","approved","rejected","expired","broken"))) {
 
-
-        switch ($project_request->last_status_text()) {
-            case "submitted":
-                echo "<p class='p'>This request was submitted on: ".$project_request->last_status_time()."</p>";
-                break;
-            case "approved":
-                echo "<p class='p'>This request was approved on: ".$project_request->last_status_time()."</p>";
-                break;
-            case "rejected":
-                echo "<p class='p'>This request was rejected on: ".$project_request->last_status_time()."</p>";
-                break;
-            case "expired":
-                echo "<p class='p'>This project expired on: ".$project_request->last_status_time()."</p>";
-                break;
-            case "broken":
-                echo "<p class='p'>This request was marked as broken on: ".$project_request->last_status_time()."</p>";
-                break;
-            default:
+            echo "<p class='p'>This request (id=" .
+                 $project_request->get_id() .
+                 ") was " .
+                 $project_request->get_last_status()->get_text() .
+                 " on: " .
+                 $project_request->get_last_status()->get_update_time() .
+                 "</p>";
+        } else {
                 echo "<h4>This request is in an unexpected state: ".
-                     htmlspecialchars( $project_request->last_status_text() ) .
+                     htmlspecialchars( $project_request->get_last_status()->get_text() ) .
                      " Please contact rc-support@ucl.ac.uk and let them know.</h4>";
         }
 
         if ($current_user->is_superuser()) {
             echo "<p class='p'>This action was taken by " .
-                 $project_request->last_status_user() .
+                 $project_request->get_last_status()->get_acting_user() .
                  ", with comments: " .
-                 htmlspecialchars($project_request->last_status_comments()) .
+                 htmlspecialchars($project_request->get_last_status()->get_comment()) .
                  "</p>";
         }
 
         echo $approval_div;
 
-        echo $project_request->as_table();
+        include "views/table_project_request.php";
+
     }
 
 } catch(\PDOException $ex){

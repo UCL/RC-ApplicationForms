@@ -71,11 +71,27 @@ class SQLActor {
         return $requests;
     }
 
+    public function get_research_theme_id($status_name) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Research_Themes WHERE full_name=?");
+        $dbh->bindValue(1, $theme_name);
+        $dbh->execute();
+        $result = $dbh->fetchColumn(0);
+        return $result; // Returns FALSE if there are no rows
+    }
+
+    public function get_research_theme($theme_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Research_Themes WHERE id=?");
+        $dbh->bindValue(1, $theme_id);
+        $dbh->execute();
+        $result = $dbh->fetchColumn(1);
+        return $result; // Returns FALSE if there are no rows
+    }
+
     public function get_status_type_id($status_name) {
         $dbh = $this->dbc->prepare("SELECT * FROM Status_Types WHERE status_type=?");
         $dbh->bindValue(1, $status_name);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetchColumn(0);
         return $result; // Returns FALSE if there are no rows
     }
 
@@ -83,44 +99,22 @@ class SQLActor {
         $dbh = $this->dbc->prepare("SELECT * FROM Status_Types WHERE id=?");
         $dbh->bindValue(1, $status_id);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetchColumn(1);
         return $result; // Returns FALSE if there are no rows
     }
 
-    public function get_last_status_info($project_id) {
+    public function get_last_project_request_status($project_id) {
         // Should return the current status (textual) of a request.
         $dbh = $this->dbc->prepare(
-            "SELECT status_type,update_time,acting_user,comment FROM Status_Types".
-            " RIGHT JOIN Project_Request_Statuses".
-            " ON (Project_Request_Statuses.status_type_id = Status_Types.id)".
-            " WHERE Project_Request_Statuses.project_id=?".
-            " ORDER BY Project_Request_Statuses.update_time".
+            "SELECT * FROM Project_Request_Statuses".
+            " WHERE project_request_id=?".
+            " ORDER BY update_time".
             " DESC LIMIT 1"
         );
         $dbh->bindValue(1, $project_id);
         $dbh->execute();
         $result = $dbh->fetch();
         return $result; // Returns FALSE if there are no rows
-    }
-
-    public function get_last_status_text($project_id) {
-        $status_info = $this->get_last_status_info($project_id);
-        return $status_info['status_type'];
-    }
-
-    public function get_last_status_time($project_id) {
-        $status_info = $this->get_last_status_info($project_id);
-        return $status_info['update_time'];
-    }
-
-    public function get_last_status_user($project_id) {
-        $status_info = $this->get_last_status_info($project_id);
-        return $status_info['acting_user'];
-    }
-
-    public function get_last_status_comments($project_id) {
-        $status_info = $this->get_last_status_info($project_id);
-        return $status_info['comment'];
     }
 
     public function get_user_profile($user_profile_id) {

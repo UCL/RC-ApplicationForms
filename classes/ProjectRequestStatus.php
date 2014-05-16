@@ -28,7 +28,7 @@ class ProjectRequestStatus {
 
     public static function from_db($request_id) {
         $instance = new self();
-        $project_request_status_array = $instance->actor->get_project_request_status($request_id);
+        $project_request_status_array = $instance->actor->get_last_project_request_status($request_id);
         $instance->fill_from_array($project_request_status_array);
         return $instance;
     }
@@ -39,7 +39,7 @@ class ProjectRequestStatus {
         }
     }
 
-    public function get_status_text() {
+    public function get_text() {
         return $this->actor->get_status_type($this->status_type_id);
     }
 

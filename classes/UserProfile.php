@@ -85,7 +85,7 @@ class UserProfile {
         $this->dirty();
     }
 
-    public function get_username() { 
+    public function get_username() {
         return $this->username;
     }
 
@@ -94,8 +94,8 @@ class UserProfile {
         $this->dirty();
     }
 
-    public function get_user_upi() { 
-        return $this->user_upi; 
+    public function get_user_upi() {
+        return $this->user_upi;
     }
 
     public function set_user_type_id($type_id) {
@@ -103,8 +103,8 @@ class UserProfile {
         $this->dirty();
     }
 
-    public function get_user_type_id() { 
-        return $this->user_type_id; 
+    public function get_user_type_id() {
+        return $this->user_type_id;
     }
 
     public function set_user_email($email) {
@@ -112,8 +112,8 @@ class UserProfile {
         $this->dirty();
     }
 
-    public function get_user_email() { 
-        return $this->user_email; 
+    public function get_user_email() {
+        return $this->user_email;
     }
 
     public function set_user_contact_number($number) {
@@ -121,8 +121,8 @@ class UserProfile {
         $this->dirty();
     }
 
-    public function get_user_contact_number() { 
-        return $this->user_contact_number; 
+    public function get_user_contact_number() {
+        return $this->user_contact_number;
     }
 
     public function set_user_surname($surname) {
@@ -130,8 +130,8 @@ class UserProfile {
         $this->dirty();
     }
 
-    public function get_user_surname() { 
-        return $this->user_surname; 
+    public function get_user_surname() {
+        return $this->user_surname;
     }
 
     public function set_user_forenames($forenames) {
@@ -139,8 +139,8 @@ class UserProfile {
         $this->dirty();
     }
 
-    public function get_user_forenames() { 
-        return $this->user_forenames; 
+    public function get_user_forenames() {
+        return $this->user_forenames;
     }
 
     public function set_user_forename_preferred($forename) {
@@ -209,7 +209,7 @@ class UserProfile {
     }
 
     public function can_be_altered_by(Operator $an_operator) {
-        if ( ($this->get_username() == $an_operator->username() )  ||
+        if ( ($this->get_username() == $an_operator->get_username() )  ||
              ($an_operator->is_superuser()))
         {
             return TRUE;
@@ -253,5 +253,4 @@ class UserProfile {
         return $this->actor->does_user_have_existing_project_request($this->get_username());
     }
 
-};    
-
+};
