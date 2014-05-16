@@ -44,15 +44,15 @@ class Operator {
         }
     }
 
-    public function username() {
+    public function get_username() {
         return $this->username;
     }
 
-    public function full_name() {
+    public function get_full_name() {
         return $this->full_name;
     }
 
-    public function email_address() {
+    public function get_email_address() {
         return $this->email_address;
     }
 }
