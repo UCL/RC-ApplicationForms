@@ -1,12 +1,23 @@
-An account application has been approved.
+<?php
+$up = $user_profile;
+$pr = $project_request;
+$op = $operator;
 
-Research : {:research_theme}
-User name : {:request_user}
-
-Link: http://avon.ucl.ac.uk/acct/list.php?idp={:project_request_id}
-
-Comments from: {:acting_user} 
------------------------------
-{:comments}
-
+return array (
+    'subject' => "AppForm Req Notify: {$up->get_username()} approved",
+    'body'    => "
 [This mail was automatically generated.]
+
+An account application has been approved by {$op->get_username()} .
+
+Username  : {$up->get_username()}
+User name : {$up->get_user_forenames()} {$up->get_user_surname()}
+
+Link: http://avon.ucl.ac.uk/acct/view_application.php?idp={$pr->get_id()}
+
+Comments from: {$op->get_username()}
+-----------------------------
+{$pr->get_last_status()->get_comment()}
+
+"
+);

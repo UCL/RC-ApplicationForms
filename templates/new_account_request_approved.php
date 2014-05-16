@@ -1,8 +1,16 @@
+<?php
+$up = $user_profile;
+$pr = $project_request;
+$op = $operator;
+
+return array (
+    'subject' => "RCPS: Request Approved",
+    'body'    => "
 Your request for Research Computing resources has been approved.
 
 We have a number of services available for users, and the approval process automatically recommends services based on the list of work types on the application form.
 
-This has recommended: {:recommendations}
+This has recommended: {$pr->get_recommended_services()}
 
   * The Legion service is most suitable for serial work, large numbers of serial jobs, and small multinode jobs (using e.g. MPI). We recommend using Legion for any use not explicitly covered by another service.
 
@@ -19,3 +27,5 @@ We create accounts on the Legion service for all applying researchers regardless
 
  To complete Emerald account creation, use the following link: https://www.emerald.rl.ac.uk/
 
+"
+);
