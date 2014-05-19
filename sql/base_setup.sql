@@ -54,12 +54,12 @@ REPLACE INTO Status_Types (id, status_type) VALUES
 ;
 
 REPLACE INTO User_Types (id, user_type) VALUES
-  (1, 'Principal Investigator'),
-  (2, 'Non-PI Researcher'),
-  (3, 'PhD/EngD Student'),
-  (4, 'Masters Student (Postgraduate)'),
-  (5, 'Masters Student (Undergraduate)'),
-  (6, 'Other Undergraduate')
+  (1, 'PhD/EngD Student'),
+  (2, 'Masters Student (Postgraduate)'),
+  (3, 'Masters Student (Undergraduate)'),
+  (4, 'Other Undergraduate'),
+  (5, 'Non-PI Researcher'),
+  (6, 'Principal Investigator')
 ;
 
 REPLACE INTO Experience_Levels (id,level_text) VALUES
