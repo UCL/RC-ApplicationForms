@@ -33,7 +33,7 @@ class MailMailer {
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "From: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
         if (array_key_exists('override_replyto', $template)) {
-            $headers .= "Reply-to: " . "PLACEHOLDER" . " \r\n";
+            $headers .= "Reply-to: " . $template['override_replyto'] . " \r\n";
         } else {
             $headers .= "Reply-to: Research Computing Support <rc-support@ucl.ac.uk> \r\n";
         }

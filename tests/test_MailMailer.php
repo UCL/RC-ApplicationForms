@@ -1,7 +1,10 @@
 <?php
+include "classes/MailMessage.php";
+include "classes/MailMailer.php";
 
-include_once "includes/MailMailer.php";
-include_once "includes/MailMessage.php";
+class ProjectRequest{};
+class UserProfile {};
+class Operator {};
 
 class test_MailMailer extends PHPUnit_Framework_TestCase {
 
@@ -20,11 +23,9 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
 
         $mailer->set_override(FALSE);
 
-        $mailer->send_mail("test_template", 
-            array("recipient1@localhost","recipient2@localhost"), 
-            array("basic_replacement" => "Success 1",
-                  "one_deep" => array( "replacement" => "Success 2" ),
-                  "two" => array( "deep" => array( "replacement" => "Success 3" ) ) ),
+        $mailer->send_mail("test_template",
+            array("recipient1@localhost","recipient2@localhost"),
+            new ProjectRequest, new UserProfile, new Operator,
             $mail_message
         );
         $this->assertEquals('recipient1@localhost, recipient2@localhost', $mail_message->get_recipient());
@@ -34,24 +35,16 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
 
         $mailer->set_override(TRUE);
 
-        $mailer->send_mail("test_template", 
-            array("recipient1@localhost","recipient2@localhost"), 
-            array("basic_replacement" => "Success 1",
-                  "one_deep" => array( "replacement" => "Success 2" ),
-                  "two" => array( "deep" => array( "replacement" => "Success 3" ) ) ),
+        $mailer->send_mail("test_template",
+            array("recipient1@localhost","recipient2@localhost"),
+            new ProjectRequest, new UserProfile, new Operator,
             $mail_message
         );
         $this->assertEquals($mailer->get_override_address(), $mail_message->get_recipient());
 
-        $this->assertEquals('Test Message', $mail_message->get_subject());
+        $this->assertEquals('Test Email Subject', $mail_message->get_subject());
         $this->assertEquals($mail_message->get_message(),
-                            "Line with no replacement.\n" .
-                            "Global Replacement: Success\n" .
-                            "Basic Replacement: Success 1\n" .
-                            "One-deep Replacement: Success 2\n" .
-                            "Two-deep Replacement: Success 3\n" .
-                            "\n" .
-                            "^ Blank line.\n");
+                            "Test Email Body");
         $this->assertEquals($mail_message->get_headers(),
                             "MIME-Version: 1.0" . "\r\n" .
                             "From: Research Computing Support <rc-support@ucl.ac.uk> \r\n" .
