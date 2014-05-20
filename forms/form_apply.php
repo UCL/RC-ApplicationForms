@@ -457,7 +457,6 @@ UPI:
         for (var i=0; i<mandatory_fields.length; i++) {
             if ( $("#application_form input[name='"+ mandatory_fields[i] +"']").val() == "" ) {
                 $('#err_all_fields').show();
-                alert(mandatory_fields[i]+" not filled in");
                 prevent_submit = true;
             }
         }
