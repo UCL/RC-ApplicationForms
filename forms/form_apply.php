@@ -98,7 +98,7 @@ UPI:
             />
     </td>
     <td>
-        Contact Number:
+        Contact Number (optional):
     </td>
     <td>
         <input
@@ -131,6 +131,7 @@ UPI:
     <p class="p">
         To obtain an account, you must either be, or be approved by, a permanent member of staff.
         If you are a student or a postdoctoral researcher, this will normally be your supervisor.
+        If you are a permanent member of staff, please leave this field unaltered.
     </p>
     <table>
         <tr>
@@ -140,6 +141,7 @@ UPI:
             <td>
                 <input
                     type="text"
+                    id="sponsor_username"
                     name="user_profile[sponsor_username]"
                     title="The username of a permanent member of staff who is prepared to approve your account request."
                     placeholder="ccaprof"
@@ -324,7 +326,7 @@ UPI:
 </ul>
 
 <p class="p">
-    If you have technical requirements that do not fit any of these categories, please describe them here:
+    If you have technical requirements that do not fit any of these categories, please describe them here (optional):
 </p>
 <textarea
     name="project[weird_tech_description]"
@@ -413,19 +415,54 @@ UPI:
 </p>
 
 <div id="error" style="color: #cc0000;">
-    <!-- Starts empty -->
+    <ul>
+        <li id="err_all_fields" style="color: #cc0000;display:none">You must complete all text fields not marked as optional.</li>
+        <li id="err_must_accept" style="color: #cc0000;display:none">You must accept the Terms and Conditions to apply.</li>
+        <li id="err_sponsor_self" style="color: #cc0000;display:none">Your sponsor's username must not be the same as your username. If your application does not require approval, please leave the sponsor username field blank.</li>
+    </ul>
 </div>
 
 <input type="submit" id="form_submit_button" value="Submit" title="Submit application request." />
 </form>
 
 <script>
-
     $( '#application_form' ).submit( function( event ) {
-        if ($('#tandc').is(":checked") == true) {
-            $('#notice').text("").show();
+        var prevent_submit = false;
+        if ($('#tandc').is(":checked") != true) {
+            $('#err_must_accept').show();
+            prevent_submit = true;
         } else {
-            $('#error').text("You must accept the Terms and Conditions to apply.").show();
+            $('#err_must_accept').hide();
+        }
+        if ($('#username').val() == $('#sponsor_username').val()) {
+            $('#err_sponsor_self').show();
+            prevent_submit = true;
+        } else {
+            $('#err_sponsor_self').hide();
+        }
+
+        mandatory_fields = [
+            "user_profile[username]",
+            "user_profile[user_upi]",
+            "user_profile[user_surname]",
+            "user_profile[user_forenames]",
+            "user_profile[user_forename_preferred]",
+            "user_profile[user_email]",
+            "user_profile[user_dept]",
+            "user_profile[experience_text]",
+            "project[pi_email]",
+            "project[work_description]",
+            "project[applications_description]"
+             ];
+        for (var i=0; i<mandatory_fields.length; i++) {
+            if ( $("#application_form input[name='"+ mandatory_fields[i] +"']").val() == "" ) {
+                $('#err_all_fields').show();
+                alert(mandatory_fields[i]+" not filled in");
+                prevent_submit = true;
+            }
+        }
+
+        if (prevent_submit == true) {
             event.preventDefault();
         }
     });
