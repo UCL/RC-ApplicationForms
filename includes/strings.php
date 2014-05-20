@@ -19,13 +19,13 @@ $strings = array(
              "Please contact rc-support@ucl.ac.uk mentioning this ".
              "problem, and pasting the following into your e-mail:".
              "</h4>\n",
-        "success" => "<p class='p'>Successfully mailed requests for approval. If you do not " .
+        "success" => "<p class='p'>Successfully created requests. If you do not " .
             "receive any further information within 3 days, please contact " .
             "rc-support@ucl.ac.uk.</p>\n<p class='p'>If you are an existing user of one of ".
-            " our services, please proceed to this page to " .
-            "<a href=\"submit_publications.php\">submit a list of any publications</a>" .
+            " our services, please proceed to the page linked below to " .
+            "submit a list of any publications and grants " .
             " you have worked on that have used them. This will help us justify the " .
             "continued funding of these services.</p>\n" .
-            "<h3><a href=\"publications.php\">Submit Publications</a></h3>\n",
+            "<h3><a href=\"publications.php\">Submit Publications and Grants</a></h3>\n",
     ),
 );
