@@ -13,9 +13,13 @@ class Operator {
 
     private $actor;
 
-    public function __construct($username) {
-        $this->actor = new SQLActor();
-        $this->actor->connect();
+    public function __construct($username, $actor = NULL) {
+        if ($actor == NULL) {
+            $this->actor = new SQLActor();
+            $this->actor->connect();
+        } else {
+            $this->actor = $actor;
+        }
         $user_info = $this->actor->get_user_info($username);
 
         if ($user_info == FALSE) {

@@ -2,13 +2,17 @@
 include "classes/MailMessage.php";
 include "classes/MailMailer.php";
 
-class ProjectRequest{};
-class UserProfile {};
-class Operator {};
+
+// Note: Mailcatcher may be something to look into here
 
 class test_MailMailer extends PHPUnit_Framework_TestCase {
 
     public function test_Mail() {
+        $mock_sqa= $this->getMockBuilder("SQLActor")->getMock();
+        $mock_pr = $this->getMockBuilder("ProjectRequest")->getMock();
+        $mock_up = $this->getMockBuilder("UserProfile")->getMock();
+        $mock_op = $this->getMockBuilder("Operator")->setConstructorArgs(array("some_guy", $mock_sqa))->getMock();
+
         $mail_message = new MailMessage();
         $mail_message->set_all('a', 'b', 'c', 'd', 'e');
 
@@ -25,7 +29,7 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
 
         $mailer->send_mail("test_template",
             array("recipient1@localhost","recipient2@localhost"),
-            new ProjectRequest, new UserProfile, new Operator,
+            $mock_pr, $mock_up, $mock_op,
             $mail_message
         );
         $this->assertEquals('recipient1@localhost, recipient2@localhost', $mail_message->get_recipient());
@@ -37,7 +41,7 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
 
         $mailer->send_mail("test_template",
             array("recipient1@localhost","recipient2@localhost"),
-            new ProjectRequest, new UserProfile, new Operator,
+            $mock_pr, $mock_up, $mock_op,
             $mail_message
         );
         $this->assertEquals($mailer->get_override_address(), $mail_message->get_recipient());
