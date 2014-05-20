@@ -32,10 +32,11 @@ try {
         //TODO: Move mailer calls to within Project Requests
         $new_project_request->update_status($operator, 'submitted', '(from the form)');
 
+
         $addresses_to_mail = array($new_project_request->get_user_profile()->get_sponsor_email_address());
 
         $mailer = new MailMailer();
-        $mail_result = $mailer->send_mail("new_account_for_approval", $addresses_to_mail, $new_project_request, $new_project_request, $operator);
+        $mail_result = $mailer->send_mail("new_account_for_approval", $addresses_to_mail, $new_project_request, $new_project_request->get_user_profile(), $operator);
 
         if ($mail_result !== TRUE) {
             echo $strings["submit"]["err_could_not_send_mail"] . $mail_result."\n";
