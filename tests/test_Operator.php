@@ -70,7 +70,6 @@ class test_Operator extends PHPUnit_Framework_TestCase {
         $mock_sql_actor->expects($this->once())->method('get_user_info')
             ->will($this->returnValue($superuser_info));
         $test_operator = new Operator("a_super_user_name", $mock_sql_actor);
-        var_dump($test_operator);
         $this->assertEquals($test_operator->is_superuser(), TRUE);
         $this->assertEquals($test_operator->get_username(), "superuser");
         $this->assertEquals($test_operator->get_full_name(), "(the name of a superuser)");
