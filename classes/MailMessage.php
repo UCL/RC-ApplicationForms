@@ -1,7 +1,7 @@
 <?php
 
 class MailMessage {
-    protected $never_send_mail = FALSE;
+    protected $never_send_mail = TRUE;
     protected $to = "nobody@localhost";
     protected $subject = "(No Subject Provided)";
     protected $additional_headers = NULL;

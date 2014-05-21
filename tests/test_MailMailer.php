@@ -1,7 +1,5 @@
 <?php
-include "classes/MailMessage.php";
-include "classes/MailMailer.php";
-
+include_once "includes/autoload_definition.php";
 
 // Note: Mailcatcher may be something to look into here
 
@@ -9,8 +7,8 @@ class test_MailMailer extends PHPUnit_Framework_TestCase {
 
     public function test_Mail() {
         $mock_sqa= $this->getMockBuilder("SQLActor")->getMock();
-        $mock_pr = $this->getMockBuilder("ProjectRequest")->getMock();
-        $mock_up = $this->getMockBuilder("UserProfile")->getMock();
+        $mock_pr = $this->getMockBuilder("ProjectRequest")->setConstructorArgs(array($mock_sqa))->getMock();
+        $mock_up = $this->getMockBuilder("UserProfile")->setConstructorArgs(array($mock_sqa))->getMock();
         $mock_op = $this->getMockBuilder("Operator")->setConstructorArgs(array("some_guy", $mock_sqa))->getMock();
 
         $mail_message = new MailMessage();

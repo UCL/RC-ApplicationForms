@@ -1,31 +1,6 @@
 <?php
 
-include_once "classes/Operator.php";
-include_once "classes/SQLActor.php";
-
-class OperatorMockSQLActor {
-    public function get_user_info($username) {
-        if ($username == "not_appearing_in_this_db") {
-            return FALSE;
-        } elseif ($username == "no_special_permissions") {
-            return array("id" => 1,
-                         "username" => $username,
-                         "fullname" => "(the name of a user with no special permissions)",
-                         "super_special_rainbow_pegasus_powers" => FALSE,
-                         "receives_emails" => TRUE,
-                         "email_address" => $username . "@localhost"
-                     );
-        } elseif ($username == "superuser") {
-            return array("id" => 2,
-                         "username" => $username,
-                         "fullname" => "(the name of a superuser)",
-                         "super_special_rainbow_pegasus_powers" => TRUE,
-                         "receives_emails" => TRUE,
-                         "email_address" => $username . "@localhost"
-                     );
-        }
-    }
-}
+include_once "includes/autoload_definition.php";
 
 class test_Operator extends PHPUnit_Framework_TestCase {
 

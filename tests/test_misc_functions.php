@@ -1,5 +1,5 @@
 <?php
-
+include_once "includes/autoload_definition.php";
 include "includes/misc_functions.php";
 
 class MiscFunctionsTest extends PHPUnit_Framework_TestCase {
@@ -44,4 +44,3 @@ class MiscFunctionsTest extends PHPUnit_Framework_TestCase {
 }
 
 ?>
-
