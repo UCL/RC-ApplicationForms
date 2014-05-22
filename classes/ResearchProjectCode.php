@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ik
- * Date: 2014-05-06
- * Time: 17:32
- */
 
-class Publication {
+class ResearchProjectCode {
     // db fields
     private $id;
     private $user_profile_id;
-    private $url;
-    private $notable = FALSE; //Checkbox default
+    private $code;
     private $time_added;
     // end of db fields
 
@@ -41,9 +34,16 @@ class Publication {
         return $instance;
     }
 
-    public static function from_db($publication_id) {
+    public static function from_code($a_code) {
         $instance = new self();
-        $an_array = $instance->actor->get_publication($publication_id);
+        $instance->fill_from_array(array('code' => $a_code));
+        $instance->dirty();
+        return $instance;
+    }
+
+    public static function from_db($code_id) {
+        $instance = new self();
+        $an_array = $instance->actor->get_research_project_code($code_id);
         $instance->fill_from_array($an_array);
         $instance->clean();
         return $instance;
@@ -56,27 +56,18 @@ class Publication {
         if (array_key_exists('user_profile_id',$an_array)) {
             $this->user_profile_id = $an_array['user_profile_id'];
         }
-        if (array_key_exists('notable',$an_array)) {
-            if ($an_array['notable'] == "on") {
-                $this->notable = 1;
-            } else {
-                $this->notable = $an_array['notable'];
-            }
+        if (array_key_exists('code',$an_array)) {
+            $this->code = $an_array['code'];
         } else {
-            $this->notable = 0;
-        }
-        if (array_key_exists('url',$an_array)) {
-            $this->url = $an_array['url'];
-        } else {
-            die("Error: no url provided to publication.");
+            die("Error: no code provided for this id.");
         }
         if (array_key_exists('time_added',$an_array)) {
             $this->time_added = $an_array['time_added'];
         }
     }
 
-    public function get_url() {
-        return $this->url;
+    public function get_code() {
+        return $this->code;
     }
 
     public function set_user_profile_id($id) {
@@ -100,7 +91,7 @@ class Publication {
         if ($this->user_profile_id === NULL) {
             $this->set_owner($altering_operator->get_username());
         }
-        $created_id = $this->actor->save_publication($this->get_packed_data());
+        $created_id = $this->actor->save_research_project_code($this->get_packed_data());
         $this->set_id($created_id);
         if ($created_id != FALSE) {
             $this->clean();
@@ -116,22 +107,8 @@ class Publication {
             $data_array['id'] = $this->id;
         }
         $data_array['user_profile_id'] = $this->user_profile_id;
-        $data_array['url'] = $this->url;
-        $data_array['notable'] = $this->notable;
+        $data_array['code'] = $this->code;
         return $data_array;
-    }
-
-    public function has_valid_url() {
-        $headers = @get_headers($this->url);
-        if(strpos($headers[0],'200')===FALSE) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function is_notable() {
-        return $this->notable;
     }
 
     public function set_id($id) {

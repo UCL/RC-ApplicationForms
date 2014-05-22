@@ -11,7 +11,7 @@
 define('CLASS_DIR', 'classes/');
 
 // Add your class dir to include path
-set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR.PATH_SEPARATOR."../classes/");
+set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
 
 // You can use this trick to make autoloader look for commonly used "My.class.php" type filenames
 //spl_autoload_extensions('.class.php');

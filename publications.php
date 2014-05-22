@@ -9,7 +9,7 @@
 include "includes/auth_user_shim.php";
 include_once "includes/autoload_definition.php";
 
-$page_title = "Publications";
+$page_title = "Grants and Publications";
 include "includes/header.php";
 
 $operator_user_profile = UserProfile::from_db_by_name($current_username);

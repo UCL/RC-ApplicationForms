@@ -31,9 +31,21 @@ try {
 
     $request = $_POST;
 
+
     echo "<ul>";
+    foreach ($request['research_project_codes'] as $code) {
+        if ($code != "") {
+            $one_code_entry = ResearchProjectCode::from_code($code);
+            $result = $one_code_entry->save_to_db($operator);
+            echo "<li>".
+                $one_code_entry->get_code() .
+                ($result ? " saved." : " could not be saved.") .
+                "</li>";
+        }
+    }
+    echo "</ul>";
 
-
+    echo "<ul>";
     foreach ($request['publications'] as $one_publication_array) {
         if ($one_publication_array['url'] != "") {
             $one_publication = Publication::from_array($one_publication_array);
@@ -54,4 +66,3 @@ try {
 }
 
 include "includes/footer.php";
-

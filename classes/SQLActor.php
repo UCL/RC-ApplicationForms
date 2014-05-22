@@ -55,7 +55,7 @@ class SQLActor {
     }
 
     public function get_user_info($username) {
-        $dbh = $this->dbc->prepare("SELECT * FROM Privileged_Users WHERE username = ?");
+        $dbh = $this->dbc->prepare("SELECT * FROM Privileged_Users WHERE username = ? ORDER BY id DESC LIMIT 1");
         $dbh->bindValue(1, $username);
         $dbh->execute();
         return $dbh->fetch();
@@ -126,7 +126,7 @@ class SQLActor {
     }
 
     public function get_user_profile_by_name($username) {
-        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE username=?");
+        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE username=? ORDER BY id DESC LIMIT 1");
         $dbh->bindValue(1, $username);
         $dbh->execute();
         $result = $dbh->fetch();
@@ -144,6 +144,14 @@ class SQLActor {
     public function get_publication($publication_id) {
         $dbh = $this->dbc->prepare("SELECT * FROM Publications WHERE id=?");
         $dbh->bindValue(1, $publication_id, PDO::PARAM_INT);
+        $dbh->execute();
+        $result = $dbh->fetch();
+        return $result;
+    }
+
+    public function get_research_project_code($code_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Research_Project_Code WHERE id=?");
+        $dbh->bindValue(1, $code_id, PDO::PARAM_INT);
         $dbh->execute();
         $result = $dbh->fetch();
         return $result;
@@ -242,6 +250,10 @@ class SQLActor {
 
     public function save_publication($publication_data) {
         return $this->save_object_data("Publications", $publication_data);
+    }
+
+    public function save_research_project_code($code_data) {
+        return $this->save_object_data("Research_Project_Codes", $code_data);
     }
 
     function mark_request_status($project_request_id, $acting_user, $status_string, $comment) {
