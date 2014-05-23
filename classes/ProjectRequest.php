@@ -24,6 +24,7 @@ class ProjectRequest {
     private $collab_soton_name;
     private $collab_other_institute;
     private $collab_other_name;
+    private $creation_time;
 
     // Form checkbox matching section
     private $work_type_basic = FALSE;
@@ -76,6 +77,23 @@ class ProjectRequest {
         }
         $instance->dirty();
         return $instance;
+    }
+
+    public static function from_db_set($request_array) {
+        $instance = new self();
+        $instance->fill_from_array($request_array);
+        return $instance;
+    }
+
+    public static function get_all_from_db($actor = NULL) {
+        $actor = new SQLActor();
+        $actor->connect();
+        $project_request_arrays = $actor->get_all_project_requests();
+        $project_requests = array();
+        foreach ($project_request_arrays as $one_project_request_array) {
+            array_push($project_requests,ProjectRequest::from_db_set($one_project_request_array));
+        }
+        return $project_requests;
     }
 
     public static function from_db($request_id) {
@@ -234,6 +252,10 @@ class ProjectRequest {
 
     public function get_id() {
         return $this->id;
+    }
+
+    public function get_creation_time() {
+        return $this->creation_time;
     }
 
     public function is_clean() {

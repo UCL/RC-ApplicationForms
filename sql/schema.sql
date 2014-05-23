@@ -115,6 +115,7 @@ CREATE TABLE Project_Requests
   collab_soton_name TEXT,
   collab_other_institute TEXT,
   collab_other_name TEXT,
+  creation_time TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id),
   FOREIGN KEY (research_theme_id) REFERENCES Research_Themes(id)

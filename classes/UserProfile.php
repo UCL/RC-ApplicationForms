@@ -44,13 +44,19 @@ class UserProfile {
         return $instance;
     }
 
+    public static function from_db_set($request_array) {
+        $instance = new self();
+        $instance->fill_from_request_array($request_array);
+        return $instance;
+    }
+
     public static function get_all_from_db($actor = NULL) {
         $actor = new SQLActor();
         $actor->connect();
         $profile_arrays = $actor->get_all_user_profiles();
         $profiles = array();
         foreach ($profile_arrays as $one_profile_array) {
-            array_push($profiles,UserProfile::from_request($one_profile_array));
+            array_push($profiles,UserProfile::from_db_set($one_profile_array));
         }
         return $profiles;
     }

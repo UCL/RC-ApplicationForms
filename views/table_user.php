@@ -20,7 +20,7 @@ echo "<table class='silvatable grid'><tr class='odd'><th>Field</th><th>Entry</th
         $user_profile->get_experience_level())
     . table_keyval("Relevant Experience",
         $user_profile->get_experience_text())
-    . table_keyval("Created",
+    . table_keyval("Profile Created",
         $user_profile->get_creation_time())
     . "</table>"
 ;

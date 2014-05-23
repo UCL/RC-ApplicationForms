@@ -61,16 +61,6 @@ class SQLActor {
         return $dbh->fetch();
     }
 
-    public function get_all_project_requests() {
-        $dbh = $this->dbc->prepare("SELECT id FROM Project_Requests");
-        $dbh->execute();
-        $requests = array();
-        while ($row = $dbh->fetch()) {
-            array_append($requests, ProjectRequests::from_db($row['id']));
-        }
-        return $requests;
-    }
-
     public function get_research_theme_id($status_name) {
         $dbh = $this->dbc->prepare("SELECT * FROM Research_Themes WHERE full_name=?");
         $dbh->bindValue(1, $theme_name);
@@ -166,6 +156,13 @@ class SQLActor {
         $dbh->bindValue(1, $project_request_id, PDO::PARAM_INT);
         $dbh->execute();
         $result = $dbh->fetch();
+        return $result;
+    }
+
+    public function get_all_project_requests() {
+        $dbh = $this->dbc->prepare("SELECT * FROM Project_Requests");
+        $dbh->execute();
+        $result = $dbh->fetchAll();
         return $result;
     }
 
