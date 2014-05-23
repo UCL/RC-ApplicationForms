@@ -133,6 +133,7 @@ CREATE TABLE Publications
   user_profile_id INTEGER,
   url TEXT,
   notable BOOLEAN,
+  time_added TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id)
 );
@@ -147,20 +148,12 @@ CREATE TABLE Publication_Services
   FOREIGN KEY (service_used) REFERENCES Services(id)
 );
 
-CREATE TABLE Award_Numbers
+CREATE TABLE Research_Project_Codes
 (
   id INTEGER AUTO_INCREMENT,
-  project_request_id INTEGER,
-  award_number VARCHAR(255),
+  user_profile_id INTEGER,
+  code TEXT,
+  time_added TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (project_request_id) REFERENCES Project_Requests(id)
-);
-
-CREATE TABLE Grant_Codes
-(
-  id INTEGER AUTO_INCREMENT,
-  project_request_id INTEGER,
-  grant_code VARCHAR(255),
-  PRIMARY KEY (id),
-  FOREIGN KEY (project_request_id) REFERENCES Project_Requests(id)
+  FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id)
 );
