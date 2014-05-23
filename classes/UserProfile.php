@@ -16,6 +16,7 @@ class UserProfile {
     private $sponsor_username;
     private $experience_level_id;
     private $experience_text;
+    private $creation_time;
     // End of db fields
 
     /** @var SQLActor actor */
@@ -41,6 +42,39 @@ class UserProfile {
         $instance->fill_from_request_array($request_array);
         $instance->dirty(); // Because it hasn't been saved to the db yet
         return $instance;
+    }
+
+    public static function get_all_from_db($actor = NULL) {
+        $actor = new SQLActor();
+        $actor->connect();
+        $profile_arrays = $actor->get_all_user_profiles();
+        $profiles = array();
+        foreach ($profile_arrays as $one_profile_array) {
+            array_push($profiles,UserProfile::from_request($one_profile_array));
+        }
+        return $profiles;
+    }
+
+    public static function get_all_unique_from_db($actor = NULL) {
+        $actor = new SQLActor();
+        $actor->connect();
+        $profile_arrays = $actor->get_all_unique_user_profiles();
+        $profiles = array();
+        foreach ($profile_arrays as $one_profile_array) {
+            array_push($profiles,UserProfile::from_request($one_profile_array));
+        }
+        return $profiles;
+    }
+
+    public static function get_all_for_one_username($username, $actor = NULL) {
+        $actor = new SQLActor();
+        $actor->connect();
+        $profile_arrays = $actor->get_all_profiles_for_one_username($username);
+        $profiles = array();
+        foreach ($profile_arrays as $one_profile_array) {
+            array_push($profiles,UserProfile::from_request($one_profile_array));
+        }
+        return $profiles;
     }
 
     public static function from_db($user_profile_id) {
@@ -179,6 +213,10 @@ class UserProfile {
         return $this->experience_level_id;
     }
 
+    public function get_experience_level() {
+        return (string)($this->actor->get_user_experience_levels()[$this->experience_level_id]['level_text']);
+    }
+
     public function set_experience_text($text) {
         $this->experience_text = $text;
         $this->dirty();
@@ -186,6 +224,10 @@ class UserProfile {
 
     public function get_experience_text() {
         return $this->experience_text;
+    }
+
+    public function get_creation_time() {
+        return $this->creation_time;
     }
 
     public function is_clean() {

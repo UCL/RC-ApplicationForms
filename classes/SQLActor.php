@@ -133,6 +133,34 @@ class SQLActor {
         return $result;
     }
 
+    public function get_all_user_profiles() {
+        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles");
+        $dbh->execute();
+        $result = $dbh->fetchAll();
+        return $result;
+    }
+
+    public function get_all_profiles_for_one_username($username) {
+        $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE username=?");
+        $dbh->bindValue(1, $username);
+        $dbh->execute();
+        $result = $dbh->fetchAll();
+        return $result;
+    }
+
+    public function get_all_unique_user_profiles() {
+        $dbh = $this->dbc->prepare(
+            "SELECT * FROM " .
+            "(SELECT MAX(id) as id,username from User_Profiles GROUP BY username)" .
+            " AS Most_Recent_IDs ".
+            " LEFT JOIN User_Profiles ON ".
+            " Most_Recent_IDs.id = User_Profiles.id"
+        );
+        $dbh->execute();
+        $result = $dbh->fetchAll();
+        return $result;
+    }
+
     public function get_project_request($project_request_id) {
         $dbh = $this->dbc->prepare("SELECT * FROM Project_Requests WHERE id=?");
         $dbh->bindValue(1, $project_request_id, PDO::PARAM_INT);
