@@ -17,11 +17,12 @@ function array_as_text_list($array_in, $conjunction=" and ") {
     }
 };
 
-
-function table_keyval($label, $value, $columns=2, $preformatted=FALSE) {
-    $label = htmlspecialchars($label);
-    $value = htmlspecialchars($value);
-    if ($preformatted) { $value = "<pre>" . $value . "</pre>"; }
+function table_keyval($label, $value, $columns=2, $preformatted=FALSE, $escape_html=TRUE) {
+    if ($escape_html === TRUE) {
+        $label = htmlspecialchars($label);
+        $value = htmlspecialchars($value);
+    }
+    if ($preformatted === TRUE) { $value = "<pre>" . $value . "</pre>"; }
     if ($columns == 2) {
         $html  = "";
         $html .= "    <tr class='even'>\n";

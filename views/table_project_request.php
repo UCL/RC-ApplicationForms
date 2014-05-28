@@ -2,7 +2,11 @@
 
 echo "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User</strong></td></tr>"
     . table_keyval("User id",
-        $project_request->get_user_profile()->get_username())
+        $project_request->get_user_profile()->get_username() .
+        " (<a href=\"view_user.php?id=".$project_request->get_user_profile()->get_id()."\">".
+        "id: ".$project_request->get_user_profile()->get_id().
+        "</a>)"
+        , 2, FALSE, FALSE) // Don't escape HTML characters
     . table_keyval("User Name",
         $project_request->get_user_profile()->get_user_forenames()." ".
         $project_request->get_user_profile()->get_user_surname())

@@ -98,8 +98,8 @@ class SQLActor {
         $dbh = $this->dbc->prepare(
             "SELECT * FROM Project_Request_Statuses".
             " WHERE project_request_id=?".
-            " ORDER BY update_time".
-            " DESC LIMIT 1"
+            " ORDER BY update_time DESC, id DESC".
+            " LIMIT 1"
         );
         $dbh->bindValue(1, $project_id);
         $dbh->execute();

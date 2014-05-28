@@ -9,9 +9,10 @@
 <form action="submit_publications.php" method="post" enctype="multipart/form-data">
     <p class="p">
         Publications and grants produced by our users help us justify the funding that goes towards
-        providing the services we do. For this reason, we annually request that you provide
+        providing the services we do. For this reason, our academic governance group, the
+        Computational Resources Allocation Group (CRAG), request that you annually provide
         us with information about work you've used our services for, that we can present as
-        evidence that the services are well-used and valuable to UCL researchers.
+        evidence that the services are used and are valuable to UCL researchers.
     </p>
     <h5>Research Project Codes</h5>
     <p class="p">
@@ -20,10 +21,14 @@
         statistics on how much grant-funded work is using the services.
     </p>
     <p class="p">
-        <b>These Research Project Codes will not be charged. We do not invoice or directly charge for any of our services.</b>
+        Please add below any and all Research Project Codes associated with work you have used
+        one of our services for in the past year.
     </p>
     <p class="p">
-        If you don't know what your Research Project Code is, your PI and/or departmental administrative staff
+        <b>These Research Project Codes will not be charged. We do not invoice or charge for the use of any of our services.</b>
+    </p>
+    <p class="p">
+        If you don't know what your Research Project Codes are, your PI and/or departmental administrative staff
         should be able to tell you.
     </p>
     <table id="research_project_codes_form_table">

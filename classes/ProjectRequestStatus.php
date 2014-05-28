@@ -39,6 +39,10 @@ class ProjectRequestStatus {
         }
     }
 
+    public function get_id() {
+        return $this->id;
+    }
+
     public function get_text() {
         return $this->actor->get_status_type($this->status_type_id);
     }

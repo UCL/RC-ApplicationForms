@@ -69,7 +69,6 @@ try{
                     if ($user_mail_result != TRUE) { array_push($mail_not_sent_array, "the user"); }
                     if ($rcps_mail_result != TRUE) { array_push($mail_not_sent_array, "RC Support"); }
                     if ($overall_mail_result != TRUE) {
-                        echo "<pre>";echo "\$user_mail_result: ".($user_mail_result?"true":"false")."\n\$rcps_mail_result: ".($rcps_mail_result?"true":"false")."\n"; echo "\$mail_not_sent_array:\n";var_dump($mail_not_sent_array);echo "</pre>";
                         $mail_not_sent = " but a notification mail could not be sent to ".
                                          array_as_text_list($mail_not_sent_array, " or ") .
                                          ". Please contact rc-support@ucl.ac.uk.";
@@ -134,7 +133,7 @@ try{
         } else {
             if ( ($req_action == "approve") || ($req_action == "reject") ) {
                 echo "<h4>You have not been permitted to perform this action. " .
-                     "Please report to your local reconditioning centre.</h4>\n";
+                     "Please contact rc-support@ucl.ac.uk if you believe you should have been.</h4>\n";
             }
             $approval_div = "";
         }

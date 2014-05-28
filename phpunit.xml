@@ -2,10 +2,10 @@
     <testsuites>
         <testsuite name="TestSuite">
             <testsuite name="tests">
-                <file>tests/test_TrueIsTrue.php</file>
                 <file>tests/test_MailMailer.php</file>
                 <file>tests/test_Operator.php</file>
                 <file>tests/test_misc_functions.php</file>
+                <file>tests/test_FullPath.php</file>
             </testsuite>
         </testsuite>
     </testsuites>

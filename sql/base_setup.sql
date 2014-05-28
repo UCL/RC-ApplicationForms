@@ -76,10 +76,11 @@ REPLACE INTO Privileged_Users
  super_special_rainbow_pegasus_powers,
  receives_emails, email_address)
 VALUES
-  (1, 'ccaaxxx', 'Test Non-special user', FALSE, FALSE, 'ccaaxxx@ucl.ac.uk'),
-  (2, 'ccaabaa', 'Brian Alston', TRUE, TRUE, 'b.alston@ucl.ac.uk'),
-  (3, 'ccaabcs', 'Bruno Silva', TRUE, TRUE, 'b.silva@ucl.ac.uk'),
-  (4, 'uccaiki', 'Ian Kirker', TRUE, TRUE, 'i.kirker@ucl.ac.uk'),
-  (5, 'uccaoke', 'Owain Kenway', TRUE, TRUE, 'o.kenway@ucl.ac.uk'),
-  (6, 'ccaacla', 'Clare Gryce', FALSE, TRUE, 'c.gryce@ucl.ac.uk')
+  (1, 'someguy', 'Test Non-special user', FALSE, FALSE, 'testfail@localhost'),
+  (2, 'suprusr', 'Test super user', TRUE, FALSE, 'testfail@localhost'), //This should never be sent mail
+  (3, 'ccaabaa', 'Brian Alston', TRUE, TRUE, 'b.alston@ucl.ac.uk'),
+  (4, 'ccaabcs', 'Bruno Silva', TRUE, TRUE, 'b.silva@ucl.ac.uk'),
+  (5, 'uccaiki', 'Ian Kirker', TRUE, TRUE, 'i.kirker@ucl.ac.uk'),
+  (6, 'uccaoke', 'Owain Kenway', TRUE, TRUE, 'o.kenway@ucl.ac.uk'),
+  (7, 'ccaacla', 'Clare Gryce', FALSE, TRUE, 'c.gryce@ucl.ac.uk')
 ;

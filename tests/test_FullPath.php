@@ -16,13 +16,14 @@ class test_FullPath extends PHPUnit_Framework_TestCase {
                 "user_surname" => "Kirker",
                 "user_forenames" => "Ian",
                 "user_forename_preferred" => "Ian",
+                "user_email" => "i.kirker@ucl.ac.uk",
                 "user_dept" => "Chemistry",
-                "sponsor_username" => "uccaoke",
+                "sponsor_username" => "suprvis",
                 "experience_level_id" => 3,
                 "experience_text" => "I HAVE 500 XP",
             ),
             "project"      => array(
-                "is_funded" => "on",
+                "is_funded" => 1,
                 "pi_email"  => "i.kirker@ucl.ac.uk",
                 "research_theme_id" => 3,
                 "work_type_small_mpi" => "on",
@@ -32,14 +33,35 @@ class test_FullPath extends PHPUnit_Framework_TestCase {
             ),
         );
 
-        $newest_uccaiki = UserProfile::from_request($_POST['user_profile']);
+        $super_user_operator = new Operator("suprusr");
+        $supervisor_operator = new Operator("suprvis");
+        $normal_operator = new Operator("someguy");
+        //$student_operator = new Operator(); // TODO: Find a student
 
-        $newest_uccaiki->save_to_db(new Operator("uccaiki"));
-        $newest_uccaiki = UserProfile::from_db_by_name("uccaiki");
+        $pr = ProjectRequest::from_request($_POST);
+        $pr->save_to_db($super_user_operator);
+        $up = $pr->get_user_profile();
 
-        $this->assertEquals($newest_uccaiki->get_username(), "uccaiki");
-        $this->assertEquals($newest_uccaiki->get_sponsor_username(), "uccaoke");
-        $this->assertEquals($newest_uccaiki->get_experience_text(), "I HAVE 500 XP");
+        $this->assertEquals($up->get_username(), "uccaiki");
+        $this->assertEquals($up->get_sponsor_username(), "suprvis");
+        $this->assertEquals($up->get_experience_text(), "I HAVE 500 XP");
+
+        $this->assertEquals($pr->can_be_altered_by($super_user_operator), TRUE);
+        $this->assertEquals($pr->can_be_altered_by($supervisor_operator), FALSE);
+        $this->assertEquals($pr->can_be_altered_by($normal_operator), FALSE);
+
+        $this->assertEquals($pr->can_be_approved_by($super_user_operator), TRUE);
+        $this->assertEquals($pr->can_be_approved_by($supervisor_operator), TRUE);
+        $this->assertEquals($pr->can_be_approved_by($normal_operator), FALSE);
+
+        $pr->update_status($super_user_operator, 'submitted', '(from within a test)');
+
+        $this->assertEquals($pr->get_last_status()->get_text(), "submitted");
+        $this->assertEquals($pr->get_last_status()->get_comment(), "(from within a test)");
+
+        $pr->approve_by($supervisor_operator, "(also from within a test)");
+        $this->assertEquals($pr->get_last_status()->get_text(), "approved");
+        $this->assertEquals($pr->get_last_status()->get_comment(), "(also from within a test)");
     }
 
 }
