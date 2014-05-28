@@ -55,58 +55,6 @@
 <!--End leftcontent-->
 
 			<!--Start rightcontent-->
-<div id="rightcontent" class="container"> 
-<div class="isd-logo-holder"><a
-    title="InfoBase - The A to Z of ISD"
-    href=" https://www.ucl.ac.uk/isd/staff/research_services/content-objects/a-z-link">
-		<img alt="InfoBase - The A to Z of ISD" id="infobase_logo"
-       src="https://www.ucl.ac.uk/isd/staff/research_services/infobase-logo" /></a></div>
-<div class="textsize"> 
-		  <!--ul class="textsizelist"> 
-			<li class="smalltext"><a href="#" onclick="setActiveStyleSheet('small'); return false;" onkeypress="setActiveStyleSheet('small'); return false;" onfocus="setActiveStyleSheet('small'); return false;">A</a></li> 
-			<li class="mediumtext"><a href="#" onclick="setActiveStyleSheet('medium'); return false;" onkeypress="setActiveStyleSheet('medium'); return false;" onfocus="setActiveStyleSheet('medium'); return false;">A</a></li> 
-			<li class="largetext"><a href="#" onclick="setActiveStyleSheet('large'); return false;" onkeypress="setActiveStyleSheet('large'); return false;" onfocus="setActiveStyleSheet('large'); return false;">A</a></li> 
-		  </ul--> 
-              <div class="fontResizer">
-                <a href="#" class="smallFont">A</a>
-                <a href="#" class="medFont">A</a>
-                <a href="#" class="largeFont">A</a>
-              </div>
-
-</div>
-		
-		  
-			
-				<!--insert index_right-->
-				<div id="right-column"><h2 class="heading">Quick Links</h2>
-<ul class="nobullet">
-<li><a href="https://www.ucl.ac.uk/isd/common/servicedesk" target="_self">ISD Service Desk</a></li>
-<li><a href="https://myaccount.ucl.ac.uk/pw/" target="_self">Change password<br /></a></li>
-<li><a href="https://myaccount.ucl.ac.uk/" target="_self">MyAccount<br /></a></li>
-<li><a href="http://www.ucl.ac.uk/isd/live_login" target="_self">live@ucl webmail login</a></li>
-<li><a href="https://www.squirrelmail.ucl.ac.uk/" target="_self">Squirrelmail login</a></li>
-<li><a href="https://moodle.ucl.ac.uk/" target="_self">Moodle login</a></li>
-<li><a href="https://www.ucl.ac.uk/isd-extra/common/windows/wts-web" target="_self">WTS login (staff)</a></li>
-<li><a href="https://www.ucl.ac.uk/isd/common/ucldesktop/anywhere-user-guide/web-access-guide" target="_self">Desktop@UCL login<br /></a></li>
-<li><a href="https://www.ucl.ac.uk/isd-extra/common/filestore/quota/" target="_self">Check disk quota</a></li>
-<li><a href="https://www.ucl.ac.uk/isd-extra/staff/mail/out-of-office/" target="_self">Set out-of-office email</a></li>
-<li><a href="https://www.ucl.ac.uk/isd/common/print/print-charges" target="_self">Check print quota</a></li>
-<li><a href="https://www.ucl.ac.uk/isd/news" target="_self">Service news</a></li>
-</ul>
-<noscript></noscript>
-
-</div>
-			
-		  
-		  
-		
-		<!--Start image randomiser-->
-		
-		<!--End image randomiser-->
-	<!--p tag inserted to pad the base of rightcontent to match the column lengths-->
-	<p></p>
-</div>
-<!--End rightcontent-->
 
 			
 
