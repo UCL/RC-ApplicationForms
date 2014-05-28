@@ -358,6 +358,9 @@ class ProjectRequest {
         if ($this->work_type_large_mpi) $service_array['Iridis'] = TRUE;
         if ($this->work_type_small_gpu) $service_array['Emerald'] = TRUE;
         if ($this->work_type_large_gpu) $service_array['Emerald'] = TRUE;
+        if (($service_array['Legion'] && $service_array['Iridis'] && $service_array['Emerald']) != TRUE) {
+            $service_array['Legion'] = TRUE; // Default for people who don't know what they need
+        }
         return array_as_text_list(array_keys($service_array));
     }
 
