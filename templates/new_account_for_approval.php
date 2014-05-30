@@ -3,7 +3,7 @@ $up = $user_profile;
 $pr = $project_request;
 $op = $operator;
 
-global $base_url;
+$base_url = SiteSettings::$base_url;
 
 return array (
     'subject' => "RCPS: New Account Request - {$up->get_user_forenames()} {$up->get_user_surname()}",

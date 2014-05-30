@@ -1,13 +1,15 @@
 <?php
 
+include_once "includes/config.php";
+
 class MailMailer {
 
     private $override_mail;
     private $override_mail_address;
 
     public function __construct() {
-        $this->override_mail = $GLOBALS['override_mail'];
-        $this->override_mail_address = $GLOBALS['override_mail_address'];
+        $this->override_mail = MailSettings::$override_mail;
+        $this->override_mail_address = MailSettings::$override_mail_address;
     }
 
 

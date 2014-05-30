@@ -6,6 +6,8 @@
  * Time: 16:17
  */
 
+include_once "includes/config.php";
+
 class ProjectRequestStatus {
     private $id;
     private $project_request_id;

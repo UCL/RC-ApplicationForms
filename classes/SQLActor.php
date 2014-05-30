@@ -1,5 +1,7 @@
 <?php
 
+include_once "includes/config.php";
+
 class SQLActor {
     private $my_db_hostname;
     private $my_db_name    ;
@@ -12,12 +14,11 @@ class SQLActor {
     private $cache;
 
     public function __construct( ) {
-        global $db_hostname, $db_name, $db_port, $db_username, $db_password;
-        $this->my_db_hostname = $db_hostname;
-        $this->my_db_name     = $db_name;
-        $this->my_db_port     = $db_port;
-        $this->my_db_username = $db_username;
-        $this->my_db_password = $db_password;
+        $this->my_db_hostname = DBSettings::$db_hostname;
+        $this->my_db_name     = DBSettings::$db_name;
+        $this->my_db_port     = DBSettings::$db_port;
+        $this->my_db_username = DBSettings::$db_username;
+        $this->my_db_password = DBSettings::$db_password;
         $this->cache          = array();
     }
 

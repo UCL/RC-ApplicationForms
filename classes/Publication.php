@@ -6,6 +6,8 @@
  * Time: 17:32
  */
 
+include_once "includes/config.php";
+
 class Publication {
     // db fields
     private $id;

@@ -6,6 +6,8 @@
  * Time: 16:14
  */
 
+include_once "includes/config.php";
+
 // not sure whether defining default (intended to work on construction) values like I have here is good practice/a good idea
 
 class ProjectRequest {

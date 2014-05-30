@@ -3,7 +3,7 @@ $up = $user_profile;
 $pr = $project_request;
 $op = $operator;
 
-global $base_url;
+$base_url = SiteSettings::$base_url;
 
 return array (
     'subject' => "AppForm Req Notify: {$up->get_username()} approved",

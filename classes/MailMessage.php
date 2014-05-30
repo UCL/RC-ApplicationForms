@@ -1,5 +1,7 @@
 <?php
 
+include_once "includes/config.php";
+
 class MailMessage {
     protected $never_send_mail;
     protected $to;
@@ -11,7 +13,7 @@ class MailMessage {
 
 
     public function __construct() {
-        $this->never_send_mail = $GLOBALS['never_send_mail'];
+        $this->never_send_mail = MailSettings::$never_send_mail;
         $this->to = "nobody@localhost";
         $this->subject = "(No Subject Provided)";
         $this->additional_headers = NULL;

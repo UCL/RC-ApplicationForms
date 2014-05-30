@@ -1,5 +1,7 @@
 <?php
 
+include_once "includes/config.php";
+
 class Operator {
 
     // To match db schema

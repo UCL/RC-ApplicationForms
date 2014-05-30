@@ -2,14 +2,22 @@
 
 //All config options
 
-$db_hostname = "localhost";
-$db_name     = "rcps_accounts";
-$db_port     = "3306";
-$db_username = "root";
-$db_password = "";
 
-$base_url = "";
+// These are classes because using either global or GLOBALS was being bloody weird
+class DBSettings {
+    static public $db_hostname = "localhost";
+    static public $db_name     = "rcps_accounts";
+    static public $db_port     = "3306";
+    static public $db_username = "root";
+    static public $db_password = "";
+}
 
-$never_send_mail = FALSE;
-$override_mail = TRUE;
-$override_mail_address = "i.kirker@ucl.ac.uk";
+class SiteSettings {
+    static public $base_url = "";
+}
+
+class MailSettings {
+    static public $never_send_mail = TRUE;
+    static public $override_mail   = TRUE;
+    static public $override_mail_address = "i.kirker@ucl.ac.uk";
+}

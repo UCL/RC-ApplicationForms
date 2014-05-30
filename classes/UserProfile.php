@@ -1,5 +1,7 @@
 <?php
 
+include_once "includes/config.php";
+
 class UserProfile {
 
     // To match db schema
@@ -220,7 +222,8 @@ class UserProfile {
     }
 
     public function get_experience_level() {
-        return (string)($this->actor->get_user_experience_levels()[$this->experience_level_id]['level_text']);
+        $levels = $this->actor->get_user_experience_levels();
+        return (string)($levels[$this->experience_level_id]['level_text']);
     }
 
     public function set_experience_text($text) {

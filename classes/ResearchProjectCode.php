@@ -1,5 +1,7 @@
 <?php
 
+include_once "includes/config.php";
+
 class ResearchProjectCode {
     // db fields
     private $id;
