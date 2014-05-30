@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS Project_Requests;
 DROP TABLE IF EXISTS Services;
 DROP TABLE IF EXISTS Publications;
 DROP TABLE IF EXISTS Publication_Services;
+DROP TABLE IF EXISTS Research_Project_Codes;
 SET FOREIGN_KEY_CHECKS = 1;
 
 

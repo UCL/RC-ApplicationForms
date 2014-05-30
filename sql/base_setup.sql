@@ -77,7 +77,7 @@ REPLACE INTO Privileged_Users
  receives_emails, email_address)
 VALUES
   (1, 'someguy', 'Test Non-special user', FALSE, FALSE, 'testfail@localhost'),
-  (2, 'suprusr', 'Test super user', TRUE, FALSE, 'testfail@localhost'), //This should never be sent mail
+  (2, 'suprusr', 'Test super user', TRUE, FALSE, 'testfail@localhost'), 
   (3, 'ccaabaa', 'Brian Alston', TRUE, TRUE, 'b.alston@ucl.ac.uk'),
   (4, 'ccaabcs', 'Bruno Silva', TRUE, TRUE, 'b.silva@ucl.ac.uk'),
   (5, 'uccaiki', 'Ian Kirker', TRUE, TRUE, 'i.kirker@ucl.ac.uk'),
