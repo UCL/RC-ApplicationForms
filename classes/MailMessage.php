@@ -1,13 +1,24 @@
 <?php
 
 class MailMessage {
-    protected $never_send_mail = TRUE;
-    protected $to = "nobody@localhost";
-    protected $subject = "(No Subject Provided)";
-    protected $additional_headers = NULL;
-    protected $additional_parameters = NULL;
-    protected $message = "(No Message Provided)";
-    protected $sent = FALSE;
+    protected $never_send_mail;
+    protected $to;
+    protected $subject;
+    protected $additional_headers;
+    protected $additional_parameters;
+    protected $message;
+    protected $sent;
+
+
+    public function __construct() {
+        $this->never_send_mail = $GLOBALS['never_send_mail'];
+        $this->to = "nobody@localhost";
+        $this->subject = "(No Subject Provided)";
+        $this->additional_headers = NULL;
+        $this->additional_parameters = NULL;
+        $this->message = "(No Message Provided)";
+        $this->sent = FALSE;
+    }
 
     // Type checking done by hinting in prototypes
     // The long set_all prototype is designed to replicate the mail function call prototype.

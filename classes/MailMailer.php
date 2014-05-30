@@ -2,8 +2,13 @@
 
 class MailMailer {
 
-    private $override_mail = TRUE;
-    private $override_mail_address = "i.kirker@ucl.ac.uk";
+    private $override_mail;
+    private $override_mail_address;
+
+    public function __construct() {
+        $this->override_mail = $GLOBALS['override_mail'];
+        $this->override_mail_address = $GLOBALS['override_mail_address'];
+    }
 
 
     public function send_mail($template_name, $addresses_to_mail,

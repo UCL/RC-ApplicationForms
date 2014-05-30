@@ -1,6 +1,7 @@
 <?php
 include_once "includes/auth_user_shim.php";
 include_once "includes/autoload_definition.php";
+include_once "includes/config.php";
 
 $page_title = "View Account Request";
 include_once "includes/header.php";

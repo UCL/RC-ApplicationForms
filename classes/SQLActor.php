@@ -12,11 +12,12 @@ class SQLActor {
     private $cache;
 
     public function __construct( ) {
-        $this->my_db_hostname = "localhost";
-        $this->my_db_name     = "rcps_accounts";
-        $this->my_db_port     = "3306";
-        $this->my_db_username = "root";
-        $this->my_db_password = "";
+        global $db_hostname, $db_name, $db_port, $db_username, $db_password;
+        $this->my_db_hostname = $db_hostname;
+        $this->my_db_name     = $db_name;
+        $this->my_db_port     = $db_port;
+        $this->my_db_username = $db_username;
+        $this->my_db_password = $db_password;
         $this->cache          = array();
     }
 

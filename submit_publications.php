@@ -8,6 +8,7 @@
 
 include "includes/auth_user_shim.php";
 include_once "includes/autoload_definition.php";
+include_once "includes/config.php";
 
 $page_title = "Submitting Publications";
 include "includes/header.php";

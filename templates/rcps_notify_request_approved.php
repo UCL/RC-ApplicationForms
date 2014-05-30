@@ -3,6 +3,8 @@ $up = $user_profile;
 $pr = $project_request;
 $op = $operator;
 
+global $base_url;
+
 return array (
     'subject' => "AppForm Req Notify: {$up->get_username()} approved",
     'body'    => "
@@ -13,7 +15,7 @@ An account application has been approved by {$op->get_username()} .
 Username  : {$up->get_username()}
 User name : {$up->get_user_forenames()} {$up->get_user_surname()}
 
-Link: http://avon.ucl.ac.uk/acct/view_application.php?idp={$pr->get_id()}
+Link: {$base_url}/view_application.php?idp={$pr->get_id()}
 
 Comments from: {$op->get_username()}
 -----------------------------

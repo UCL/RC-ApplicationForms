@@ -144,7 +144,7 @@ UPI:
                     id="sponsor_username"
                     name="user_profile[sponsor_username]"
                     title="The username of a permanent member of staff who is prepared to approve your account request."
-                    placeholder="ccaprof"
+                    placeholder="e.g. ccaprof"
                     pattern="[A-Za-z0-9]{7}"
                     />
             </td>
@@ -425,6 +425,10 @@ UPI:
 <input type="submit" id="form_submit_button" value="Submit" title="Submit application request." />
 </form>
 
+<style>
+  .problem {background-color: #ffcccc};
+ </style>
+
 <script>
     $( '#application_form' ).submit( function( event ) {
         var prevent_submit = false;
@@ -450,14 +454,16 @@ UPI:
             "user_profile[user_email]",
             "user_profile[user_dept]",
             "user_profile[experience_text]",
-            "project[pi_email]",
             "project[work_description]",
             "project[applications_description]"
              ];
         for (var i=0; i<mandatory_fields.length; i++) {
             if ( $("#application_form input[name='"+ mandatory_fields[i] +"']").val() == "" ) {
+                $("#application_form input[name='"+ mandatory_fields[i] +"']").addClass("problem");
                 $('#err_all_fields').show();
                 prevent_submit = true;
+            } else {
+                $("#application_form input[name='"+ mandatory_fields[i] +"']").removeClass("problem");
             }
         }
 
