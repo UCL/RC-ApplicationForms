@@ -471,4 +471,9 @@ UPI:
             event.preventDefault();
         }
     });
+
+    //Make *absolutely* sure error boxes are hidden from the start
+    $('#err_sponsor_self').hide();
+    $('#err_must_accept').hide();
+    $('#err_all_fields').hide();
 </script>
