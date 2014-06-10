@@ -9,6 +9,8 @@ php:
 before_script:
   - mysql --user=root -e 'create database rcps_accounts;'
 # ^- creates the database you use for testing in
+  - mysql --init-command='use rcps_accounts;' < sql/schema.sql
+  - mysql --init-command='use rcps_accounts;' < sql/base_setup.sql
 
 # MySQL on Travis CI is started on boot, binds to 127.0.0.1 and requires
 #  authentication. You can connect using the username "travis" or "root"
