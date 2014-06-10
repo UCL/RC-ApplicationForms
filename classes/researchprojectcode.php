@@ -29,22 +29,22 @@ class ResearchProjectCode {
         $this->dirty();
     }
 
-    public static function from_array($an_array) {
-        $instance = new self();
+    public static function from_array($an_array, $actor=NULL) {
+        $instance = new self($actor);
         $instance->fill_from_array($an_array);
         $instance->dirty();
         return $instance;
     }
 
-    public static function from_code($a_code) {
-        $instance = new self();
+    public static function from_code($a_code, $actor=NULL) {
+        $instance = new self($actor);
         $instance->fill_from_array(array('code' => $a_code));
         $instance->dirty();
         return $instance;
     }
 
-    public static function from_db($code_id) {
-        $instance = new self();
+    public static function from_db($code_id, $actor=NULL) {
+        $instance = new self($actor);
         $an_array = $instance->actor->get_research_project_code($code_id);
         $instance->fill_from_array($an_array);
         $instance->clean();
@@ -81,7 +81,7 @@ class ResearchProjectCode {
     }
 
     public function set_user_profile_id_from_username($username) {
-        $user_profile = UserProfile::from_db_by_name($username);
+        $user_profile = UserProfile::from_db_by_name($username, $this->actor);
         $this->set_user_profile_id($user_profile->get_id());
     }
 

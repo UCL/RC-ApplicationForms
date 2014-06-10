@@ -30,7 +30,7 @@ if (isset($user_profile)) {
 } else {
     $actor = new SQLActor();
     $actor->connect();
-    $user_profiles = UserProfile::get_all_from_db();
+    $user_profiles = UserProfile::get_all_from_db($actor);
     include "views/table_users.php";
 }
 

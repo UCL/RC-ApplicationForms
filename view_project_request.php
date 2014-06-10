@@ -20,7 +20,7 @@ if (isset($project_request)) {
 } else {
     $actor = new SQLActor();
     $actor->connect();
-    $project_requests = ProjectRequest::get_all_from_db();
+    $project_requests = ProjectRequest::get_all_from_db($actor);
     include "views/table_project_requests.php";
 }
 

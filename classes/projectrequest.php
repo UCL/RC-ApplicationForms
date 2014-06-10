@@ -67,13 +67,13 @@ class ProjectRequest {
         $this->clean();
     }
 
-    public static function from_request($request_array) {
-        $instance = new self();
+    public static function from_request($request_array, $actor=NULL) {
+        $instance = new self($actor);
         $instance->fill_from_array($request_array['project']);
 
         if ($instance->get_user_profile_id() === FALSE) {
             // Then we need to create a user profile object from the request too
-            $user_profile = UserProfile::from_request($request_array['user_profile']);
+            $user_profile = UserProfile::from_request($request_array['user_profile'], $actor);
 
             $instance->bind_user_profile($user_profile);
         }
@@ -81,15 +81,18 @@ class ProjectRequest {
         return $instance;
     }
 
-    public static function from_db_set($request_array) {
-        $instance = new self();
+    public static function from_db_set($request_array, $actor=NULL) {
+        $instance = new self($actor);
         $instance->fill_from_array($request_array);
         return $instance;
     }
 
     public static function get_all_from_db($actor = NULL) {
-        $actor = new SQLActor();
-        $actor->connect();
+        if ($actor == NULL) {
+            $actor = new SQLActor();
+            $actor->connect();
+        } 
+            
         $project_request_arrays = $actor->get_all_project_requests();
         $project_requests = array();
         foreach ($project_request_arrays as $one_project_request_array) {
@@ -98,8 +101,8 @@ class ProjectRequest {
         return $project_requests;
     }
 
-    public static function from_db($request_id) {
-        $instance = new self();
+    public static function from_db($request_id, $actor=NULL) {
+        $instance = new self($actor);
         $project_array = $instance->actor->get_project_request($request_id);
         if ($project_array === FALSE) {
             $this->set_valid(FALSE);
@@ -138,7 +141,7 @@ class ProjectRequest {
             if ($this->get_user_profile_id() === FALSE) {
                 die ("Tried to use user profile from project request without a user profile...");
             } else {
-                $this->bind_user_profile(UserProfile::from_db($this->get_user_profile_id()));
+                $this->bind_user_profile(UserProfile::from_db($this->get_user_profile_id(), $this-actor));
             }
         }
         return $this->user_profile;
@@ -341,7 +344,7 @@ class ProjectRequest {
             die("Cannot get status for an unsaved ProjectRequest.".
                 " (If you see this message and are not the programmer, something is broken.)");
         }
-        $status = ProjectRequestStatus::from_db($this->get_id());
+        $status = ProjectRequestStatus::from_db($this->get_id(), $this->actor);
         if ($status === FALSE) {
             die("Cannot get status for this project request.");
         }

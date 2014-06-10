@@ -39,62 +39,69 @@ class UserProfile {
         $this->dirty();
     }
 
-    public static function from_request($request_array) {
-        $instance = new self();
+    public static function from_request($request_array, $actor=NULL) {
+        $instance = new self($actor);
         $instance->fill_from_request_array($request_array);
         $instance->dirty(); // Because it hasn't been saved to the db yet
         return $instance;
     }
 
-    public static function from_db_set($request_array) {
-        $instance = new self();
+    public static function from_db_set($request_array, $actor=NULL) {
+        $instance = new self($actor);
         $instance->fill_from_request_array($request_array);
         return $instance;
     }
 
     public static function get_all_from_db($actor = NULL) {
-        $actor = new SQLActor();
-        $actor->connect();
+        if ($actor == NULL) {
+            $actor = new SQLActor();
+            $actor->connect();
+        }
+
         $profile_arrays = $actor->get_all_user_profiles();
         $profiles = array();
         foreach ($profile_arrays as $one_profile_array) {
-            array_push($profiles,UserProfile::from_db_set($one_profile_array));
+            array_push($profiles,UserProfile::from_db_set($one_profile_array, $actor));
         }
         return $profiles;
     }
 
     public static function get_all_unique_from_db($actor = NULL) {
-        $actor = new SQLActor();
-        $actor->connect();
+        if ($actor == NULL) {
+            $actor = new SQLActor();
+            $actor->connect();
+        }
         $profile_arrays = $actor->get_all_unique_user_profiles();
         $profiles = array();
         foreach ($profile_arrays as $one_profile_array) {
-            array_push($profiles,UserProfile::from_request($one_profile_array));
+            array_push($profiles,UserProfile::from_request($one_profile_array, $actor));
         }
         return $profiles;
     }
 
     public static function get_all_for_one_username($username, $actor = NULL) {
-        $actor = new SQLActor();
-        $actor->connect();
+        if ($actor == NULL) {
+            $actor = new SQLActor();
+            $actor->connect();
+        }
         $profile_arrays = $actor->get_all_profiles_for_one_username($username);
         $profiles = array();
         foreach ($profile_arrays as $one_profile_array) {
-            array_push($profiles,UserProfile::from_request($one_profile_array));
+            array_push($profiles,UserProfile::from_request($one_profile_array, $actor));
         }
         return $profiles;
     }
 
-    public static function from_db($user_profile_id) {
-        $instance = new self();
+    public static function from_db($user_profile_id, $actor=NULL) {
+        $instance = new self($actor);
         $request_array = $instance->actor->get_user_profile($user_profile_id);
         $instance->fill_from_request_array($request_array);
         return $instance;
     }
 
-    public static function from_db_by_name($username) {
+    public static function from_db_by_name($username, $actor=NULL) {
         // NB: This gets their *last* profile in the db sorted by id
-        $instance = new self();
+        $instance = new self($actor);
         $request_array = $instance->actor->get_user_profile_by_name($username);
 
         if ($request_array === FALSE) {
