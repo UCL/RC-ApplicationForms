@@ -9,7 +9,7 @@ class DBSettings {
     static public $db_name     = "rcps_accounts";
     static public $db_port     = "3306";
     static public $db_username = "root";
-    static public $db_password = "bacon";
+    static public $db_password = "";
 }
 
 class SiteSettings {
