@@ -105,7 +105,7 @@ class SQLActor {
         );
         $dbh->bindValue(1, $project_id);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetch(PDO::FETCH_ASSOC);
         return $result; // Returns FALSE if there are no rows
     }
 
@@ -113,7 +113,7 @@ class SQLActor {
         $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE id=? ORDER BY id DESC LIMIT 1");
         $dbh->bindValue(1, $user_profile_id, PDO::PARAM_INT);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -121,14 +121,14 @@ class SQLActor {
         $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE username=? ORDER BY id DESC LIMIT 1");
         $dbh->bindValue(1, $username);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
     public function get_all_user_profiles() {
         $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles");
         $dbh->execute();
-        $result = $dbh->fetchAll();
+        $result = $dbh->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -136,7 +136,7 @@ class SQLActor {
         $dbh = $this->dbc->prepare("SELECT * FROM User_Profiles WHERE username=?");
         $dbh->bindValue(1, $username);
         $dbh->execute();
-        $result = $dbh->fetchAll();
+        $result = $dbh->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -149,7 +149,7 @@ class SQLActor {
             " Most_Recent_IDs.id = User_Profiles.id"
         );
         $dbh->execute();
-        $result = $dbh->fetchAll();
+        $result = $dbh->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -157,14 +157,14 @@ class SQLActor {
         $dbh = $this->dbc->prepare("SELECT * FROM Project_Requests WHERE id=?");
         $dbh->bindValue(1, $project_request_id, PDO::PARAM_INT);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
     public function get_all_project_requests() {
         $dbh = $this->dbc->prepare("SELECT * FROM Project_Requests");
         $dbh->execute();
-        $result = $dbh->fetchAll();
+        $result = $dbh->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -172,7 +172,7 @@ class SQLActor {
         $dbh = $this->dbc->prepare("SELECT * FROM Publications WHERE id=?");
         $dbh->bindValue(1, $publication_id, PDO::PARAM_INT);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -180,7 +180,7 @@ class SQLActor {
         $dbh = $this->dbc->prepare("SELECT * FROM Research_Project_Code WHERE id=?");
         $dbh->bindValue(1, $code_id, PDO::PARAM_INT);
         $dbh->execute();
-        $result = $dbh->fetch();
+        $result = $dbh->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
