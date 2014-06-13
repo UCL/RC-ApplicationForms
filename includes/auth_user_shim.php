@@ -22,7 +22,7 @@ if ( (class_exists(SiteSettings)) && (SetSiteSettings::is_dev == TRUE) ) {
         $current_username = $_SERVER['PHP_AUTH_USER'];
     }
 } else {
-    if (array_key_exists("PHP_AUTH_USER", $_SERVER) {
+    if (array_key_exists("PHP_AUTH_USER", $_SERVER)) {
         $current_username = $_SERVER['PHP_AUTH_USER'];
     } else {
         echo "No user logged in!";
