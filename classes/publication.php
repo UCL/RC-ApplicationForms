@@ -35,15 +35,15 @@ class Publication {
         $this->dirty();
     }
 
-    public static function from_array($an_array) {
-        $instance = new self();
+    public static function from_array($an_array, $actor=NULL) {
+        $instance = new self($actor);
         $instance->fill_from_array($an_array);
         $instance->dirty();
         return $instance;
     }
 
-    public static function from_db($publication_id) {
-        $instance = new self();
+    public static function from_db($publication_id, $actor=NULL) {
+        $instance = new self($actor);
         $an_array = $instance->actor->get_publication($publication_id);
         $instance->fill_from_array($an_array);
         $instance->clean();
@@ -89,7 +89,7 @@ class Publication {
     }
 
     public function set_user_profile_id_from_username($username) {
-        $user_profile = UserProfile::from_db_by_name($username);
+        $user_profile = UserProfile::from_db_by_name($username, $this->actor);
         $this->set_user_profile_id($user_profile->get_id());
     }
 

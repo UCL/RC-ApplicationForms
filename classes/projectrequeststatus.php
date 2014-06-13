@@ -26,8 +26,8 @@ class ProjectRequestStatus {
         }
     }
 
-    public static function from_db($request_id) {
-        $instance = new self();
+    public static function from_db($request_id, $actor=NULL) {
+        $instance = new self($actor);
         $project_request_status_array = $instance->actor->get_last_project_request_status($request_id);
         $instance->fill_from_array($project_request_status_array);
         return $instance;
