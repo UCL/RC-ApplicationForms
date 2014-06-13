@@ -6,7 +6,7 @@
  * If the is_dev SiteSetting variable is set to TRUE, it also allows a developer to set what user they are
  *  on a per-query basis. This... Might be dangerous. I'm hoping not!
  */
-if ( (class_exists(SiteSettings)) && (SetSiteSettings::is_dev == TRUE) ) { 
+if ( (class_exists("SiteSettings")) && (SetSiteSettings::is_dev == TRUE) ) { 
 
     echo "<h2>Warning: Operator Auth Shim in place. Remove from production.</h2>";
 
