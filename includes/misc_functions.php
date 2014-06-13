@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Little text output functions that didn't seem to belong anywhere else.
+ */
+
 function array_as_text_list($array_in, $conjunction=" and ") {
     switch (count($array_in)) {
         case 0:

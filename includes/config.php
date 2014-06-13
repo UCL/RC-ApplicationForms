@@ -1,9 +1,10 @@
 <?php
 
-//All config options
-
-
-// These are classes because using either global or GLOBALS was being bloody weird
+/**
+ * Per site configuration options.
+ *
+ * These are classes because using either global or GLOBALS was being bloody weird
+ */
 class DBSettings {
     static public $db_hostname = "localhost";
     static public $db_name     = "rcps_accounts";
@@ -14,6 +15,7 @@ class DBSettings {
 
 class SiteSettings {
     static public $base_url = "";
+    static public $is_dev   = TRUE;
 }
 
 class MailSettings {
@@ -21,3 +23,4 @@ class MailSettings {
     static public $override_mail   = TRUE;
     static public $override_mail_address = "i.kirker@ucl.ac.uk";
 }
+

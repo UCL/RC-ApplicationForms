@@ -1,4 +1,6 @@
-# Reset the world.
+-- This is just the schema setup. Initial population of the tables is handled in base_setup.sql.
+
+-- Reset the world.
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Research_Themes;
 DROP TABLE IF EXISTS Privileged_Users;

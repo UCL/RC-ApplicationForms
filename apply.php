@@ -17,6 +17,7 @@
 <?php
     $actor = new SQLActor();
     $actor->connect();
+    /* Sets up options for drop-down lists. */
     $user_type_options        = $actor->options_from_table("User_Types", "user_type");
     $experience_level_options = $actor->options_from_table("Experience_Levels", "level_text");
     $research_themes          = $actor->options_from_table("Research_Themes", "full_name");

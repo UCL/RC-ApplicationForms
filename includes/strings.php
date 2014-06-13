@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ik
- * Date: 2014-04-10
- * Time: 15:46
+ * Ideally this would contain any small static strings used elsewhere. 
+ *
+ * In practice, most of the small bits are dynamic, so there isn't much here.
  */
 
 $strings = array(

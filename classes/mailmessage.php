@@ -2,6 +2,11 @@
 
 include_once "includes/config.php";
 
+/**
+ * MailMessage handles an actual mail, including sending it.
+ *
+ * It is used by MailMailer to encapsulate all the properties of a message.
+ */
 class MailMessage {
     protected $never_send_mail;
     protected $to;

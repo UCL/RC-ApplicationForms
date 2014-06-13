@@ -2,6 +2,9 @@
 
 include_once "includes/config.php";
 
+/**
+ * The Operator class handles information about a logged-in user performing actions.
+ */
 class Operator {
 
     // To match db schema

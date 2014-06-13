@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ik
- * Date: 2014-05-07
- * Time: 16:35
+ * This file contains all the form elements for use in apply.php
+ *
+ * I'm not *entirely* convinced that separating it out was useful, but meh.
  */
 ?>
 
@@ -445,7 +444,7 @@ UPI:
             $('#err_sponsor_self').hide();
         }
 
-        mandatory_fields = [
+        var mandatory_fields = [
             "user_profile[username]",
             "user_profile[user_upi]",
             "user_profile[user_surname]",
@@ -458,12 +457,13 @@ UPI:
             "project[applications_description]"
              ];
         for (var i=0; i<mandatory_fields.length; i++) {
-            if ( $("#application_form input[name='"+ mandatory_fields[i] +"']").val() == "" ) {
-                $("#application_form input[name='"+ mandatory_fields[i] +"']").addClass("problem");
+            var field = $("#application_form input[name='"+ mandatory_fields[i] +"']");
+            if ( field.val() == "" ) {
+                field.addClass("problem");
                 $('#err_all_fields').show();
                 prevent_submit = true;
             } else {
-                $("#application_form input[name='"+ mandatory_fields[i] +"']").removeClass("problem");
+                field.removeClass("problem");
             }
         }
 

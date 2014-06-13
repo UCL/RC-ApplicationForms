@@ -2,11 +2,27 @@
 
 include_once "includes/config.php";
 
+
+/**
+ * MailMailer is responsible for taking a template name and information and turning it into a sent mail.
+ *
+ *  It uses MailMessage, which is responsible for actually calling the PHP mail function.
+ *
+ */
 class MailMailer {
 
     private $override_mail;
     private $override_mail_address;
 
+    /**
+     * The MailMailer constructor sets some options.
+     * 
+     * It allows for either the mail address any email would be sent to to be overridden,
+     *  or for the ability to send mail at all to be overridden.
+     * MailSettings is a static class defined in includes/config.php
+     *
+     * @return void 
+     */
     public function __construct() {
         $this->override_mail = MailSettings::$override_mail;
         $this->override_mail_address = MailSettings::$override_mail_address;

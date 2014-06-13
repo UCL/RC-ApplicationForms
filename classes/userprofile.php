@@ -2,6 +2,12 @@
 
 include_once "includes/config.php";
 
+/**
+ * The UserProfile class handles information about one user who has submitted an application.
+ *
+ * It represents a current or future entry in the User_Profiles table in the database, and is
+ *  used either alone or as a member of a ProjectRequest object.
+ */
 class UserProfile {
 
     // To match db schema

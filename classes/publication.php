@@ -1,13 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ik
- * Date: 2014-05-06
- * Time: 17:32
- */
 
 include_once "includes/config.php";
 
+/**
+ * The Publication class handles the storage of information about user publications, shockingly.
+ *
+ * It represents either a current or future entry in the Publications table of the database.
+ */
 class Publication {
     // db fields
     private $id;

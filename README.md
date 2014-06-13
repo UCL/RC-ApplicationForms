@@ -34,7 +34,7 @@ There's some magic in the HTML form name values to create nicely arranged arrays
 
 Because of the way information is POSTed, the method in SQLActor that submits to the db has to sort out checkbox information -- checkboxes that aren't checked don't get submitted with a FALSE value or anything, they just don't get submitted. The code goes through a list of checkboxes that should match the ones originally in the form, and checks whether they're set or not, constructing a new 1/0 array.
 
-SQLActor returns an array containing the ids of the new entries in the database, so they can be used in the notificaion emails.
+SQLActor returns an array containing the ids of the new entries in the database, so they can be used in the notification emails.
 
 ### View Application - `list.php`
 
@@ -92,5 +92,3 @@ Because of this structure:
 #### Design
 
  * How to inform people about renewal requirements
-
-

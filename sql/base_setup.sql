@@ -1,3 +1,4 @@
+-- The intended initial configuration of the database.
 
 REPLACE INTO Research_Themes (id, full_name) VALUES
   ( 1, 'Clinical Medicine'),

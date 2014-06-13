@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ik
- * Date: 2014-05-07
- * Time: 16:30
+ * This file contains all the form elements for submitting publication and project code info.
+ *
+ * As with the application form version, I'm not sure separating it out was useful, but it couldn't hurt I guess.
  */
 ?>
 <form action="submit_publications.php" method="post" enctype="multipart/form-data">

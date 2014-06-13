@@ -1,9 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ik
- * Date: 2014-05-01
- * Time: 14:28
+ * The class autoloader configuration.
+ *
+ * If you're not a PHP enthusiast, PHP can automatically load class definitions so you don't have to have
+ *  a billion include statements at the start of every file. Unfortunately, it's a bit finicky.
+ * Note that it lowercases classnames before calling the autoload function, which was a source of much
+ *  unexpected pain when moving from OS X to Linux.
  */
 
 

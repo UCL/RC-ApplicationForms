@@ -2,6 +2,13 @@
 
 include_once "includes/config.php";
 
+/**
+ * The SQLActor class contains all the SQL code in the application.
+ *
+ * I'm slightly uncomfortable with how large it is.
+ * Any code from any other class that requires SQL to be used will have an underlying
+ *  function here. :/
+ */
 class SQLActor {
     private $my_db_hostname;
     private $my_db_name    ;

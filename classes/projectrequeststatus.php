@@ -1,11 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ik
- * Date: 2014-05-08
- * Time: 16:17
+ * ProjectRequestStatus represents a change in the status of a ProjectRequest.
+ *
+ * It is mirrored by a database entry in the Project_Request_Status table.
  */
-
 include_once "includes/config.php";
 
 class ProjectRequestStatus {
