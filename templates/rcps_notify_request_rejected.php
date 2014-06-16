@@ -13,7 +13,7 @@ An account application has been *denied* by {$op->get_username()} .
 Username  : {$up->get_username()}
 User name : {$up->get_forenames()} {$up->get_surnames()}
 
-Link: http://avon.ucl.ac.uk/acct/view_application.php?idp={$pr->get_id()}
+Link: http://avon.ucl.ac.uk/acct/view_project_request.php?idp={$pr->get_id()}
 
 Comments from: {$op->get_username()}
 -----------------------------

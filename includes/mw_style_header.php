@@ -204,7 +204,6 @@
                                                                  <li><a href="/accounts/apply.php"Array>Wiki Main Page</a></li>
                                                                  <li><a href="/accounts/view_user_profile.php"Array>Users</a></li>
                                                                  <li><a href="/accounts/view_project_request.php"Array>Projects</a></li>
-                                                                 <li><a href="/accounts/view_application.php"Array>Applications</a></li>
                                                               </ul>
                             </div>
                          </div>
