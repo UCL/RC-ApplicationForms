@@ -105,7 +105,7 @@ class ProjectRequest {
         $instance = new self($actor);
         $project_array = $instance->actor->get_project_request($request_id);
         if ($project_array === FALSE) {
-            $this->set_valid(FALSE);
+            $instance->set_valid(FALSE);
         } else {
             $instance->fill_from_array($project_array);
             $instance->set_valid(TRUE);
