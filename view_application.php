@@ -29,7 +29,7 @@ try{
 
     $project_request = ProjectRequest::from_db($req_project_id);
     if ($project_request->is_valid() == FALSE) {
-        echo "<h4>Invalid Request [Proj ID:{$req_project_id}] . If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4><div style='height:500px;'>&nbsp;</div>";
+        echo "<h4>Invalid Request ". (($req_project_id == "")?"[No project id]":"[Proj ID:{$req_project_id}]") . ". If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4><div style='height:500px;'>&nbsp;</div>";
     } else {
         $taking_action = FALSE;
         if ($project_request->can_be_approved_by($current_user)) {
