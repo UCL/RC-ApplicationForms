@@ -140,7 +140,7 @@ div.subsection {
 			<div id="centercontent" class="container"> 
 				<div id="centercontentrhborder" class="container">
 					<!--tal:block metal:define-slot="resizer" content="structure context/@@ucl_text_resizer"/-->
-                    <div id="rendered-doc-area">
+                    <div id="rendered-doc-area" style="min-height:500px">
 					<!--Start center content area-->
 <div class="heading">
 <h2 class="heading"><?php echo $page_title;?></h2>
