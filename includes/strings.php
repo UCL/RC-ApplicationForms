@@ -19,7 +19,7 @@ $strings = array(
              "problem, and pasting the following into your e-mail:".
              "</h4>\n",
         "success" => "<p class='p'>Successfully created requests. If you do not " .
-            "receive any further information within 3 days, please contact " .
+            "receive any further information within 3 working days, please contact " .
             "rc-support@ucl.ac.uk.</p>\n<p class='p'>If you are an existing user of one of ".
             " our services, please proceed to the page linked below to " .
             "submit a list of any publications and grants " .
