@@ -16,7 +16,7 @@ if ($req_method == "POST") {
     $req_action             = $_POST['action_choice'];
     $post_comments          = $_POST['comments'];
 } elseif ($req_method == "GET") {
-    $req_project_id         = $_GET['id'];
+    $req_project_id         = array_key_exists('id', $_GET)?$_GET['id']:"";
     $req_action             = array_key_exists('action', $_GET)?$_GET["action"]:NULL;
     $post_comments          = "(via a direct link)";
 } else {
