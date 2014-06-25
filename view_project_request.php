@@ -16,7 +16,7 @@ if ($req_method == "POST") {
     $req_action             = $_POST['action_choice'];
     $post_comments          = $_POST['comments'];
 } elseif ($req_method == "GET") {
-    $req_project_id         = $_GET['idp'];
+    $req_project_id         = $_GET['id'];
     $req_action             = array_key_exists('action', $_GET)?$_GET["action"]:NULL;
     $post_comments          = "(via a direct link)";
 } else {
@@ -33,7 +33,7 @@ try{
     if ($req_project_id != "") {
         $project_request = ProjectRequest::from_db($req_project_id, $actor);
         if ($project_request->is_valid() == FALSE) {
-            echo "<h4>Invalid Request [Proj ID:{$req_project_id}]. If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
+            echo "<h4>Invalid Request [Proj ID:" . htmlspecialchars($req_project_id) . "]. If you believe this is a mistake, please contact rc-support@ucl.ac.uk, pasting into the email the full address of this page.</h4>";
         } else {
             $taking_action = FALSE;
             if ($project_request->can_be_approved_by($current_user)) {
@@ -99,7 +99,7 @@ try{
                                     "     > " .
                                     "   <input type=\"hidden\" " .
                                     "          name=\"project_id\" " .
-                                    "          value=\"" . $req_project_id . "\" " .
+                                    "          value=\"" . htmlspecialchars($req_project_id) . "\" " .
                                     "    />" .
                                     "   <table style='margin-left:auto;margin-right:auto;'>" .
                                     "   <tr><td>" .
@@ -148,11 +148,11 @@ try{
                 array("submitted","approved","rejected","expired","broken"))) {
 
                 echo "<p class='p'>This request (id=" .
-                     $project_request->get_id() .
+                     htmlspecialchars($project_request->get_id()) .
                      ") was " .
-                     $project_request->get_last_status()->get_text() .
+                     htmlspecialchars($project_request->get_last_status()->get_text()) .
                      " on: " .
-                     $project_request->get_last_status()->get_update_time() .
+                     htmlspecialchars($project_request->get_last_status()->get_update_time()) .
                      "</p>";
             } else {
                     echo "<h4>This request is in an unexpected state: ".
@@ -162,7 +162,7 @@ try{
 
             if ($current_user->is_superuser()) {
                 echo "<p class='p'>This action was taken by " .
-                     $project_request->get_last_status()->get_acting_user() .
+                     htmlspecialchars($project_request->get_last_status()->get_acting_user()) .
                      ", with comments: " .
                      htmlspecialchars($project_request->get_last_status()->get_comment()) .
                      "</p>";

@@ -15,7 +15,7 @@ An account application has been approved by {$op->get_username()} .
 Username  : {$up->get_username()}
 User name : {$up->get_user_forenames()} {$up->get_user_surname()}
 
-Link: {$base_url}/view_project_request.php?idp={$pr->get_id()}
+Link: {$base_url}/view_project_request.php?id={$pr->get_id()}
 
 Comments from: {$op->get_username()}
 -----------------------------

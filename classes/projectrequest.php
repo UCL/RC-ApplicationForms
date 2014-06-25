@@ -141,7 +141,7 @@ class ProjectRequest {
             if ($this->get_user_profile_id() === FALSE) {
                 die ("Tried to use user profile from project request without a user profile...");
             } else {
-                $this->bind_user_profile(UserProfile::from_db($this->get_user_profile_id(), $this-actor));
+                $this->bind_user_profile(UserProfile::from_db($this->get_user_profile_id(), $this->actor));
             }
         }
         return $this->user_profile;
