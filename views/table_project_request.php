@@ -1,5 +1,8 @@
 <?php
 
+$sponsor_username = $project_request->get_user_profile()->get_sponsor_username();
+if ($sponsor_username == "") { $sponsor_username = "(none given)"; }
+
 echo "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User</strong></td></tr>"
     . table_keyval("User id",
         $project_request->get_user_profile()->get_username() .
@@ -12,8 +15,8 @@ echo "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User<
         $project_request->get_user_profile()->get_user_surname())
     . table_keyval("User e-mail",
         $project_request->get_user_profile()->get_user_email())
-    . table_keyval("Supervisor Username",
-        $project_request->get_user_profile()->get_sponsor_username())
+    . table_keyval("Sponsor Username",
+        $sponsor_username)
 
     . "</table><table class='silvatable grid'><tr class='odd'><td colspan=2><strong>Project</strong></td></tr>"
     . table_keyval("PI",
