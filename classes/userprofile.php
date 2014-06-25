@@ -235,8 +235,7 @@ class UserProfile {
     }
 
     public function get_experience_level() {
-        $levels = $this->actor->get_user_experience_levels();
-        return (string)($levels[$this->experience_level_id]['level_text']);
+        return $this->actor->get_user_experience_level($this->experience_level_id);
     }
 
     public function set_experience_text($text) {

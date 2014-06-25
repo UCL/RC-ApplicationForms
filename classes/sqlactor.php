@@ -70,7 +70,7 @@ class SQLActor {
         return $dbh->fetch();
     }
 
-    public function get_research_theme_id($status_name) {
+    public function get_research_theme_id($theme_name) {
         $dbh = $this->dbc->prepare("SELECT * FROM Research_Themes WHERE full_name=?");
         $dbh->bindValue(1, $theme_name);
         $dbh->execute();
@@ -215,6 +215,14 @@ class SQLActor {
     public function get_user_experience_levels() {
         // Get an array of hashes of user_experience_levels with their ids
         return $this->get_table("Experience_Levels");
+    }
+
+    public function get_experience_level($id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Experience_Levels WHERE id=?");
+        $dbh->bindValue(1, $id);
+        $dbh->execute();
+        $result = $dbh->fetchColumn(1);
+        return $result; // Returns FALSE if there are no rows
     }
 
     public function get_services() {
