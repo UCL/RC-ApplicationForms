@@ -8,7 +8,7 @@ $base_url = SiteSettings::$base_url;
 return array (
     'subject' => "RCPS: New Account Request - {$up->get_user_forenames()} {$up->get_user_surname()}",
     'body'    =>
-        "{$stored_addresses_imploded}
+        "
 [This mail was automatically generated.]
 
 You have been mailed to confirm your application for an account using Research Computing resources.

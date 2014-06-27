@@ -217,7 +217,7 @@ class SQLActor {
         return $this->get_table("Experience_Levels");
     }
 
-    public function get_experience_level($id) {
+    public function get_user_experience_level($id) {
         $dbh = $this->dbc->prepare("SELECT * FROM Experience_Levels WHERE id=?");
         $dbh->bindValue(1, $id);
         $dbh->execute();
