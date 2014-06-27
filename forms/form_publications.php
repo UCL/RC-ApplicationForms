@@ -56,7 +56,7 @@
     </p>
     <p class="p">
         If that work was especially notable or well-regarded within your field, e.g. a paper in Nature, Science,
-        or The Lancet,<a href="#disclaimer">[1]</a> or a review paper,please also tick the box alongside so we can make special mention of these in our
+        or The Lancet,<a href="#disclaimer">[1]</a> or a review paper, please also tick the box alongside so we can make special mention of these in our
         reports.
     </p>
     <p class="p">
