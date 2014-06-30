@@ -52,7 +52,7 @@ class Publication {
 
     public function fill_from_array($an_array) {
         if (array_key_exists('id',$an_array)) {
-            $this->user_profile_id = $an_array['id'];
+            $this->id = $an_array['id'];
         }
         if (array_key_exists('user_profile_id',$an_array)) {
             $this->user_profile_id = $an_array['user_profile_id'];
