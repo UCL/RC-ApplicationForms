@@ -3,6 +3,13 @@ $up = $user_profile;
 $pr = $project_request;
 $op = $operator;
 
+$recommendation = $pr->get_recommended_services();
+if ($recommendation == "") {
+    $recommendation = "Unfortunately, you did not provide any information about your workload we could use, so you will be granted a Legion account. To discuss more specialised requirements or if you're not sure what you need, please contact rc-support@ucl.ac.uk .";
+} else {
+    $recommendation = "This has recommended: $recommendation";
+}
+
 return array (
     'subject' => "RCPS: Request Approved",
     'body'    => "
@@ -10,7 +17,7 @@ Your request for Research Computing resources has been approved.
 
 We have a number of services available for users, and the approval process automatically recommends services based on the list of work types on the application form.
 
-This has recommended: {$pr->get_recommended_services()}
+$recommendation
 
   * The Legion service is most suitable for serial work, large numbers of serial jobs, and small multinode jobs (using e.g. MPI). We recommend using Legion for any use not explicitly covered by another service.
 
