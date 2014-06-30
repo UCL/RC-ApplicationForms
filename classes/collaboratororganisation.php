@@ -11,7 +11,7 @@ include_once "includes/config.php";
 /**
  * represents either a current or future entry in the Collaborator_Organisations table of the database.
  */
-class Collaborator_Organisation {
+class CollaboratorOrganisation {
     // db fields
     private $id;
     private $project_request_id;

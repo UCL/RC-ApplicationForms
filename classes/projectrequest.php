@@ -21,11 +21,6 @@ class ProjectRequest {
     private $weird_tech_description;
     private $work_description;
     private $applications_description;
-    private $collab_bristol_name;
-    private $collab_oxford_name;
-    private $collab_soton_name;
-    private $collab_other_institute;
-    private $collab_other_name;
     private $creation_time;
 
     // Form checkbox matching section
@@ -38,10 +33,6 @@ class ProjectRequest {
     private $work_type_large_mpi = FALSE;
     private $work_type_small_gpu = FALSE;
     private $work_type_large_gpu = FALSE;
-    private $is_collab_bristol = FALSE;
-    private $is_collab_oxford = FALSE;
-    private $is_collab_soton = FALSE;
-    private $is_collab_other = FALSE;
     // End of db fields
 
     /** @var SQLActor actor */
@@ -238,15 +229,6 @@ class ProjectRequest {
         return $concat_string;
     }
 
-    public function get_formatted_collaboration() {
-        $concat_string = "";
-        if ($this->is_collab_bristol) $concat_string .= "Bristol: " . $this->collab_bristol_name . "\n";
-        if ($this->is_collab_oxford) $concat_string .= "Oxford: " . $this->collab_oxford_name . "\n";
-        if ($this->is_collab_soton) $concat_string .= "Southampton: " . $this->collab_soton_name . "\n";
-        if ($this->is_collab_other) $concat_string .= htmlspecialchars($this->collab_other_institute) . ": " . $this->collab_other_name . "\n";
-        return $concat_string;
-    }
-
     public function get_weird_tech_description() {
         return $this->weird_tech_description;
     }
@@ -305,11 +287,6 @@ class ProjectRequest {
         $data_array['weird_tech_description'] = $this->weird_tech_description;
         $data_array['work_description'] = $this->work_description;
         $data_array['applications_description'] = $this->applications_description;
-        $data_array['collab_bristol_name'] = $this->collab_bristol_name;
-        $data_array['collab_oxford_name'] = $this->collab_oxford_name;
-        $data_array['collab_soton_name'] = $this->collab_soton_name;
-        $data_array['collab_other_institute'] = $this->collab_other_institute;
-        $data_array['collab_other_name'] = $this->collab_other_name;
 
         //checkbox matching section
         $data_array['work_type_basic'] = (int)(bool) $this->work_type_basic;
@@ -321,10 +298,6 @@ class ProjectRequest {
         $data_array['work_type_large_mpi'] = (int)(bool) $this->work_type_large_mpi;
         $data_array['work_type_small_gpu'] = (int)(bool) $this->work_type_small_gpu;
         $data_array['work_type_large_gpu'] = (int)(bool) $this->work_type_large_gpu;
-        $data_array['is_collab_bristol'] = (int)(bool) $this->is_collab_bristol;
-        $data_array['is_collab_oxford'] = (int)(bool) $this->is_collab_oxford;
-        $data_array['is_collab_soton'] = (int)(bool) $this->is_collab_soton;
-        $data_array['is_collab_other'] = (int)(bool) $this->is_collab_other;
         return $data_array;
     }
 

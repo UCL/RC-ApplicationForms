@@ -356,56 +356,6 @@ UPI:
     title="Please provide a list of any software you know you'll need, with approximate versions where known."
     placeholder="E.g. Gaussian 04.f, VASP 5.2.19, Braniac 5.0"
     ></textarea>
-
-<h5>Collaboration</h5>
-<p class="note">
-    Statistical information on collaboration is used in reports to various funding bodies, especially in relation to the <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/CfI">Centre for Innovation</a>.
-</p>
-<table>
-    <tr>
-        <td>
-            <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_bristol]">
-                Bristol
-            </label>
-        </td>
-        <td>
-            PI/lead CoI:
-            <input type="text" name="project[collab_bristol_name]" placeholder="Name"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_oxford]" />
-                Oxford
-            </label>
-        </td>
-        <td>
-            PI/lead CoI:
-            <input type="text" name="project[collab_oxford_name]" placeholder="Name"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_soton]" />
-                Southampton
-            </label>
-        </td>
-        <td>
-            PI/lead CoI:
-            <input type="text" name="project[collab_soton_name]" placeholder="Name"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label><input class="collab_checkbox" type="checkbox" name="project[is_collab_other]" />
-                Other:</label> <input type="text" name="project[collab_other_institute]" placeholder="University" />
-        </td>
-        <td>
-            PI/lead CoI:
-            <input type="text" name="project[collab_other_name]" placeholder="Name"/>
-        </td>
-    </tr>
-</table>
 </div>
 </div>
 <p class="p">

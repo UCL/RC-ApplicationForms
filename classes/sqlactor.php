@@ -191,6 +191,14 @@ class SQLActor {
         return $result;
     }
 
+    public function get_collaborator_organisation($code_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Collaborator_Organisations WHERE id=?");
+        $dbh->bindValue(1, $code_id, PDO::PARAM_INT);
+        $dbh->execute();
+        $result = $dbh->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function get_table($table) {
         // Returns assoc array containing ids and contents for the list tables
         if (! isset($this->cache[$table])) {
@@ -296,6 +304,10 @@ class SQLActor {
 
     public function save_research_project_code($code_data) {
         return $this->save_object_data("Research_Project_Codes", $code_data);
+    }
+
+    public function save_collaborator_organisation($code_data) {
+        return $this->save_object_data("Collaborator_Organisations", $code_data);
     }
 
     function mark_request_status($project_request_id, $acting_user, $status_string, $comment) {
