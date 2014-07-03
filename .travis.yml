@@ -18,6 +18,16 @@ before_script:
 
 # Also, validate this after changing using http://yaml.travis-ci.org/
 
+
+
+# From: http://docs.travis-ci.com/user/sauce-connect/
+# Not sure yet whether to actually do selenium/sauce testing. It *does* mean adding in composer junk.
+#addons:
+#  sauce_connect:
+#    username: "ucl-ikirker-oss"
+#    access_key:
+#      secure: "HyTHGc0fJSrY/jOV7P/Z68ddzgUDtZAjqeFs4TWlghs4CJ+p6v9tYUokFG1Nc1bdzRpPTmnRQn0Twvigv3VS2Edn7VLWcK3fHq9mz3MDn/GzQJNMdtK0zwvDcFGTIXsfhEA/+NO1HGzOzHucUl67O2/jRXASMxvn5e+P5BvkQN4="
+
 # From: https://github.com/travis-ci/travis-ci-php-example/blob/master/.travis.yml
 # omitting "script:" will default to phpunit
 # use the $DB env variable to determine the phpunit.xml to use
