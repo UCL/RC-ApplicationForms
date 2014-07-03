@@ -3,6 +3,8 @@
  * This file contains all the form elements for use in apply.php
  *
  * I'm not *entirely* convinced that separating it out was useful, but meh.
+ *
+ * There's only a little PHP in here, for inserting option sets and values.
  */
 ?>
 
@@ -354,8 +356,54 @@ UPI:
     rows=3
     cols=70
     title="Please provide a list of any software you know you'll need, with approximate versions where known."
-    placeholder="E.g. Gaussian 04.f, VASP 5.2.19, Braniac 5.0"
+    placeholder="E.g. Gaussian 04f, VASP 5.2.19, Braniac 5.0"
     ></textarea>
+</div>
+<div>
+    <h5>External Collaboration</h5>
+    <p class="note">
+        Statistical information on collaboration with other institutions and organisations is used in reports to
+        various funding bodies, especially in relation to the
+        <a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/CfI">Centre for Innovation</a> and
+        the related <a href="http://www.ses.ac.uk/">Science and Engineering South</a> (SES) consortium.
+    </p>
+    <datalist id="collab_org_list">
+        <option value="Bristol" />
+        <option value="Cambridge" />
+        <option value="Imperial College" />
+        <option value="King's College" />
+        <option value="Oxford" />
+        <option value="Southampton" />
+        <option value="Warwick" />
+    </datalist>
+
+    <table id="collaborations_form_table">
+        <tr id="collaborations_row[0]">
+            <td>
+                <label>
+                    University/Organisation:
+                    <input type="text" style="width:100px;margin-right:1em;" name="collaborations[0][organisation_name]" list="collab_org_list" />
+                </label>
+            </td>
+            <td>
+                <label>
+                    PI/lead:
+                    <input type="text" name="collaborations[0][collaborator_contact_name]" />
+                </label>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" name="collaborations[0][is_private_sector]" />
+                    Industrial partner?
+                </label>
+            </td>
+        </tr>
+        <tr id="collaborations_add_row_tr">
+            <td colspan="3" id="collaborations_add_row_td">
+                <a id="collaborations_add_row_link" title="Click to add another row" href="#" onclick="add_collaborations_row();return false;">Add Another Row</a>
+            </td>
+        </tr>
+    </table>
 </div>
 </div>
 <p class="p">
@@ -375,10 +423,44 @@ UPI:
 </form>
 
 <style>
-  .problem {background-color: #ffcccc};
+  .problem {background-color: #ff9999};
  </style>
 
 <script>
+    function add_collaborations_row() {
+        var table = document.getElementById("collaborations_form_table");
+        var old_row = table.rows[table.rows.length - 2];
+        var new_row = table.insertRow(table.rows.length - 1);
+
+        var old_row_num = Number(old_row.id.slice("collaborations_row[".length,-1));
+        var new_row_num = old_row_num + 1;
+
+        var n = String(new_row_num);
+        new_row.id = ''.concat("collaborations_row[",n,"]");
+        new_row.innerHTML = ''.concat(
+            "\t\t\t<td>",
+            "\t\t\t\t<label>",
+            "\t\t\t\t\tUniversity/Organisation:",
+            "\t\t\t\t\t<input type=\"text\" style=\"width:100px;margin-right:1em;\" name=\"collaborations[",n,"][organisation_name]\" list=\"collab_org_list\" />",
+            "\t\t\t\t</label>",
+            "\t\t\t</td>",
+            "\t\t\t<td>",
+            "\t\t\t\t<label>",
+            "\t\t\t\t\tPI/lead:",
+            "\t\t\t\t\t<input type=\"text\" name=\"collaborations[",n,"][collaborator_contact_name]\" />",
+            "\t\t\t\t</label>",
+            "\t\t\t</td>",
+            "\t\t\t<td>",
+            "\t\t\t\t<label>",
+            "\t\t\t\t\t<input type=\"checkbox\" name=\"collaborations[",n,"][is_private_sector]\" />",
+            "\t\t\t\t\tIndustrial partner?",
+            "\t\t\t\t</label>",
+            "\t\t\t</td>"
+        );
+    }
+
+
+
     $( '#application_form' ).submit( function( event ) {
         var prevent_submit = false;
         if ($('#tandc').is(":checked") != true) {

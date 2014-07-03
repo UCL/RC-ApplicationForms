@@ -105,6 +105,7 @@ CREATE TABLE Project_Requests
   work_type_large_mpi BOOLEAN,
   work_type_small_gpu BOOLEAN,
   work_type_large_gpu BOOLEAN,
+  # TODO: Make a work types table instead. This will never happen.
   pi_email TEXT,
   weird_tech_description TEXT,
   work_description TEXT,
@@ -153,12 +154,13 @@ CREATE TABLE Research_Project_Codes
   FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id)
 );
 
-CREATE TABLE Collaborator_Organisations
+CREATE TABLE Collaborations
 (
   id INTEGER AUTO_INCREMENT,
   project_request_id INTEGER,
   is_private_sector BOOLEAN,
   organisation_name TEXT,
+  collaborator_contact_name TEXT,
   time_added TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (project_request_id) REFERENCES Project_Requests(id)

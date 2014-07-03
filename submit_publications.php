@@ -63,7 +63,7 @@ try {
     echo "</ul>";
 
 } catch(\PDOException $ex) {
-    print("\n<p>" . $ex->getMessage() . "</p>\n");
+    print("\n<p>" . $ex->getMessage() . ":" . __METHOD__ . "</p>\n");
 }
 
 include "includes/footer.php";

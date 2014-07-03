@@ -191,11 +191,19 @@ class SQLActor {
         return $result;
     }
 
-    public function get_collaborator_organisation($code_id) {
-        $dbh = $this->dbc->prepare("SELECT * FROM Collaborator_Organisations WHERE id=?");
-        $dbh->bindValue(1, $code_id, PDO::PARAM_INT);
+    public function get_collaboration($collaboration_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Collaborations WHERE id=?");
+        $dbh->bindValue(1, $collaboration_id, PDO::PARAM_INT);
         $dbh->execute();
         $result = $dbh->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get_all_collaborations_for_project($project_request_id) {
+        $dbh = $this->dbc->prepare("SELECT * FROM Collaborations WHERE project_request_id=?");
+        $dbh->bindValue(1, $project_request_id);
+        $dbh->execute();
+        $result = $dbh->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -306,8 +314,8 @@ class SQLActor {
         return $this->save_object_data("Research_Project_Codes", $code_data);
     }
 
-    public function save_collaborator_organisation($code_data) {
-        return $this->save_object_data("Collaborator_Organisations", $code_data);
+    public function save_collaboration($code_data) {
+        return $this->save_object_data("Collaborations", $code_data);
     }
 
     function mark_request_status($project_request_id, $acting_user, $status_string, $comment) {

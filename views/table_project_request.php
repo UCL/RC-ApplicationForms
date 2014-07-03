@@ -32,6 +32,6 @@ echo "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User<
     . table_keyval("Unusual Technical Requirements",
         $project_request->get_weird_tech_description(), 1, TRUE)
     . table_keyval("Collaboration (if any)",
-        $project_request->get_formatted_collaboration(), 1, TRUE)
+        $project_request->get_formatted_collaborations(), 1, TRUE)
     . "</table>"
 ;

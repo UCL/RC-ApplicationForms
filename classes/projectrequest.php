@@ -47,6 +47,8 @@ class ProjectRequest {
     /** @var bool is_clean */
     private $is_clean; /* i.e. is this consistent with the database contents */
 
+    private $collaborations = NULL;
+
 
     public function __construct($actor=NULL) {
         if ($actor == NULL) {
@@ -68,6 +70,18 @@ class ProjectRequest {
 
             $instance->bind_user_profile($user_profile);
         }
+
+        if ($instance->get_id() == FALSE) {
+            // Then we also need to create Collaboration information
+            $collaborations = array();
+            foreach ($request_array['collaborations'] as $one_collaboration) {
+                if ($one_collaboration['organisation_name'] != "") {
+                    array_push($collaborations, Collaboration::from_array($one_collaboration));
+                }
+            }
+            $instance->bind_collaborations($collaborations);
+        }
+
         $instance->dirty();
         return $instance;
     }
@@ -267,6 +281,14 @@ class ProjectRequest {
                 }
                 $created_id = $this->actor->save_project_request($this->get_packed_data());
                 $this->set_id($created_id);
+
+                /** @var Collaboration $one_collaboration */
+                $collaborations = $this->get_collaborations();
+                foreach ($collaborations as $one_collaboration) {
+                    $one_collaboration->set_project_request_id($created_id);
+                    $one_collaboration->save_to_db($altering_operator);
+                }
+
                 $this->clean();
                 return TRUE;
             }
@@ -322,6 +344,37 @@ class ProjectRequest {
             die("Cannot get status for this project request.");
         }
         return $status;
+    }
+
+    public function bind_collaborations($collaborations_array) {
+        $this->collaborations = $collaborations_array;
+    }
+
+    public function get_collaborations() {
+        if ($this->collaborations == NULL) {
+            $collaborations = Collaboration::get_all_for_project($this->id);
+            return $collaborations;
+        } else {
+            return $this->collaborations;
+        }
+    }
+
+    public function get_formatted_collaborations($before="", $column_separator="\t", $row_separator="\n", $after="") {
+        $collaborations = $this->get_collaborations();
+
+        $return_string = $before;
+
+        /** @var Collaboration $one_collaboration */
+        foreach ($collaborations as $one_collaboration) {
+            $return_string .= $one_collaboration->get_organisation_name() .
+                              $column_separator .
+                              $one_collaboration->get_collaborator_contact_name() .
+                              $column_separator .
+                              ($one_collaboration->get_private_sector_status()?"   (industrial partner)":"") .
+                              $row_separator;
+        }
+        $return_string .= $after;
+        return $return_string;
     }
 
     public function get_recommended_services() {
