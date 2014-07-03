@@ -31,6 +31,7 @@ class test_FullPath extends PHPUnit_Framework_TestCase {
                 "work_description" => "I am do work",
                 "applications_description" => "Gaussian 51",
             ),
+            "collaborations" => array(),
         );
 
         $super_user_operator = new Operator("suprusr");
