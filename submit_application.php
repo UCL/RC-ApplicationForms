@@ -46,7 +46,9 @@ try {
         $mail_result = $mailer->send_mail($template_name, $addresses_to_mail, $new_project_request, $new_project_request->get_user_profile(), $operator);
 
         if ($mail_result !== TRUE) {
-            echo $strings["submit"]["err_could_not_send_mail"] . $mail_result."\n";
+            echo $strings["submit"]["err_could_not_send_mail"] . $mail_result."\n <pre>";
+            var_dump($_POST);
+            echo "</pre>\n";
         } else {
             echo $strings["submit"]["success"];
         }

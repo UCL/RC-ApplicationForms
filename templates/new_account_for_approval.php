@@ -1,4 +1,7 @@
 <?php
+/** @var UserProfile $up */
+/** @var ProjectRequest $pr */
+/** @var Operator $op */
 $up = $user_profile;
 $pr = $project_request;
 $op = $operator;
@@ -39,7 +42,7 @@ You have been mailed because the following person has submitted a request for ac
   {$pr->get_weird_tech_description()}
 
 -- Collaboration
-  {$pr->get_formatted_collaboration()}
+  {$pr->get_formatted_collaborations()}
 
 "
 );
