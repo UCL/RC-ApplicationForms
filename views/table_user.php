@@ -1,5 +1,8 @@
 <?php
 
+$sponsor_username = $user_profile->get_sponsor_username();
+if ($sponsor_username == "") { $sponsor_username = "(none given)"; }
+
 echo "<table class='silvatable grid'><tr class='odd'><th>Field</th><th>Entry</th></tr>"
     . table_keyval("Database id",
         $user_profile->get_id())
@@ -11,7 +14,7 @@ echo "<table class='silvatable grid'><tr class='odd'><th>Field</th><th>Entry</th
     . table_keyval("User e-mail",
         $user_profile->get_user_email())
     . table_keyval("Sponsor Username",
-        $user_profile->get_sponsor_username())
+        $sponsor_username)
     . table_keyval("User UPI",
         $user_profile->get_user_upi())
     . table_keyval("User Dept",
