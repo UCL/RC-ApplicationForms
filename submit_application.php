@@ -34,11 +34,13 @@ try {
         $new_project_request->update_status($operator, 'submitted', '(from the form)');
 
         $new_user_profile = $new_project_request->get_user_profile();
-        $addresses_to_mail = array($new_user_profile->get_sponsor_email_address());
+
 
         if ($new_user_profile->get_sponsor_username() == "") {
+            $addresses_to_mail = array($new_user_profile->get_sponsor_email_address());
             $template_name = "new_account_for_approval";
         } else {
+            $addresses_to_mail = array($new_user_profile->get_user_email());
             $template_name = "new_account_for_self_approval";
         }
 
