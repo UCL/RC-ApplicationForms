@@ -10,7 +10,7 @@ include "includes/auth_user_shim.php";
 include_once "includes/autoload_definition.php";
 include_once "includes/config.php";
 
-$page_title = "Submitting Publications";
+$page_title = "Submitting Grant and Publication Information";
 include "includes/header.php";
 
 
