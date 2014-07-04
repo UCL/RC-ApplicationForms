@@ -101,8 +101,12 @@ class UserProfile {
     public static function from_db($user_profile_id, $actor=NULL) {
         $instance = new self($actor);
         $request_array = $instance->actor->get_user_profile($user_profile_id);
-        $instance->fill_from_request_array($request_array);
-        return $instance;
+        if ($request_array == FALSE) {
+            return FALSE;
+        } else {
+            $instance->fill_from_request_array($request_array);
+            return $instance;
+        }
     }
 
     public static function from_db_by_name($username, $actor=NULL) {
