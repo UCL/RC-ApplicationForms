@@ -41,7 +41,7 @@ Please check the information below is correct, and visit the page below to confi
   {$pr->get_weird_tech_description()}
 
 -- Collaboration
-  {$pr->get_formatted_collaboration()}
+  {$pr->get_formatted_collaborations()}
 
 "
 );
