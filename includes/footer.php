@@ -14,19 +14,6 @@
 
 <!--End Insert a page template menu if one is present-->
 
-<!--Start Insert ISD super search here-->
- <div id="isd-ssearch-container">
-    <form action="http://search2.ucl.ac.uk/search/search.cgi" method="get" id="isd-ssearch-form">
-        <input placeholder="Search ISD" name="query" id="query" type="text" value="" accesskey="q" value="Search ISD">
-        <input type="hidden" name="collection" value="ucl-public-meta">
-        <input type="hidden" name="subsite" value="isd" />
-    </form>
- </div>
-<!--End Insert ISD Super search here-->
-	<!--Start Generate Menu-->
-
-	
-	<!--End Generate Menu-->
 	<!--Start left include-->
 
 	
@@ -34,14 +21,9 @@
 		
 			<div id="left-silva-content" class="leftcontainer">
 <ul class="nobullet">
-<li><a href="http://www.ucl.ac.uk/isd/staff/research_services" target="_self">RITS Home</a>
+<li><a href="/" target="_self">Back to Main Site</a>
 </li>
-<li><a href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing" target="_self">Research Computing</a></li>
-<li><a href="http://www.ucl.ac.uk/isd/staff/research_services/research-data" target="_self">Research Data</a></li>
-<li><a href="http://www.ucl.ac.uk/isd/staff/research_services/research-applications" target="_self">Research Applications</a></li>
-<li><a href="http://www.ucl.ac.uk/isd/staff/research_services/rsdt">Research Software Development</a><br /></li>
-<li><a href="http://www.ucl.ac.uk/isd/staff/research_services/governance" target="_self">Governance</a></li>
-<li><a href="http://www.ucl.ac.uk/isd/staff/research_services/contact-us" target="_self">Contact Us</a><br /></li>
+<li><a href="mailto:rc-support@ucl.ac.uk" target="_self">Mail Support</a></li>
 </ul>
 
 </div>
