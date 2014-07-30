@@ -164,7 +164,9 @@ class ProjectRequest {
             return TRUE;
         }
 
-        if ($this->get_user_profile()->get_sponsor_username() == $an_operator->get_username()) {
+        if ( ($this->get_user_profile()->get_sponsor_username() == $an_operator->get_username()) ||
+             ($this->get_user_profile()->get_sponsor_username() == "") ) 
+        {
             return TRUE;
         } else {
             return FALSE;
