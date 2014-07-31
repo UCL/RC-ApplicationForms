@@ -408,7 +408,16 @@ UPI:
 </div>
 <p class="p">
     <!-- Has an id to let us use $("#tandc").checked -->
-    <label><input type="checkbox" id="tandc" name="tandc" value="tandc" />Please tick this to acknowledge that you have read and accepted the <a target="_new" href="http://www.ucl.ac.uk/isd/staff/research_services/research-computing/account/Legion_account_T_Cs_June09.pdf">Research Computing Account terms and conditions</a>. <em>(This link should open in a new tab/window.)</em></label>
+    <label>
+        <input type="checkbox" id="tandc" name="tandc" value="tandc" />
+            Please tick this to acknowledge that you have read and accepted the 
+            <a target="_new" href="https://wiki.rc.ucl.ac.uk/wiki/Terms_and_Conditions">
+                Research Computing Account terms and conditions.
+            </a>
+            <em>
+                (This link should open in a new tab/window.)
+            </em>
+    </label>
 </p>
 
 <div id="error" style="color: #cc0000;">
