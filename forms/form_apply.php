@@ -149,7 +149,7 @@ UPI:
                     name="user_profile[sponsor_username]"
                     title="The username of a permanent member of staff who is prepared to approve your account request."
                     placeholder=""
-                    pattern="[A-Za-z0-9]{7}"
+                    pattern="[a-z0-9]{7}"
                     />
             </td>
         </tr>
