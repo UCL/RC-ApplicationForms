@@ -22,7 +22,7 @@ User Information
                         type="text"
                         id="username"
                         name="user_profile[username]"
-                        title="Your existing UCL userid."
+                        title="Your existing UCL username."
                         readonly
                         value="<?php echo "$current_username" ?>"
                         pattern="[A-Za-z0-9]{7}"
@@ -130,9 +130,12 @@ UPI:
         Sponsor
     </h3>
     <p class="p">
-        To obtain an account, you must either be, or be approved by, a permanent member of staff.
-        If you are a student or a postdoctoral researcher, this will normally be your supervisor.
-        If you are a permanent member of staff, please leave this field unaltered.
+        To obtain an account, you must either be, or be sponsored and approved by, a permanent member of staff. Please put their 7-character UCL username (e.g. ccaanam) here.
+        If you are a student or a postdoctoral researcher, this should normally be your supervisor.
+        If you are a permanent member of staff, please leave this field blank.
+    </p>
+    <p>
+        The email address corresponding to this username will be contacted to ask them to approve your application.
     </p>
     <table>
         <tr>
@@ -145,7 +148,7 @@ UPI:
                     id="sponsor_username"
                     name="user_profile[sponsor_username]"
                     title="The username of a permanent member of staff who is prepared to approve your account request."
-                    placeholder="e.g. ccaprof"
+                    placeholder=""
                     pattern="[A-Za-z0-9]{7}"
                     />
             </td>
@@ -425,6 +428,7 @@ UPI:
         <li id="err_all_fields" style="color: #cc0000;display:none">You must complete all text fields not marked as optional.</li>
         <li id="err_must_accept" style="color: #cc0000;display:none">You must accept the Terms and Conditions to apply.</li>
         <li id="err_sponsor_self" style="color: #cc0000;display:none">Your sponsor's username must not be the same as your username. If your application does not require approval, please leave the sponsor username field blank.</li>
+        <li id="err_invalid_sponsor" style="color: #cc0000;display:none">The sponsor username provided is invalid. Please provide their UCL username; for example, ccaaeof.</li>
     </ul>
 </div>
 
@@ -468,21 +472,58 @@ UPI:
         );
     }
 
+    function is_sponsor_username_valid() {
+        var sponsor_field = $("#sponsor_username");
+
+        if ( null == sponsor_field.val().match(/^(|[a-z0-9]{7})$/) ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function is_sponsor_user() {
+        var sponsor_field = $("#sponsor_username");
+        var user_field = $('#username').val();
+
+        if (sponsor_field == user_field) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function have_terms_been_accepted() {
+        if ( $('#tandc').is(":checked") == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     $( '#application_form' ).submit( function( event ) {
         var prevent_submit = false;
-        if ($('#tandc').is(":checked") != true) {
+
+        if (have_terms_been_accepted() == true) {
+            $('#err_must_accept').hide();
+        } else {
             $('#err_must_accept').show();
             prevent_submit = true;
-        } else {
-            $('#err_must_accept').hide();
         }
-        if ($('#username').val() == $('#sponsor_username').val()) {
+
+        if (is_sponsor_user()) {
             $('#err_sponsor_self').show();
             prevent_submit = true;
         } else {
             $('#err_sponsor_self').hide();
+        }
+
+        if (is_sponsor_username_valid()) {
+            $('#err_invalid_sponsor').hide();
+        } else {
+            $('#err_invalid_sponsor').show();
+            prevent_submit = true;
         }
 
         var mandatory_fields = [
@@ -515,6 +556,7 @@ UPI:
 
     //Make *absolutely* sure error boxes are hidden from the start
     $('#err_sponsor_self').hide();
+    $('#err_invalid_sponsor').hide();
     $('#err_must_accept').hide();
     $('#err_all_fields').hide();
 </script>
