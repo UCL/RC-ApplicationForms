@@ -176,6 +176,7 @@ try{
     } else {
         $project_requests = ProjectRequest::get_all_from_db($actor);
         include "views/table_project_requests.php";
+        include "views/project_requests_stats.php";
     }
 } catch(\PDOException $ex){
   print("\n<p>" . $ex->getMessage() . "</p>\n");
