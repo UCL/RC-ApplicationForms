@@ -101,7 +101,7 @@ class ProjectRequest {
         $project_request_arrays = $actor->get_all_project_requests();
         $project_requests = array();
         foreach ($project_request_arrays as $one_project_request_array) {
-            array_push($project_requests,ProjectRequest::from_db_set($one_project_request_array));
+            array_push($project_requests,ProjectRequest::from_db_set($one_project_request_array, $actor));
         }
         return $project_requests;
     }
