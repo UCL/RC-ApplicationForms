@@ -22,7 +22,7 @@ CREATE TABLE Research_Themes
   id INTEGER AUTO_INCREMENT,
   full_name TEXT NOT NULL,
   PRIMARY KEY (id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Privileged_Users
 (
@@ -33,14 +33,14 @@ CREATE TABLE Privileged_Users
   receives_emails BOOLEAN,
   email_address VARCHAR(255),
   PRIMARY KEY (id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Status_Types
 (
   id INTEGER AUTO_INCREMENT,
   status_type TEXT,
   PRIMARY KEY (id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Project_Request_Statuses
 (
@@ -52,21 +52,21 @@ CREATE TABLE Project_Request_Statuses
   update_time TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (status_type_id) REFERENCES Status_Types(id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE User_Types
 (
   id INTEGER AUTO_INCREMENT,
   user_type TEXT,
   PRIMARY KEY (id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Experience_Levels
 (
   id INTEGER AUTO_INCREMENT,
   level_text text,
   PRIMARY KEY (id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE User_Profiles
 (
@@ -88,7 +88,7 @@ CREATE TABLE User_Profiles
   PRIMARY KEY (id),
   FOREIGN KEY (user_type_id) REFERENCES User_Types(id),
   FOREIGN KEY (experience_level_id) REFERENCES Experience_Levels(id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Project_Requests
 (
@@ -114,14 +114,14 @@ CREATE TABLE Project_Requests
   PRIMARY KEY (id),
   FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id),
   FOREIGN KEY (research_theme_id) REFERENCES Research_Themes(id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Services
 (
   id INTEGER AUTO_INCREMENT,
   name varchar(255),
   PRIMARY KEY (id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Publications
 (
@@ -132,7 +132,7 @@ CREATE TABLE Publications
   time_added TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Publication_Services
 (
@@ -142,7 +142,7 @@ CREATE TABLE Publication_Services
   PRIMARY KEY (id),
   FOREIGN KEY (publication_id) REFERENCES Publications(id),
   FOREIGN KEY (service_used) REFERENCES Services(id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Research_Project_Codes
 (
@@ -152,7 +152,7 @@ CREATE TABLE Research_Project_Codes
   time_added TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (user_profile_id) REFERENCES User_Profiles(id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Collaborations
 (
@@ -164,4 +164,4 @@ CREATE TABLE Collaborations
   time_added TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (project_request_id) REFERENCES Project_Requests(id)
-);
+) DEFAULT CHARSET=utf8;
