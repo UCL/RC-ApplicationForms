@@ -30,9 +30,11 @@ $recommendation
 
 We create accounts on the Legion service for all applying researchers regardless of work type, but due to the shared nature of the other two services, there is an additional account creation step for Iridis and Emerald. You do not need to complete this step if you do not intend to use these services.
 
- To complete Iridis account creation, use the following link: https://cfi.soton.ac.uk/signup/
+ Note that if you already have an account on Iridis or Emerald, you _shouldn't_ perform this step -- it is _only_ for the creation of new accounts.
 
- To complete Emerald account creation, use the following link: https://www.emerald.rl.ac.uk/
+ To complete Iridis or Emerald account creation, use the following link: https://cfi.soton.ac.uk/signup/
+
+
 
 "
 );
