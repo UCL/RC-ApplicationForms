@@ -25,7 +25,6 @@ try {
     $actor->connect();
 
     $request = $_POST;
-
     $new_project_request = ProjectRequest::from_request($request, $actor);
     $creation_result = $new_project_request->save_to_db($operator);
 

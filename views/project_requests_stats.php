@@ -60,3 +60,4 @@ foreach ($tprj_request_status_statistics as $tprj_status => $tprj_status_count) 
     echo "<tr><td>{$tprj_status}</td><td>$tprj_status_count</td></tr>\n";
 }
 echo "</table>";
+
