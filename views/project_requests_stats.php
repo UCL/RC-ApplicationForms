@@ -29,7 +29,7 @@ foreach ($project_requests as $one_project_request) {
     if (array_key_exists($tprj_project_status, $tprj_request_status_statistics)) {
         $tprj_request_status_statistics[$tprj_project_status] += 1;
     } else {
-        $tprj_request_status_statistics[$tprj_project_status] = 0;
+        $tprj_request_status_statistics[$tprj_project_status] = 1;
     }
 
     if ($one_project_request->get_user_profile()->get_sponsor_username() == "") {
