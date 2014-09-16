@@ -23,8 +23,8 @@ function array_as_text_list($array_in, $conjunction=" and ") {
 
 function table_keyval($label, $value, $columns=2, $preformatted=FALSE, $escape_html=TRUE) {
     if ($escape_html === TRUE) {
-        $label = htmlspecialchars($label);
-        $value = htmlspecialchars($value);
+        $label = str_replace("\n", "<br />", htmlspecialchars($label));
+        $value = str_replace("\n", "<br />", htmlspecialchars($value));
     }
     if ($preformatted === TRUE) { $value = "<pre>" . $value . "</pre>"; }
     if ($columns == 2) {
@@ -53,6 +53,9 @@ function table_keyval($label, $value, $columns=2, $preformatted=FALSE, $escape_h
     return $html;
 }
 
+function escape_multiline_input($text) {
+    return str_replace("\n", "<br />", htmlspecialchars($text));
+}
 
 
 ?>

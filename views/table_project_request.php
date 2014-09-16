@@ -3,6 +3,12 @@
 $sponsor_username = $project_request->get_user_profile()->get_sponsor_username();
 if ($sponsor_username == "") { $sponsor_username = "(none given)"; }
 
+$work_description         = $project_request->get_work_description();
+$work_required            = $project_request->get_formatted_work_required();
+$applications_description = $project_request->get_applications_description();
+$tech_description         = $project_request->get_weird_tech_description();
+$collaborations           = $project_request->get_formatted_collaborations();
+
 echo "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User</strong></td></tr>"
     . table_keyval("User id",
         $project_request->get_user_profile()->get_username() .
@@ -24,14 +30,14 @@ echo "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User<
     . table_keyval("Research Theme",
         $project_request->get_research_theme())
     . table_keyval("Project Description",
-        $project_request->get_work_description(), 1, TRUE)
+        $work_description, 1)
     . table_keyval("Applications Required",
-        $project_request->get_applications_description(), 1, TRUE)
+        $applications_description, 1)
     . table_keyval("Work Required",
-        $project_request->get_formatted_work_required(), 1, TRUE)
+        $work_required, 1)
     . table_keyval("Unusual Technical Requirements",
-        $project_request->get_weird_tech_description(), 1, TRUE)
+        $tech_description, 1)
     . table_keyval("Collaboration (if any)",
-        $project_request->get_formatted_collaborations(), 1, TRUE)
+        $collaborations, 1)
     . "</table>"
 ;
