@@ -164,13 +164,19 @@ class ProjectRequest {
             return TRUE;
         }
 
-        if ( ($this->get_user_profile()->get_sponsor_username() == $an_operator->get_username()) ||
-             ($this->get_user_profile()->get_sponsor_username() == "") ) 
-        {
+        $applicant_name = $this->get_user_profile()->get_username();
+        $sponsor_name = $this->get_user_profile()->get_sponsor_username();
+        $operator_name = $an_operator->get_username();
+
+        if ($sponsor_name == $operator_name) {
             return TRUE;
-        } else {
-            return FALSE;
         }
+
+        if ( ( $sponsor_name == "" ) && ($applicant_name == $operator_name) ) {
+            return TRUE;
+        }
+
+        return FALSE;
     }
 
     public function can_be_altered_by(Operator $an_operator) {
