@@ -371,7 +371,6 @@ class ProjectRequest {
             $return_string .= $one_collaboration->get_organisation_name() .
                               $column_separator .
                               $one_collaboration->get_collaborator_contact_name() .
-                              $column_separator .
                               ($one_collaboration->get_private_sector_status()?"   (industrial partner)":"") .
                               $row_separator;
         }

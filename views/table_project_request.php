@@ -7,7 +7,7 @@ $work_description         = $project_request->get_work_description();
 $work_required            = $project_request->get_formatted_work_required();
 $applications_description = $project_request->get_applications_description();
 $tech_description         = $project_request->get_weird_tech_description();
-$collaborations           = $project_request->get_formatted_collaborations();
+$collaborations           = $project_request->get_formatted_collaborations("", ": ");
 
 echo "<table class='silvatable grid'><tr class='odd'><td colspan=2><strong>User</strong></td></tr>"
     . table_keyval("User id",
