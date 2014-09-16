@@ -8,10 +8,7 @@
 
 ?>
 
-<script type="text/javascript">
-    document.write("\<script src='//ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' type='text/javascript'>\<\/script>");
-</script>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <!-- Begin form -->
 <?php
