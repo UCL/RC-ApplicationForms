@@ -7,7 +7,9 @@ $page_title = "View Project Request";
 include_once "includes/header.php";
 include_once "includes/misc_functions.php";
 
-
+echo "<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js\"></script>";
+echo "<script src=\"js/jquery.tablesorter.min.js\"></script>";
+echo "<script src=\"js/jquery.metadata.js\"></script>";
 
 $req_method = $_SERVER['REQUEST_METHOD'];
 
