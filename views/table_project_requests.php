@@ -6,6 +6,37 @@
   <button type="button" onclick="$('#isd-container').css('width','200%')">200%</button>
 </p>
 
+<p class='p'>
+   Click to colour rows by status: <button type="button" onclick="colourise()">Colourise</button>
+</p>
+
+<script>
+function colourise () {
+    var tds = document.getElementsByTagName('td')
+    for (var i=0; i< tds.length ; i++) {
+        var td = tds[i]
+        var tdSiblings = td.parentElement.childNodes
+        var tdContents = tds[i].innerHTML
+
+        if(tdContents.startsWith("\n\t\tapproved")) { 
+            applyStyle(tdSiblings, "background-color: #dfffdf;") 
+        } else if (tdContents.startsWith("\n\t\tsubmitted")) { 
+            tds[i].parentElement.style = "background-color: #ffffdd;" 
+            applyStyle(tdSiblings, "background-color: #ffffdd;") 
+        } else if ( tdContents.startsWith("\n\t\trejected") ) { 
+            applyStyle(tdSiblings, "background-color: #ffdfdf;") 
+        }
+    }
+}
+
+function applyStyle(elementArray, style) {
+    for (var i=0; i<elementArray.length; i++) {
+        elementArray[i].style = style
+    }
+}
+</script>
+
+
 <?php // Table sorter from: http://tablesorter.com/ ?>
 
 <style>
