@@ -5,12 +5,12 @@
 <meta charset="UTF-8">
 <title><?php echo $page_title;?></title>
 
-<link rel="shortcut icon" href="https://www.ucl.ac.uk/isd/++resource++images/favicon2.ico" />
-<link rel="stylesheet" href="https://www.ucl.ac.uk/isd/++resource++styles/default.css" type="text/css" media="screen" />
-<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/++resource++isd_styles/isd.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/++resource++isd_styles/isd-silva-doc-styles.css" />
-<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/++resource++isd_styles/isd-staff.css" />
-<link rel="stylesheet" type="text/css" href="https://www.ucl.ac.uk/isd/staff/research_services/research-computing/local-styles.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.ucl.ac.uk/silva/UCLISDLayout/css/default.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.ucl.ac.uk/silva/UCLISDLayout/css/isd.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.ucl.ac.uk/silva/UCLISDLayout/css/isd-silva-doc-styles.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.ucl.ac.uk/silva/UCLISDLayout/css/isd-staff.css" />
+
+<link rel="shortcut icon" href="//cdn.ucl.ac.uk/silva/UCLIndigoSkin/images/favicon.ico" />
 
 <style type="text/css">
 
@@ -41,7 +41,7 @@ div.subsection {
 		<p id="skip">
 			<a href="#leftcontent">
 				<img alt="Skip to site navigation"
-         src="https://www.ucl.ac.uk/isd/++resource++images/skip.gif" />
+         src="//cdn.ucl.ac.uk/silva/UCLISDLayout/images/skip.gif" />
 			</a>
 		</p>
 		<!-- Start banner and breadcrumbs --> 
@@ -60,7 +60,7 @@ div.subsection {
 		</div> 
 		<div id="logo_holder"> 
 			<div id="logo">
-				<a href="/"><img src="https://www.ucl.ac.uk/isd/++resource++images/ucl0112.gif"
+				<a href="/"><img src="//cdn.ucl.ac.uk/silva/UCLISDLayout/images/ucl0112.gif"
                      alt="UCL Home" /></a>
 			</div> 
 		</div> 

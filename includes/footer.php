@@ -5,11 +5,13 @@
 			<!--Start leftcontent-->
 	
 <div id="leftcontent" class="container">
+    <!--
     <div class="isd-logo-holder">
     <a href="http://www.ucl.ac.uk/isd"><img
     alt="Information Services Division" id="isd_logo"
     src="https://www.ucl.ac.uk/isd/staff/research_services/isd-logo" /></a>
     </div>
+    -->
 <!--Insert a page template menu if one is present-->
 
 <!--End Insert a page template menu if one is present-->
@@ -77,10 +79,6 @@ document.write(curr_year);
 		<li><a href="http://www.ucl.ac.uk/help/" title="Help">Help</a></li>
 		</ul>
 	</div> 
-	<br /> 
-	<a href="http://www.google.com/"><img
-    src="https://www.ucl.ac.uk/isd/++resource++images/google_logo_small"
-    alt="Search by Google" id="google_image" /></a> 
 <!--End Footer-->
 </div> 
 
