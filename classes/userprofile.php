@@ -145,7 +145,8 @@ class UserProfile {
     }
 
     public function get_username() {
-        return $this->username;
+        return strtolower($this->username);
+        // This strtolower call is necessary because neither the LDAP we're using nor the MySQL lookups are case sensitive. I hate everyone.
     }
 
     public function set_user_upi($upi) {
@@ -226,7 +227,8 @@ class UserProfile {
     }
 
     public function get_sponsor_username() {
-        return $this->sponsor_username;
+        return strtolower($this->sponsor_username);
+        // See get_username -- lack of case sensitivity in places is a problem
     }
 
     public function set_experience_level_id($id) {

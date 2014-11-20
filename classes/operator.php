@@ -54,7 +54,8 @@ class Operator {
     }
 
     public function get_username() {
-        return $this->username;
+        return strtolower($this->username);
+        // strtolower is needed because not everything (e.g. authentication) is case sensitive. >:|
     }
 
     public function get_full_name() {
