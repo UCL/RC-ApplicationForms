@@ -51,6 +51,20 @@ class ResearchProjectCode {
         return $instance;
     }
 
+    public static function get_all_from_db($actor = NULL) {
+        if ($actor == NULL) {
+            $actor = new SQLActor();
+            $actor->connect();
+        }
+
+        $code_arrays = $actor->get_all_research_project_codes();
+        $codes = array();
+        foreach ($code_arrays as $one_profile_array) {
+            array_push($codes,ResearchProjectCode::from_array($one_profile_array, $actor));
+        }
+        return $codes;
+    }
+
     public function fill_from_array($an_array) {
         if (array_key_exists('id',$an_array)) {
             $this->id = $an_array['id'];
@@ -113,8 +127,16 @@ class ResearchProjectCode {
         return $data_array;
     }
 
+    public function get_id() {
+        return $this->id;
+    }
+
     public function set_id($id) {
         $this->id = $id;
+    }
+
+    public function get_creation_time() {
+        return $this->time_added;
     }
 
     public function clean() {

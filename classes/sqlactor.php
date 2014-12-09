@@ -183,11 +183,25 @@ class SQLActor {
         return $result;
     }
 
+    public function get_all_publications() {
+        $dbh = $this->dbc->prepare("SELECT * FROM Publications");
+        $dbh->execute();
+        $result = $dbh->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function get_research_project_code($code_id) {
-        $dbh = $this->dbc->prepare("SELECT * FROM Research_Project_Code WHERE id=?");
+        $dbh = $this->dbc->prepare("SELECT * FROM Research_Project_Codes WHERE id=?");
         $dbh->bindValue(1, $code_id, PDO::PARAM_INT);
         $dbh->execute();
         $result = $dbh->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get_all_research_project_codes() {
+        $dbh = $this->dbc->prepare("SELECT * FROM Research_Project_Codes");
+        $dbh->execute();
+        $result = $dbh->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
