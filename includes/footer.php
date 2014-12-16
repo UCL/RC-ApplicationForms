@@ -25,6 +25,7 @@
 <ul class="nobullet">
 <li><a href="/" target="_self">Back to Main Site</a>
 </li>
+<li><a href="/accounts/index.php">Accounts</a></li>
 <li><a href="mailto:rc-support@ucl.ac.uk" target="_self">Mail Support</a></li>
 </ul>
 
