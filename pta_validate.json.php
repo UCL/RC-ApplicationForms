@@ -6,8 +6,11 @@ header('Content-Type: application/json');
 function connect_to_db() {
     // Enter your credentials here.
     $db_username = "UCL_RCPS";
-    $db_password = "RCAW9637phnfDV";
+    $db_password = "";
     $tns = "EBSDEV";
+    if ($db_password == "") {
+        die("{ \n  result: \"failure\", \n  error: \"No database password set.\" \n}\n");
+    }
 
     $c = oci_pconnect($db_username, $db_password, $tns);
     if (!$c) {
