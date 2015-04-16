@@ -335,7 +335,7 @@ class UserProfile {
             "sejjcm7", "zcahec2", "rmjlwal", "rmjdarc", "rmjdoay",
             "rmhekbh", "rmjdgeh", "ucabspi", "ucacsri", "rmjdreg",
         );
-        return in_array($username, $farr_users));
+        return in_array($username, $farr_users);
     }
 
 };
