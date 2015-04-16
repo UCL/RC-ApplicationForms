@@ -322,4 +322,21 @@ class UserProfile {
         return $this->actor->does_user_have_existing_project_request($this->get_username());
     }
 
+    public function is_farr_user() {
+        // TODO: move this data somewhere sensible
+        $farr_users = array(
+            "rmjlach", "seaargi", "rmjlmee", "rmhaarh", "rmjdhaz",
+            "rmhkati", "rmjlcl0", "rmjljug", "rmharsp", "rmjlls0",
+            "rmjdas2", "rmjdcsh", "rmyaral", "rmjlcwa", "rmhidxk",
+            "rmhipmt", "rmjdjpc", "rmjdwil", "rmjdmdm", "rmjlda0",
+            "rmjdkmo", "rmjdsc1", "rmjlduk", "rmjlefr", "rmjdera",
+            "rmjdjel", "rmgpfak", "rmjdgfa", "ucacdgf", "rekgzko",
+            "rmhiapa", "ucabncl", "rmjdbdu", "zcakf79", "rmjlsmi",
+            "sejjcm7", "zcahec2", "rmjlwal", "rmjdarc", "rmjdoay",
+            "rmhekbh", "rmjdgeh", "ucabspi", "ucacsri", "rmjdreg",
+        );
+        return in_array($username, $farr_users));
+    }
+
 };
+
