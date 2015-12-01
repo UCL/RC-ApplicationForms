@@ -24,7 +24,7 @@ Services
 
   * The Legion service is most suitable for serial work, large numbers of serial jobs, and small multi-node jobs (using e.g. MPI). We recommend using Legion for any use not explicitly covered by another service.
 
-  * The Grace service is intended for multi-node parallel jobs, typically with core counts >= 32. Jobs smaller than this are not permitted access to the majority of the cluster nodes.
+  * The Grace service is intended for multi-node parallel jobs, typically with core counts >= 32. Jobs smaller than this are not permitted access to the majority of the cluster nodes. It is not yet available but is expected to be by 2015-12-04.
   
   * The Emerald service is intended and suitable for work using GPUs, and is shared with and operated by the STFC. Any work using GPUs is recommended to be performed on Emerald if possible.
 
