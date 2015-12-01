@@ -385,18 +385,18 @@ class ProjectRequest {
     }
 
     public function get_recommended_services() {
-        $service_array = array('Legion' => FALSE, 'Iridis' => FALSE, 'Emerald' => FALSE);
+        $service_array = array('Legion' => FALSE, 'Iridis' => FALSE, 'Emerald' => FALSE, 'Grace' => FALSE);
 
         if ($this->work_type_basic) $service_array['Legion'] = TRUE;
         if ($this->work_type_array) $service_array['Legion'] = TRUE;
         if ($this->work_type_multithread) $service_array['Legion'] = TRUE;
         if ($this->work_type_all_the_ram) $service_array['Legion'] = TRUE;
         if ($this->work_type_small_mpi) $service_array['Legion'] = TRUE;
-        if ($this->work_type_mid_mpi) $service_array['Iridis'] = TRUE;
-        if ($this->work_type_large_mpi) $service_array['Iridis'] = TRUE;
+        if ($this->work_type_mid_mpi) $service_array['Grace'] = TRUE;
+        if ($this->work_type_large_mpi) $service_array['Grace'] = TRUE;
         if ($this->work_type_small_gpu) $service_array['Emerald'] = TRUE;
         if ($this->work_type_large_gpu) $service_array['Emerald'] = TRUE;
-        if (($service_array['Legion'] || $service_array['Iridis'] || $service_array['Emerald']) != TRUE) {
+        if (($service_array['Legion'] || $service_array['Iridis'] || $service_array['Emerald'] || $service_array['Grace']) != TRUE) {
             // If you want a default
         }
         return array_as_text_list(array_keys($service_array, TRUE));

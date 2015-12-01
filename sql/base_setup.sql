@@ -42,7 +42,8 @@ REPLACE INTO Research_Themes (id, full_name) VALUES
 REPLACE INTO Services (id, name) VALUES
   (1, 'Legion'),
   (2, 'Iridis'),
-  (3, 'Emerald')
+  (3, 'Emerald'),
+  (4, 'Grace')
 ;
 
 REPLACE INTO Status_Types (id, status_type) VALUES
